@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
 
 
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
@@ -58,6 +59,39 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - Resources/logo.png
+
+  fonts:
+    - family: Jost
+      fonts:
+        - asset: fonts/Jost-Black.ttf
+        - asset: fonts/Jost-BlackItalic.ttf
+          style: italic
+
+        - asset: fonts/Jost-Bold.ttf
+          weight: 700
+        - asset: fonts/Jost-BoldItalic.ttf
+          weight: 700
+          style: italic
+
+        - asset: fonts/Jost-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Jost-MediumItalic.ttf
+          weight: 500
+          style: italic
+
+        - asset: fonts/Jost-Light.ttf
+          weight: 300
+        - asset: fonts/Jost-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: fonts/Jost-Thin.ttf
+          weight: 200
+        - asset: fonts/Jost-ThinItalic.ttf
+          weight: 200
+          style: italic
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

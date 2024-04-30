@@ -11,17 +11,32 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  @override
-  //test_controllers
+  final email_controller = TextEditingController();
+  final password_controller = TextEditingController();
 
-  final email_controller=TextEditingController();
-  final password_controller=TextEditingController();
-
-  Future signIn()  async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email_controller.text.trim(),
-      password: password_controller.text.trim(),
+  Future signIn() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFF2798E4), // Change the color of the progress circle
+          ),
+        );
+      },
     );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email_controller.text.trim(),
+        password: password_controller.text.trim(),
+      );
+    } catch (e) {
+      // Handle any errors here
+    } finally {
+      // Dismiss the dialog before navigating
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -31,51 +46,78 @@ class LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-@override
- Widget build(BuildContext context) {
-   return Scaffold(
-      backgroundColor: Colors.grey[300],
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Text(
-            'Login',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              width: 150,
+              height: 150,
+              child: Image.asset('Resources/logo.png'),
             ),
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: TextField(
-              controller: email_controller  ,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
+            Text(
+              'Login',
+              style: TextStyle(
+                fontFamily: 'Jost',
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: TextField(
-              controller: password_controller ,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(),
+            const SizedBox(height: 20),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: TextField(
+                  controller: email_controller,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              signIn();
-            },
-            child: const Text('Login'),
-          ),
-        ],
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: TextField(
+                  controller: password_controller,
+                  obscureText: true, // Hide the password being typed
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                signIn();
+              },
+              child: Text(
+                'Login',
+                style: TextStyle(
+                  fontFamily: 'Jost',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
+            ),
+          ],
+        ),
       ),
     );
-
   }
 }
