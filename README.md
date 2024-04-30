@@ -1,6 +1,5 @@
 # ElderRing
 
-#Patient Credentials:
-#email: admin@admin.com
-#pass: adminadmin
- 
+## Patient Credentials:
+- **Email:** admin@admin.com
+- **Password:** adminadmin
