@@ -50,85 +50,98 @@ class LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                width: 150,
-                height: 150,
-                child: Image.asset('Resources/logo.png'),
-              ),
-              Text(
-                'Login',
-                style: TextStyle(
-                  fontFamily: 'Jost',
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: 150,
+                  height: 150,
+                  child: Image.asset('Resources/logo.png'),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextField(
-                    controller: email_controller,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide(
-                            color: Color(
-                                0xFF2798E4)), // Set the color when focused
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextField(
-                    controller: password_controller,
-                    obscureText: true, // Hide the password being typed
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide(
-                            color: Color(
-                                0xFF2798E4)), // Set the color when focused
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  signIn();
-                },
-                child: Text(
+                Text(
                   'Login',
                   style: TextStyle(
                     fontFamily: 'Jost',
-                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                const SizedBox(height: 20),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: TextField(
+                      controller: email_controller,
+                      cursorColor: Color(0xFF2798E4), // Set the cursor color
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: TextStyle(
+                          color: Color(
+                              0xFF2798E4), // Set the label color when focused
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                              color: Color(
+                                  0xFF2798E4)), // Set the border color when focused
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: TextField(
+                      controller: password_controller,
+                      obscureText: true, // Hide the password being typed
+                      cursorColor: Color(0xFF2798E4), // Set the cursor color
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        labelStyle: TextStyle(
+                          color: Color(
+                              0xFF2798E4), // Set the label color when focused
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                              color: Color(
+                                  0xFF2798E4)), // Set the border color when focused
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    signIn();
+                  },
+                  child: Text(
+                    'Login',
+                    style: TextStyle(
+                      fontFamily: 'Jost',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Color(0xFF2798E4)),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
