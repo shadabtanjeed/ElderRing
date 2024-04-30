@@ -47,6 +47,57 @@ class HomePageState extends State<HomePage> {
                 ),
                 textAlign: TextAlign.center,
               ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Handle button press
+                },
+                child: Text(
+                  'Medication Schedule',
+                  style: TextStyle(
+                    fontFamily: 'Jost',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Handle button press
+                },
+                child: Text(
+                  'Emergency',
+                  style: TextStyle(
+                    fontFamily: 'Jost',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Handle button press
+                },
+                child: Text(
+                  'Location Sharing',
+                  style: TextStyle(
+                    fontFamily: 'Jost',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+              ),
             ],
           ),
         ),
