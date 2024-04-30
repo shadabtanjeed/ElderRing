@@ -51,9 +51,8 @@ class LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.only(top: 50.0),
+        padding: const EdgeInsets.only(top: 10.0),
         child: SingleChildScrollView(
-          // Add this line
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -81,6 +80,12 @@ class LoginPageState extends State<LoginPage> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                            color: Color(
+                                0xFF2798E4)), // Set the color when focused
+                      ),
                     ),
                   ),
                 ),
@@ -95,6 +100,12 @@ class LoginPageState extends State<LoginPage> {
                       labelText: 'Password',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                            color: Color(
+                                0xFF2798E4)), // Set the color when focused
                       ),
                     ),
                   ),
