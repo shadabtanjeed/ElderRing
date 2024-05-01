@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 FirebaseAuth auth = FirebaseAuth.instance;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => LoginPageState();
@@ -57,7 +57,7 @@ class LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Container(
+                SizedBox(
                   width: 150,
                   height: 150,
                   child: Image.asset('Resources/logo.png'),
