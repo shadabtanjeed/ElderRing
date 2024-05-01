@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class MainPage extends StatelessWidget {
-  const MainPage({Key? key}) : super(key: key);
+  const MainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +16,11 @@ class MainPage extends StatelessWidget {
             // return HomePage(); // HomePage is not defined
             return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
-                return HomePage();
+                return const HomePage();
               },
             ); // Wrap HomePage with StatefulBuilder
           } else {
-            return LoginPage();
+            return const LoginPage();
           }
         },
       ),

@@ -62,7 +62,7 @@ class LoginPageState extends State<LoginPage> {
                   height: 150,
                   child: Image.asset('Resources/logo.png'),
                 ),
-                Text(
+                const Text(
                   'Login',
                   style: TextStyle(
                     fontFamily: 'Jost',
@@ -76,10 +76,11 @@ class LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.all(20),
                     child: TextField(
                       controller: email_controller,
-                      cursorColor: Color(0xFF2798E4), // Set the cursor color
+                      cursorColor:
+                          const Color(0xFF2798E4), // Set the cursor color
                       decoration: InputDecoration(
                         labelText: 'Email',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           color: Color(
                               0xFF2798E4), // Set the label color when focused
                         ),
@@ -88,7 +89,7 @@ class LoginPageState extends State<LoginPage> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                               color: Color(
                                   0xFF2798E4)), // Set the border color when focused
                         ),
@@ -102,10 +103,11 @@ class LoginPageState extends State<LoginPage> {
                     child: TextField(
                       controller: password_controller,
                       obscureText: true, // Hide the password being typed
-                      cursorColor: Color(0xFF2798E4), // Set the cursor color
+                      cursorColor:
+                          const Color(0xFF2798E4), // Set the cursor color
                       decoration: InputDecoration(
                         labelText: 'Password',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           color: Color(
                               0xFF2798E4), // Set the label color when focused
                         ),
@@ -114,7 +116,7 @@ class LoginPageState extends State<LoginPage> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                               color: Color(
                                   0xFF2798E4)), // Set the border color when focused
                         ),
@@ -127,17 +129,17 @@ class LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     signIn();
                   },
-                  child: Text(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(const Color(0xFF2798E4)),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                  ),
+                  child: const Text(
                     'Login',
                     style: TextStyle(
                       fontFamily: 'Jost',
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Color(0xFF2798E4)),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
                 ),
               ],
