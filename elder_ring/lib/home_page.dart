@@ -16,8 +16,8 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Signed In as ' + (user?.email ?? ''),
-          style: TextStyle(
+          'Signed In as ${user?.email ?? ''}',
+          style: const TextStyle(
             fontFamily: 'Jost',
             fontSize: 24,
             fontWeight: FontWeight.w600,
@@ -25,7 +25,7 @@ class HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
             },
@@ -38,7 +38,7 @@ class HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Welcome',
                 style: TextStyle(
                   fontFamily: 'Jost',
@@ -52,50 +52,50 @@ class HomePageState extends State<HomePage> {
                 onPressed: () {
                   // Handle button press
                 },
-                child: Text(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                child: const Text(
                   'Medication Schedule',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
-                ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   // Handle button press
                 },
-                child: Text(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                child: const Text(
                   'Emergency',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
-                ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   // Handle button press
                 },
-                child: Text(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                child: const Text(
                   'Location Sharing',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,
                   ),
-                ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
               ),
             ],
