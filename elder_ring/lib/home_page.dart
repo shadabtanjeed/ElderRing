@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'map_page.dart'; // Importing the MaPage widget
+
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => HomePageState();
@@ -53,7 +55,8 @@ class HomePageState extends State<HomePage> {
                   // Handle button press
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                  backgroundColor:
+                      MaterialStateProperty.all(const Color(0xFF2798E4)),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -70,7 +73,8 @@ class HomePageState extends State<HomePage> {
                   // Handle button press
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                  backgroundColor:
+                      MaterialStateProperty.all(const Color(0xFF2798E4)),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -84,10 +88,15 @@ class HomePageState extends State<HomePage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Handle button press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MaPage()), // Navigating to MaPage
+                  );
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                  backgroundColor:
+                      MaterialStateProperty.all(const Color(0xFF2798E4)),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(

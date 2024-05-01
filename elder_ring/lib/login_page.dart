@@ -18,7 +18,7 @@ class LoginPageState extends State<LoginPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(
             color: Color(0xFF2798E4), // Change the color of the progress circle
           ),
