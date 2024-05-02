@@ -9,7 +9,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -18,6 +18,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const MainPage(),
       theme: ThemeData(
+        primarySwatch: Colors.blue,
+        primaryColor: const Color(0xFF2798E4),
         fontFamily: 'Jost', // Use the Jost font
       ),
     );
