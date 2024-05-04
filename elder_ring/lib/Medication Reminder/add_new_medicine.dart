@@ -291,5 +291,13 @@ class _AddMedicineState extends State<AddMedicine> {
     setState(() {
       isLoading = false; // Add this line
     });
+
+    // Navigate to the MedicationSchedule page after a delay
+    Future.delayed(Duration(seconds: 1), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MedicationSchedule()),
+      );
+    });
   }
 }
