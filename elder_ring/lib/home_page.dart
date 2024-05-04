@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'map_page.dart'; // Importing the MaPage widget
+import 'Locations/mapMenu.dart'; // Importing the MaPage widget
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -91,7 +91,8 @@ class HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MaPage()), // Navigating to MaPage
+                        builder: (context) =>
+                            const MapMenu()), // Navigating to MaPage
                   );
                 },
                 style: ButtonStyle(

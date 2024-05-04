@@ -1,34 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'locationServices.dart';
+import 'showOnMaps.dart';
 
-class MaPage extends StatefulWidget {
-  const MaPage({super.key});
+class MapMenu extends StatefulWidget {
+  const MapMenu({super.key});
 
   @override
-  State<MaPage> createState() => _MaPageState();
+  State<MapMenu> createState() => _MapMenuState();
 }
 
-class _MaPageState extends State<MaPage> {
+class _MapMenuState extends State<MapMenu> {
   String latitude = '';
   String longitude = '';
-
-  getLocation() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
-      print("Location permission denied"); // should use widget to show errormsg
-
-      permission = await Geolocator.requestPermission();
-    } else {
-      Position currentPosition = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      setState(() {
-        latitude = currentPosition.latitude.toString();
-        longitude = currentPosition.longitude.toString();
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,18 +25,35 @@ class _MaPageState extends State<MaPage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () {
-                getLocation();
+                LocationServices().fetchLocation().then((position) {
+                  setState(() {
+                    latitude = position.latitude.toString();
+                    longitude = position.longitude.toString();
+                  });
+                });
               },
               child: const Text('Fetch Location'),
             ),
             const SizedBox(height: 20),
             Text(
               'Latitude: $latitude',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
             Text(
               'Longitude: $longitude',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LocationMapPage(),
+                  ),
+                );
+              },
+              child: const Text('Show on Map'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
