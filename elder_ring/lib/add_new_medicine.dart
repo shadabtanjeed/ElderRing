@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'medicine_database.dart';
 
 class AddMedicine extends StatefulWidget {
   const AddMedicine({Key? key}) : super(key: key);
@@ -47,13 +48,13 @@ class _AddMedicineState extends State<AddMedicine> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildMedicineTypeTile('Tablet'),
-                _buildMedicineTypeTile('Syrup'),
-                _buildMedicineTypeTile('Injection'),
+                _buildMedicineTypeTile('Tablet', 'Resources/tablet.png'),
+                _buildMedicineTypeTile('Syrup', 'Resources/syrup.png'),
+                _buildMedicineTypeTile('Injection', 'Resources/injection.png'),
               ],
             ),
             const SizedBox(height: 20.0),
-            const Text("Meal Time:",
+            const Text("Medicine Timing:",
                 style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
@@ -62,8 +63,8 @@ class _AddMedicineState extends State<AddMedicine> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildMealTimeTile('Before Eating'),
-                _buildMealTimeTile('After Eating'),
+                _buildMealTimeTile('Before Meal'),
+                _buildMealTimeTile('After Meal'),
               ],
             ),
             const SizedBox(height: 20.0),
@@ -87,7 +88,7 @@ class _AddMedicineState extends State<AddMedicine> {
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Handle add medicine button press
               },
               style: ButtonStyle(
@@ -136,7 +137,7 @@ class _AddMedicineState extends State<AddMedicine> {
     );
   }
 
-  Widget _buildMedicineTypeTile(String type) {
+  Widget _buildMedicineTypeTile(String type, String imagePath) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -150,11 +151,20 @@ class _AddMedicineState extends State<AddMedicine> {
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(color: const Color(0xFF2798E4)),
         ),
-        child: Text(
-          type,
-          style: TextStyle(
-            color: medicineType == type ? Colors.white : Colors.black,
-          ),
+        child: Column(
+          children: [
+            Image.asset(
+              imagePath,
+              width: 50, // you can adjust the size as needed
+              height: 50, // you can adjust the size as needed
+            ),
+            Text(
+              type,
+              style: TextStyle(
+                color: medicineType == type ? Colors.white : Colors.black,
+              ),
+            ),
+          ],
         ),
       ),
     );
