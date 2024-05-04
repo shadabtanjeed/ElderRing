@@ -70,6 +70,7 @@ flutter:
     - Resources/tablet.png
     - Resources/syrup.png
 
+
   fonts:
     - family: Jost
       fonts:
