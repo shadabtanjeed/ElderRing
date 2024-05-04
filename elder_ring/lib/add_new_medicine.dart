@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:random_string/random_string.dart';
 import 'medicine_database.dart';
+import 'medication_schedule.dart';
 
 class AddMedicine extends StatefulWidget {
   const AddMedicine({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class _AddMedicineState extends State<AddMedicine> {
   TextEditingController medicineNameController = TextEditingController();
   TextEditingController medicineTypeController = TextEditingController();
   TimeOfDay startTime = TimeOfDay.now();
+  bool isLoading = false; // Add this line
 
   @override
   void dispose() {
@@ -45,83 +47,100 @@ class _AddMedicineState extends State<AddMedicine> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: Container(
-        margin: const EdgeInsets.all(20.0),
-        child: ListView(
-          children: [
-            _buildTextField("Medicine Name:", 'Enter medicine name',
-                TextInputType.text, medicineNameController),
-            const SizedBox(height: 20.0),
-            _buildTextField("Medicine Dosage:", 'Enter medicine dosage',
-                TextInputType.text, medicineDosageController),
-            const SizedBox(height: 20.0),
-            const Text("Medicine Type:",
-                style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF2798E4))),
-            const SizedBox(height: 10.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(20.0),
+            child: ListView(
               children: [
-                _buildMedicineTypeTile('Tablet', 'Resources/tablet.png'),
-                _buildMedicineTypeTile('Syrup', 'Resources/syrup.png'),
-                _buildMedicineTypeTile('Injection', 'Resources/injection.png'),
+                _buildTextField("Medicine Name:", 'Enter medicine name',
+                    TextInputType.text, medicineNameController),
+                const SizedBox(height: 20.0),
+                _buildTextField("Medicine Dosage:", 'Enter medicine dosage',
+                    TextInputType.text, medicineDosageController),
+                const SizedBox(height: 20.0),
+                const Text("Medicine Type:",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF2798E4))),
+                const SizedBox(height: 10.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildMedicineTypeTile('Tablet', 'Resources/tablet.png'),
+                    _buildMedicineTypeTile('Syrup', 'Resources/syrup.png'),
+                    _buildMedicineTypeTile(
+                        'Injection', 'Resources/injection.png'),
+                  ],
+                ),
+                const SizedBox(height: 20.0),
+                const Text("Medicine Timing:",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF2798E4))),
+                const SizedBox(height: 10.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildMealTimeTile('Before Meal'),
+                    _buildMealTimeTile('After Meal'),
+                  ],
+                ),
+                const SizedBox(height: 20.0),
+                _buildTextField(
+                    "Interval (in hours):",
+                    'Enter interval in hours',
+                    TextInputType.number,
+                    intervalController),
+                const SizedBox(height: 20.0),
+                const Text("Start Time:",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF2798E4))),
+                const SizedBox(height: 10.0),
+                ElevatedButton(
+                  onPressed: _pickTime,
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(const Color(0xFF2798E4)),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                  ),
+                  child: Text('Select Start Time'),
+                ),
+                const SizedBox(height: 20.0),
+                ElevatedButton(
+                  onPressed: () async {
+                    await addMedicine();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(const Color(0xFF2798E4)),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                  ),
+                  child: const Text(
+                    'Add Medicine',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
               ],
             ),
-            const SizedBox(height: 20.0),
-            const Text("Medicine Timing:",
-                style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF2798E4))),
-            const SizedBox(height: 10.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildMealTimeTile('Before Meal'),
-                _buildMealTimeTile('After Meal'),
-              ],
-            ),
-            const SizedBox(height: 20.0),
-            _buildTextField("Interval (in hours):", 'Enter interval in hours',
-                TextInputType.number, intervalController),
-            const SizedBox(height: 20.0),
-            const Text("Start Time:",
-                style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF2798E4))),
-            const SizedBox(height: 10.0),
-            ElevatedButton(
-              onPressed: _pickTime,
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(const Color(0xFF2798E4)),
-                foregroundColor: MaterialStateProperty.all(Colors.white),
-              ),
-              child: Text('Select Start Time'),
-            ),
-            const SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () async {
-                await addMedicine();
-              },
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(const Color(0xFF2798E4)),
-                foregroundColor: MaterialStateProperty.all(Colors.white),
-              ),
-              child: const Text(
-                'Add Medicine',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
+          ),
+          if (isLoading) // Add this line
+            Container(
+              color: Colors.black.withOpacity(0.5),
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: Color(0xFF2798E4),
                 ),
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }
@@ -229,6 +248,10 @@ class _AddMedicineState extends State<AddMedicine> {
   }
 
   Future<void> addMedicine() async {
+    setState(() {
+      isLoading = true; // Add this line
+    });
+
     String medicineId = randomAlphaNumeric(10);
     DatabaseMethods dbMethods = DatabaseMethods();
 
@@ -260,9 +283,13 @@ class _AddMedicineState extends State<AddMedicine> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
+          backgroundColor: Color(0xFF2798E4),
           textColor: Colors.white,
           fontSize: 16.0);
+    });
+
+    setState(() {
+      isLoading = false; // Add this line
     });
   }
 }
