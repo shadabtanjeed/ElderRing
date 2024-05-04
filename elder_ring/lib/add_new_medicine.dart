@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:random_string/random_string.dart';
 import 'medicine_database.dart';
 
 class AddMedicine extends StatefulWidget {
@@ -10,9 +13,22 @@ class AddMedicine extends StatefulWidget {
 
 class _AddMedicineState extends State<AddMedicine> {
   String medicineType = 'Tablet';
-  String mealTime = 'Before Eating';
-  int interval = 1;
+  bool isAfterEating = false;
+  TextEditingController intervalController = TextEditingController();
+  TextEditingController medicineDosageController = TextEditingController();
+  TextEditingController medicineNameController = TextEditingController();
+  TextEditingController medicineTypeController = TextEditingController();
   TimeOfDay startTime = TimeOfDay.now();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    intervalController.dispose();
+    medicineDosageController.dispose();
+    medicineNameController.dispose();
+    medicineTypeController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +49,11 @@ class _AddMedicineState extends State<AddMedicine> {
         margin: const EdgeInsets.all(20.0),
         child: ListView(
           children: [
-            _buildTextField(
-                "Medicine Name:", 'Enter medicine name', TextInputType.text),
+            _buildTextField("Medicine Name:", 'Enter medicine name',
+                TextInputType.text, medicineNameController),
             const SizedBox(height: 20.0),
             _buildTextField("Medicine Dosage:", 'Enter medicine dosage',
-                TextInputType.text),
+                TextInputType.text, medicineDosageController),
             const SizedBox(height: 20.0),
             const Text("Medicine Type:",
                 style: TextStyle(
@@ -69,7 +85,7 @@ class _AddMedicineState extends State<AddMedicine> {
             ),
             const SizedBox(height: 20.0),
             _buildTextField("Interval (in hours):", 'Enter interval in hours',
-                TextInputType.number),
+                TextInputType.number, intervalController),
             const SizedBox(height: 20.0),
             const Text("Start Time:",
                 style: TextStyle(
@@ -89,7 +105,7 @@ class _AddMedicineState extends State<AddMedicine> {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () async {
-                // Handle add medicine button press
+                await addMedicine();
               },
               style: ButtonStyle(
                 backgroundColor:
@@ -110,7 +126,8 @@ class _AddMedicineState extends State<AddMedicine> {
     );
   }
 
-  Widget _buildTextField(String label, String hint, TextInputType inputType) {
+  Widget _buildTextField(String label, String hint, TextInputType inputType,
+      TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -126,6 +143,7 @@ class _AddMedicineState extends State<AddMedicine> {
               borderRadius: BorderRadius.circular(10.0),
               border: Border.all(color: const Color(0xFF2798E4))),
           child: TextField(
+            controller: controller,
             keyboardType: inputType,
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -174,20 +192,24 @@ class _AddMedicineState extends State<AddMedicine> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          mealTime = time;
+          isAfterEating = time == 'After Meal';
         });
       },
       child: Container(
         padding: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          color: mealTime == time ? Colors.blue : Colors.white,
+          color: isAfterEating == (time == 'After Meal')
+              ? Colors.blue
+              : Colors.white,
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(color: const Color(0xFF2798E4)),
         ),
         child: Text(
           time,
           style: TextStyle(
-            color: mealTime == time ? Colors.white : Colors.black,
+            color: isAfterEating == (time == 'After Meal')
+                ? Colors.white
+                : Colors.black,
           ),
         ),
       ),
@@ -204,5 +226,43 @@ class _AddMedicineState extends State<AddMedicine> {
         startTime = selectedTime;
       });
     }
+  }
+
+  Future<void> addMedicine() async {
+    String medicineId = randomAlphaNumeric(10);
+    DatabaseMethods dbMethods = DatabaseMethods();
+
+    // Create a DateTime object using the current date and the hour and minute from startTime
+    DateTime startDateTime = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+      startTime.hour,
+      startTime.minute,
+    );
+
+    // Convert the DateTime object to a Timestamp
+    Timestamp startTimeStamp = Timestamp.fromDate(startDateTime);
+
+    Map<String, dynamic> medicineInfoMap = {
+      "medicine_name": medicineNameController.text,
+      "medicine_dosage": medicineDosageController.text,
+      "medicine_type": medicineType,
+      "is_after_eating": isAfterEating,
+      "interval": int.parse(intervalController.text),
+      "start_time": startTimeStamp, // Store the Timestamp in Firestore
+      "medicine_id": medicineId,
+    };
+
+    await dbMethods.addMedicineInfo(medicineInfoMap, medicineId).then((value) {
+      Fluttertoast.showToast(
+          msg: "Medicine Details Added Successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    });
   }
 }
