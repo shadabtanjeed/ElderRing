@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'map_page.dart'; // Importing the MaPage widget
-import 'medication_schedule.dart';
+import 'Medication Reminder/medication_schedule.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:elder_ring/add_new_medicine.dart';
+import 'package:elder_ring/Medication%20Reminder/add_new_medicine.dart';
 
 class MedicationSchedule extends StatefulWidget {
   const MedicationSchedule({super.key});
