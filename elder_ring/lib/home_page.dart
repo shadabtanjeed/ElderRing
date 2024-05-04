@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'map_page.dart'; // Importing the MaPage widget
+import 'medication_schedule.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -52,7 +53,12 @@ class HomePageState extends State<HomePage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Handle button press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const MedicationSchedule()), // Navigating to MedicationSchedule
+                  );
                 },
                 style: ButtonStyle(
                   backgroundColor:
@@ -69,9 +75,7 @@ class HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  // Handle button press
-                },
+                onPressed: () {},
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all(const Color(0xFF2798E4)),
@@ -102,29 +106,6 @@ class HomePageState extends State<HomePage> {
                 ),
                 child: const Text(
                   'Location Sharing',
-                  style: TextStyle(
-                    fontFamily: 'Jost',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const MaPage()), // Navigating to MaPage
-                  );
-                },
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
-                ),
-                child: const Text(
-                  'Medication Schedule',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,
