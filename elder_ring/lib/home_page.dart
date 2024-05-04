@@ -36,7 +36,7 @@ class HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(top: 50.0),
+          padding: const EdgeInsets.only(top: 30.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -91,7 +91,8 @@ class HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MaPage()), // Navigating to MaPage
+                        builder: (context) =>
+                            const MaPage()), // Navigating to MaPage
                   );
                 },
                 style: ButtonStyle(
@@ -101,6 +102,29 @@ class HomePageState extends State<HomePage> {
                 ),
                 child: const Text(
                   'Location Sharing',
+                  style: TextStyle(
+                    fontFamily: 'Jost',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const MaPage()), // Navigating to MaPage
+                  );
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                child: const Text(
+                  'Medication Schedule',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,
