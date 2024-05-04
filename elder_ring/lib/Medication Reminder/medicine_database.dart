@@ -8,4 +8,10 @@ class DatabaseMethods {
         .doc(id)
         .set(medicineInfoMap);
   }
+
+  Future<Stream<QuerySnapshot>> getMedicineInfo() async {
+    return await FirebaseFirestore.instance
+        .collection("medicine_schedule")
+        .snapshots();
+  }
 }
