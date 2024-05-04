@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:elder_ring/add_new_medicine.dart';
 
 class MedicationSchedule extends StatefulWidget {
-  const MedicationSchedule({Key? key}) : super(key: key);
+  const MedicationSchedule({super.key});
 
   @override
   State<MedicationSchedule> createState() => _MedicationScheduleState();
@@ -12,40 +13,48 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: const Text(
-            'Medication Schedule',
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight:
-                    FontWeight.w600), // Set the color to white and make it bold
-          ),
+        centerTitle: true,
+        title: const Text(
+          'Medication Schedule',
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight:
+                  FontWeight.w600), // Set the color to white and make it bold
         ),
-        backgroundColor: Color(0xFF2798E4),
+        backgroundColor: const Color(0xFF2798E4),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           // Set the back button color to white
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                // Handle button press
-              },
-              child: const Text('Add Medication'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Handle button press
-              },
-              child: const Text('View Medication'),
-            ),
-          ],
+      body: const Center(
+        child: Column(),
+      ),
+      floatingActionButton: Container(
+        width: 75.0, // Set your desired width
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      const AddMedicine()), // Navigating to MedicationSchedule
+            );
+          },
+          backgroundColor: const Color(0xFF2798E4),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.add, color: Colors.white),
+              Text('Add',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600)),
+            ],
+          ),
         ),
       ),
     );
