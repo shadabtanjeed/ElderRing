@@ -107,6 +107,26 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                             ],
                           ),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.edit, color: Color(0xFF2798E4)),
+                              onPressed: () {
+                                // Add your edit functionality here
+                              },
+                            ),
+                            SizedBox(width: 1),
+                            // adjust the width as needed to change the spacing
+                            IconButton(
+                              icon:
+                                  Icon(Icons.delete, color: Color(0xFFD70040)),
+                              onPressed: () {
+                                // Add your delete functionality here
+                              },
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
