@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:elder_ring/Medication%20Reminder/add_new_medicine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'medicine_database.dart';
+import 'package:intl/intl.dart';
 
 class MedicationSchedule extends StatefulWidget {
   const MedicationSchedule({Key? key}) : super(key: key);
@@ -54,6 +55,33 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                 default:
                   imagePath = 'Resources/tablet.png'; // default image
               }
+
+              // Get the current time
+              DateTime currentTime = DateTime.now();
+
+              // Get the start_time from the database and convert it to DateTime
+              DateTime startTime = (ds['start_time'] as Timestamp).toDate();
+
+              // Get the interval from the database
+              int interval = ds['interval'];
+
+              // Calculate the next dose time
+              DateTime nextDoseTime = startTime;
+              while (nextDoseTime.isBefore(currentTime)) {
+                nextDoseTime = nextDoseTime.add(Duration(hours: interval));
+              }
+
+              // Calculate the remaining time for the next dose
+              Duration remainingTime = nextDoseTime.difference(currentTime);
+
+              // Format the remaining time as a string
+              String remainingTimeString = DateFormat('hh:mm').format(DateTime(
+                  0,
+                  0,
+                  0,
+                  remainingTime.inHours,
+                  remainingTime.inMinutes.remainder(60)));
+
               return Container(
                 margin: const EdgeInsets.only(bottom: 20),
                 child: Material(
@@ -91,6 +119,10 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                                       fontSize: 17,
                                       fontWeight: FontWeight.w600)),
                               Text("Interval: " + ds['interval'].toString(),
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w600)),
+                              Text("Next Dose: " + remainingTimeString,
                                   style: TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.w600)),
