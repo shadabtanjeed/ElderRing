@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'locationServices.dart';
 import 'showOnMaps.dart';
+import 'shareLocation.dart';
+import 'crudscreen.dart';
 
 class MapMenu extends StatefulWidget {
   const MapMenu({super.key});
@@ -54,6 +56,27 @@ class _MapMenuState extends State<MapMenu> {
                 );
               },
               child: const Text('Show on Map'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ShareLocation()),
+                );
+              },
+              child: const Text('Fire Share'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CrudScreen()),
+                );
+              },
+              child: const Text('CRUD Operations'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart';
 import 'locationServices.dart';
 import 'dart:async';
 
@@ -24,9 +24,10 @@ class _LocationMapPageState extends State<LocationMapPage> {
 
   _getCurrentLocation() async {
     try {
-      Position position = await locationServices.fetchLocation();
+      LocationData locationData = await locationServices.fetchLocation();
       setState(() {
-        currentLocation = LatLng(position.latitude, position.longitude);
+        currentLocation =
+            LatLng(locationData.latitude!, locationData.longitude!);
       });
       GoogleMapController controller = await _controller.future;
       controller.moveCamera(CameraUpdate.newLatLng(currentLocation));
@@ -50,12 +51,16 @@ class _LocationMapPageState extends State<LocationMapPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Location Map'),
+        title: const Text('My Location'),
       ),
       body: GoogleMap(
+        mapType: MapType.normal,
+        // buildingsEnabled: true,
+        // myLocationEnabled: true,
+        // myLocationButtonEnabled: true,
         initialCameraPosition: CameraPosition(
           target: currentLocation,
-          zoom: 14.4746,
+          zoom: 15,
         ),
         markers: markers,
         onMapCreated: (GoogleMapController controller) {
