@@ -67,15 +67,21 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
 
               // Calculate the next dose time
               DateTime nextDoseTime = startTime;
-              while (nextDoseTime.isBefore(currentTime)) {
-                nextDoseTime = nextDoseTime.add(Duration(hours: interval));
+              if (interval > 0) {
+                while (nextDoseTime.isBefore(currentTime)) {
+                  nextDoseTime = nextDoseTime.add(Duration(hours: interval));
+                }
+              } else {
+                // Handle the case where interval is not greater than 0
+                // For example, you could set nextDoseTime to currentTime
+                nextDoseTime = currentTime;
               }
 
               // Calculate the remaining time for the next dose
               Duration remainingTime = nextDoseTime.difference(currentTime);
 
               // Format the remaining time as a string
-              String remainingTimeString = DateFormat('hh:mm').format(DateTime(
+              String remainingTimeString = DateFormat('HH:mm').format(DateTime(
                   0,
                   0,
                   0,
@@ -121,11 +127,13 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                               Text("Interval: " + ds['interval'].toString(),
                                   style: TextStyle(
                                       fontSize: 17,
-                                      fontWeight: FontWeight.w600)),
+                                      fontWeight: FontWeight.w500)),
                               Text("Next Dose: " + remainingTimeString,
                                   style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w600)),
+                                    fontSize: 18, // increased font size
+                                    fontWeight: FontWeight.w600, // made it bold
+                                    color: Colors.red, // changed color to red
+                                  )),
                               Text(
                                   ds['is_after_eating']
                                       ? "After Meal"
