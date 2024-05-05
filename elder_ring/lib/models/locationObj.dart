@@ -35,11 +35,10 @@ class LocationObj {
 
     LocationData currentLocation = await location.getLocation();
 
-    position =
-        GeoPoint(currentLocation.latitude!, currentLocation.longitude!);
+    position = GeoPoint(currentLocation.latitude!, currentLocation.longitude!);
     updated_on = DateTime.now();
 
-    _db.collection('location_share').doc(unique_id).set({
+    _db.collection('location_db').doc(unique_id).set({
       'position': position,
       'unique_id': unique_id,
       'updated_on': updated_on,
@@ -49,7 +48,7 @@ class LocationObj {
   static Future<bool> exists(String uniqueId) async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
     DocumentSnapshot doc =
-        await db.collection('location_share').doc(uniqueId).get();
+        await db.collection('location_db').doc(uniqueId).get();
     return doc.exists;
   }
 
@@ -58,7 +57,7 @@ class LocationObj {
   static Future<LocationObj> fromFirestore(String uniqueId) async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
     DocumentSnapshot doc =
-        await db.collection('location_share').doc(uniqueId).get();
+        await db.collection('location_db').doc(uniqueId).get();
 
     return LocationObj(
       position: doc['position'],
@@ -71,14 +70,14 @@ class LocationObj {
     position = newPosition;
     updated_on = DateTime.now();
 
-    await _db.collection('location_share').doc(unique_id).update({
+    await _db.collection('location_db').doc(unique_id).update({
       'position': position,
       'updated_on': updated_on,
     });
   }
 
   Future<void> createLocation() async {
-    await _db.collection('location_share').doc(unique_id).set({
+    await _db.collection('location_db').doc(unique_id).set({
       'position': position,
       'unique_id': unique_id,
       'updated_on': updated_on,
@@ -86,6 +85,6 @@ class LocationObj {
   }
 
   Future<void> deleteLocation() async {
-    await _db.collection('location_share').doc(unique_id).delete();
+    await _db.collection('location_db').doc(unique_id).delete();
   }
 }

@@ -23,7 +23,7 @@ class _GetLocationState extends State<GetLocation> {
         title: const Text('Get Location'),
       ),
       body: StreamBuilder<DocumentSnapshot>(
-        stream: _db.collection('location_share').doc('Untouchable').snapshots(),
+        stream: _db.collection('location_db').doc('Untouchable').snapshots(),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasError) {
