@@ -1,0 +1,1 @@
+// to receive and show the shared location
