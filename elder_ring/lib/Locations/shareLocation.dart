@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:elder_ring/models/locationObj.dart';
-import 'package:location/location.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Add this line
+// import 'package:location/location.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ShareLocation extends StatefulWidget {
   const ShareLocation({super.key});
@@ -12,7 +12,7 @@ class ShareLocation extends StatefulWidget {
 
 class _ShareLocationState extends State<ShareLocation> {
   LocationObj locationObj = LocationObj(
-      position: GeoPoint(0, 0),
+      position: const GeoPoint(0, 0),
       unique_id: "theOldMan", // replace this with the actual unique_id
       updated_on: DateTime.now());
 
@@ -26,11 +26,11 @@ class _ShareLocationState extends State<ShareLocation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sharing Location'),
+        title: const Text('Sharing Location'),
       ),
       body: Center(
         child: locationObj.position == null
-            ? CircularProgressIndicator()
+            ? const CircularProgressIndicator()
             : Text(
                 'Location:\nLat: ${locationObj.position.latitude}, Long: ${locationObj.position.longitude}'),
       ),
