@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:elder_ring/models/locationObj.dart';
-import 'crud.dart';
 
 class CrudScreen extends StatefulWidget {
   @override
@@ -9,7 +8,6 @@ class CrudScreen extends StatefulWidget {
 }
 
 class _CrudScreenState extends State<CrudScreen> {
-  final CrudOperations crudOperations = CrudOperations();
   final TextEditingController uniqueIdController = TextEditingController();
   final TextEditingController latitudeController = TextEditingController();
   final TextEditingController longitudeController = TextEditingController();
@@ -50,14 +48,14 @@ class _CrudScreenState extends State<CrudScreen> {
                 ),
                 updated_on: DateTime.now(),
               );
-              await crudOperations.createLocation(locationObj);
+              await locationObj.createLocation();
             },
             child: const Text('Create'),
           ),
           ElevatedButton(
             onPressed: () async {
               LocationObj locationObj =
-                  await crudOperations.readLocation(uniqueIdController.text);
+                  await LocationObj.fromFirestore(uniqueIdController.text);
               latitudeController.clear();
               longitudeController.clear();
               updatedOnController.clear();
@@ -79,13 +77,18 @@ class _CrudScreenState extends State<CrudScreen> {
                 ),
                 updated_on: DateTime.now(),
               );
-              await crudOperations.updateLocation(locationObj);
+              await locationObj.updateLocation(locationObj.position);
             },
             child: const Text('Update'),
           ),
           ElevatedButton(
             onPressed: () async {
-              await crudOperations.deleteLocation(uniqueIdController.text);
+              LocationObj locationObj = LocationObj(
+                position: const GeoPoint(0, 0),
+                unique_id: uniqueIdController.text,
+                updated_on: DateTime.parse("1865-08-01"),
+              );
+              await locationObj.deleteLocation();
             },
             child: const Text('Delete'),
           ),

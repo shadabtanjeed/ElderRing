@@ -19,7 +19,7 @@ class _ShareLocationState extends State<ShareLocation> {
   @override
   void initState() {
     super.initState();
-    locationObj.updateLocation();
+    locationObj.update();
   }
 
   @override
