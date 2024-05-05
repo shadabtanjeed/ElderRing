@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:elder_ring/models/locationObj.dart';
-// import 'package:location/location.dart';
+import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ShareLocation extends StatefulWidget {
@@ -12,14 +12,50 @@ class ShareLocation extends StatefulWidget {
 
 class _ShareLocationState extends State<ShareLocation> {
   LocationObj locationObj = LocationObj(
-      position: const GeoPoint(0, 0),
-      unique_id: "theOldMan", // replace this with the actual unique_id
-      updated_on: DateTime.now());
+    position: const GeoPoint(0, 0),
+    unique_id: "Untouchable", // replace this with the actual unique_id
+    updated_on: DateTime.now(),
+  );
+
+  Location location = Location();
 
   @override
   void initState() {
     super.initState();
-    locationObj.update();
+    updateLocation();
+    startTransmission();
+  }
+
+  void startTransmission() {
+    location.onLocationChanged.listen((LocationData currentLocation) {
+      setState(() {
+        locationObj = LocationObj(
+          position:
+              GeoPoint(currentLocation.latitude!, currentLocation.longitude!),
+          unique_id: locationObj.unique_id,
+          updated_on: DateTime.now(),
+        );
+      });
+      locationObj.updateLocation(locationObj.position);
+    });
+  }
+
+  void updateLocation() async {
+    LocationData currentLocation = await location.getLocation();
+    locationObj = LocationObj(
+      position: GeoPoint(currentLocation.latitude!, currentLocation.longitude!),
+      unique_id: locationObj.unique_id,
+      updated_on: DateTime.now(),
+    );
+
+    bool exists = await LocationObj.exists(locationObj.unique_id);
+    if (!exists) {
+      await locationObj.createLocation();
+    } else {
+      await locationObj.updateLocation(locationObj.position);
+    }
+
+    setState(() {});
   }
 
   @override
@@ -33,6 +69,11 @@ class _ShareLocationState extends State<ShareLocation> {
             ? const CircularProgressIndicator()
             : Text(
                 'Location:\nLat: ${locationObj.position.latitude}, Long: ${locationObj.position.longitude}'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: updateLocation,
+        tooltip: 'Update Location',
+        child: const Icon(Icons.refresh),
       ),
     );
   }
