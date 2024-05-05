@@ -5,7 +5,7 @@ import 'medicine_database.dart';
 import 'package:intl/intl.dart';
 
 class MedicationSchedule extends StatefulWidget {
-  const MedicationSchedule({Key? key}) : super(key: key);
+  const MedicationSchedule({super.key});
 
   @override
   State<MedicationSchedule> createState() => _MedicationScheduleState();
@@ -26,7 +26,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
       stream: MedicineInfoStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text('Something went wrong');
+          return const Text('Something went wrong');
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -116,23 +116,26 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(ds['medicine_name'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600,
                                       color: Color(0xFF2798E4))),
                               Text("Dosage: " + ds['medicine_dosage'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.w600)),
-                              Text("Interval: " + ds['interval'].toString(),
-                                  style: TextStyle(
+                              Text(
+                                  "Interval (in hrs): " +
+                                      ds['interval'].toString(),
+                                  style: const TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.w500)),
                               Text("Next Dose: " + remainingTimeString,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18, // increased font size
                                     fontWeight: FontWeight.w600, // made it bold
-                                    color: Colors.red, // changed color to red
+                                    color: Color(
+                                        0xFFD70040), // changed color to red
                                   )),
                               Text(
                                   ds['is_after_eating']
@@ -142,8 +145,8 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                                       fontSize: 17,
                                       fontWeight: FontWeight.w600,
                                       color: ds['is_after_eating']
-                                          ? Color(0xFF097969)
-                                          : Color(0xFFD70040))),
+                                          ? const Color(0xFF097969)
+                                          : const Color(0xFFE97451))),
                             ],
                           ),
                         ),
@@ -151,16 +154,17 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             IconButton(
-                              icon: Icon(Icons.edit, color: Color(0xFF2798E4)),
+                              icon: const Icon(Icons.edit,
+                                  color: Color(0xFF2798E4)),
                               onPressed: () {
                                 // Add your edit functionality here
                               },
                             ),
-                            SizedBox(width: 1),
+                            const SizedBox(width: 1),
                             // adjust the width as needed to change the spacing
                             IconButton(
-                              icon:
-                                  Icon(Icons.delete, color: Color(0xFFD70040)),
+                              icon: const Icon(Icons.delete,
+                                  color: Color(0xFFD70040)),
                               onPressed: () {
                                 // Add your delete functionality here
                               },
@@ -175,7 +179,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
             },
           );
         } else {
-          return Text('No data');
+          return const Text('No data');
         }
       },
     );
