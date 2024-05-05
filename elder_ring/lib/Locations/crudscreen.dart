@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:elder_ring/models/locationObj.dart';
 
 class CrudScreen extends StatefulWidget {
+  const CrudScreen({super.key});
+
   @override
   _CrudScreenState createState() => _CrudScreenState();
 }
@@ -86,7 +88,7 @@ class _CrudScreenState extends State<CrudScreen> {
               LocationObj locationObj = LocationObj(
                 position: const GeoPoint(0, 0),
                 unique_id: uniqueIdController.text,
-                updated_on: DateTime.parse("1865-08-01"),
+                updated_on: DateTime.parse("1865-08-15"),
               );
               await locationObj.deleteLocation();
             },

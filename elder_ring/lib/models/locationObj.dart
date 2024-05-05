@@ -14,44 +14,51 @@ class LocationObj {
       required this.updated_on});
 
   Future<void> update() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
 
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
         return;
       }
     }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
         return;
       }
     }
 
-    LocationData _currentLocation = await location.getLocation();
+    LocationData currentLocation = await location.getLocation();
 
-    this.position =
-        GeoPoint(_currentLocation.latitude!, _currentLocation.longitude!);
-    this.updated_on = DateTime.now();
+    position =
+        GeoPoint(currentLocation.latitude!, currentLocation.longitude!);
+    updated_on = DateTime.now();
 
-    _db.collection('location_share').doc(this.unique_id).set({
-      'position': this.position,
-      'unique_id': this.unique_id,
-      'updated_on': this.updated_on,
+    _db.collection('location_share').doc(unique_id).set({
+      'position': position,
+      'unique_id': unique_id,
+      'updated_on': updated_on,
     });
+  }
+
+  static Future<bool> exists(String uniqueId) async {
+    final FirebaseFirestore db = FirebaseFirestore.instance;
+    DocumentSnapshot doc =
+        await db.collection('location_share').doc(uniqueId).get();
+    return doc.exists;
   }
 
   //CRUD
 
-  static Future<LocationObj> fromFirestore(String unique_id) async {
-    final FirebaseFirestore _db = FirebaseFirestore.instance;
+  static Future<LocationObj> fromFirestore(String uniqueId) async {
+    final FirebaseFirestore db = FirebaseFirestore.instance;
     DocumentSnapshot doc =
-        await _db.collection('location_share').doc(unique_id).get();
+        await db.collection('location_share').doc(uniqueId).get();
 
     return LocationObj(
       position: doc['position'],
@@ -61,24 +68,24 @@ class LocationObj {
   }
 
   Future<void> updateLocation(GeoPoint newPosition) async {
-    this.position = newPosition;
-    this.updated_on = DateTime.now();
+    position = newPosition;
+    updated_on = DateTime.now();
 
-    await _db.collection('location_share').doc(this.unique_id).update({
-      'position': this.position,
-      'updated_on': this.updated_on,
+    await _db.collection('location_share').doc(unique_id).update({
+      'position': position,
+      'updated_on': updated_on,
     });
   }
 
   Future<void> createLocation() async {
-    await _db.collection('location_share').doc(this.unique_id).set({
-      'position': this.position,
-      'unique_id': this.unique_id,
-      'updated_on': this.updated_on,
+    await _db.collection('location_share').doc(unique_id).set({
+      'position': position,
+      'unique_id': unique_id,
+      'updated_on': updated_on,
     });
   }
 
   Future<void> deleteLocation() async {
-    await _db.collection('location_share').doc(this.unique_id).delete();
+    await _db.collection('location_share').doc(unique_id).delete();
   }
 }

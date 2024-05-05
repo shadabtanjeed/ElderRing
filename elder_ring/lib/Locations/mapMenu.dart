@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'locationServices.dart';
-import 'showOnMaps.dart';
 import 'shareLocation.dart';
 import 'crudscreen.dart';
+import 'getLocation.dart';
 
 class MapMenu extends StatefulWidget {
   const MapMenu({super.key});
@@ -19,7 +19,7 @@ class _MapMenuState extends State<MapMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Location'),
+        title: const Text('Location Menu'),
       ),
       body: Center(
         child: Column(
@@ -50,12 +50,10 @@ class _MapMenuState extends State<MapMenu> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const LocationMapPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const GetLocation()),
                 );
               },
-              child: const Text('Show on Map'),
+              child: const Text('Show Live Location'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -73,10 +71,10 @@ class _MapMenuState extends State<MapMenu> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CrudScreen()),
+                  MaterialPageRoute(builder: (context) => const CrudScreen()),
                 );
               },
-              child: const Text('CRUD Operations'),
+              child: const Text('CRUDs'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
