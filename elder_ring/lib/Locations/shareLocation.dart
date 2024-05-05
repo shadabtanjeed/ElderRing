@@ -26,7 +26,14 @@ class _ShareLocationState extends State<ShareLocation> {
     startTransmission();
   }
 
+  @override
+  void dispose() {
+    location.enableBackgroundMode(enable: false);
+    super.dispose();
+  }
+
   void startTransmission() {
+    location.enableBackgroundMode(enable: true);
     location.onLocationChanged.listen((LocationData currentLocation) {
       setState(() {
         locationObj = LocationObj(
