@@ -20,7 +20,7 @@ class _GetLocationState extends State<GetLocation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Get Location'),
+        title: const Text('Sharing Live Location'),
       ),
       body: StreamBuilder<DocumentSnapshot>(
         stream: _db.collection('location_db').doc('Untouchable').snapshots(),
@@ -31,7 +31,7 @@ class _GetLocationState extends State<GetLocation> {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text("Loading");
+            return const Text("Initiating Satellites...");
           }
 
           GeoPoint position = snapshot.data!['position'];
@@ -43,8 +43,8 @@ class _GetLocationState extends State<GetLocation> {
           markers.add(Marker(
             markerId: const MarkerId('currentLocation'),
             position: currentLocation,
-            icon:
-                BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                BitmapDescriptor.hueViolet),
           ));
 
           path.add(currentLocation);
@@ -52,7 +52,7 @@ class _GetLocationState extends State<GetLocation> {
           polylines.add(Polyline(
             polylineId: const PolylineId('path'),
             points: path,
-            color: Colors.green,
+            color: const Color.fromARGB(255, 10, 223, 18),
           ));
 
           return GoogleMap(

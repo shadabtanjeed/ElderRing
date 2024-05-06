@@ -57,7 +57,7 @@ class _CrudScreenState extends State<CrudScreen> {
           ElevatedButton(
             onPressed: () async {
               LocationObj locationObj =
-                  await LocationObj.fromFirestore(uniqueIdController.text);
+                  await LocationObj.readLocation(uniqueIdController.text);
               latitudeController.clear();
               longitudeController.clear();
               updatedOnController.clear();

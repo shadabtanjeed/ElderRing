@@ -4,14 +4,14 @@ import 'package:location/location.dart';
 import 'locationServices.dart';
 import 'dart:async';
 
-class LocationMapPage extends StatefulWidget {
-  const LocationMapPage({super.key});
+class ShowLocationOnMap extends StatefulWidget {
+  const ShowLocationOnMap({super.key});
 
   @override
-  _LocationMapPageState createState() => _LocationMapPageState();
+  _ShowLocationOnMapState createState() => _ShowLocationOnMapState();
 }
 
-class _LocationMapPageState extends State<LocationMapPage> {
+class _ShowLocationOnMapState extends State<ShowLocationOnMap> {
   LatLng currentLocation = const LatLng(0, 0);
   final LocationServices locationServices = LocationServices();
   final Completer<GoogleMapController> _controller = Completer();
@@ -50,9 +50,7 @@ class _LocationMapPageState extends State<LocationMapPage> {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Location'),
-      ),
+      appBar: AppBar(),
       body: GoogleMap(
         mapType: MapType.normal,
         // buildingsEnabled: true,

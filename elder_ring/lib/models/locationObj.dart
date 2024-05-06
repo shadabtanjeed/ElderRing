@@ -8,6 +8,8 @@ class LocationObj {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final Location location = Location();
 
+  static const int LOCATION_UPDATE_LIMIT = 10;
+
   LocationObj(
       {required this.position,
       required this.unique_id,
@@ -52,9 +54,15 @@ class LocationObj {
     return doc.exists;
   }
 
+  bool isLocationUpToDate(DateTime updatedOn) {
+    DateTime now = DateTime.now();
+    Duration difference = now.difference(updatedOn);
+    return difference.inMinutes <= LOCATION_UPDATE_LIMIT;
+  }
+
   //CRUD
 
-  static Future<LocationObj> fromFirestore(String uniqueId) async {
+  static Future<LocationObj> readLocation(String uniqueId) async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
     DocumentSnapshot doc =
         await db.collection('location_db').doc(uniqueId).get();
