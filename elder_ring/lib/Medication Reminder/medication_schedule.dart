@@ -1,3 +1,4 @@
+import 'package:elder_ring/Medication%20Reminder/update_medicine.dart';
 import 'package:flutter/material.dart';
 import 'package:elder_ring/Medication%20Reminder/add_new_medicine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -159,7 +160,13 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                               icon: const Icon(Icons.edit,
                                   color: Color(0xFF2798E4)),
                               onPressed: () {
-                                EditEmployeeDetails(ds.id);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        UpdateMedicine(medicineId: ds.id),
+                                  ),
+                                );
                               },
                             ),
                             const SizedBox(width: 1),
@@ -232,7 +239,4 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
       ),
     );
   }
-
-  Future EditMedicineDetails(String id) =>
-
 }
