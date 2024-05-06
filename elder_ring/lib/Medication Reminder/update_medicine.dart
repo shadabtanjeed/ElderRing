@@ -6,7 +6,9 @@ import 'medicine_database.dart';
 import 'medication_schedule.dart';
 
 class UpdateMedicine extends StatefulWidget {
-  const UpdateMedicine({Key? key}) : super(key: key);
+  final String medicineId;
+
+  const UpdateMedicine({Key? key, required this.medicineId}) : super(key: key);
 
   @override
   State<UpdateMedicine> createState() => _UpdateMedicineState();
@@ -20,11 +22,10 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
   TextEditingController medicineNameController = TextEditingController();
   TextEditingController medicineTypeController = TextEditingController();
   TimeOfDay startTime = TimeOfDay.now();
-  bool isLoading = false; // Add this line
+  bool isLoading = false;
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     intervalController.dispose();
     medicineDosageController.dispose();
     medicineNameController.dispose();
@@ -38,7 +39,7 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'Add new medicine',
+          'Update medicine',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
         backgroundColor: const Color(0xFF2798E4),
@@ -113,7 +114,7 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
                 const SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () async {
-                    await UpdateMedicine();
+                    await UpdateMedicine(widget.medicineId);
                   },
                   style: ButtonStyle(
                     backgroundColor:
@@ -131,7 +132,7 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
               ],
             ),
           ),
-          if (isLoading) // Add this line
+          if (isLoading)
             Container(
               color: Colors.black.withOpacity(0.5),
               child: Center(
@@ -192,8 +193,8 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
           children: [
             Image.asset(
               imagePath,
-              width: 50, // you can adjust the size as needed
-              height: 50, // you can adjust the size as needed
+              width: 50,
+              height: 50,
             ),
             Text(
               type,
@@ -247,15 +248,13 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
     }
   }
 
-  Future<void> UpdateMedicine() async {
+  Future<void> UpdateMedicine(String medicineId) async {
     setState(() {
-      isLoading = true; // Add this line
+      isLoading = true;
     });
 
-    String medicineId = randomAlphaNumeric(10);
     DatabaseMethods dbMethods = DatabaseMethods();
 
-    // Create a DateTime object using the current date and the hour and minute from startTime
     DateTime startDateTime = DateTime(
       DateTime.now().year,
       DateTime.now().month,
@@ -264,7 +263,6 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
       startTime.minute,
     );
 
-    // Convert the DateTime object to a Timestamp
     Timestamp startTimeStamp = Timestamp.fromDate(startDateTime);
 
     Map<String, dynamic> medicineInfoMap = {
@@ -273,11 +271,12 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
       "medicine_type": medicineType,
       "is_after_eating": isAfterEating,
       "interval": int.parse(intervalController.text),
-      "start_time": startTimeStamp, // Store the Timestamp in Firestore
+      "start_time": startTimeStamp,
       "medicine_id": medicineId,
     };
 
-    await dbMethods.UpdateMedicineInfo(medicineInfoMap, medicineId)
+    await dbMethods
+        .updateMedicineData(medicineId, medicineInfoMap)
         .then((value) {
       Fluttertoast.showToast(
           msg: "Medicine Details Updated Successfully",
