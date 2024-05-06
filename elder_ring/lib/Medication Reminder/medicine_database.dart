@@ -14,4 +14,11 @@ class DatabaseMethods {
         .collection("medicine_schedule")
         .snapshots();
   }
+
+  Future updateMedicineData(String id, Map<String, dynamic> UpdateInfo) async {
+    return await FirebaseFirestore.instance
+        .collection("medicine_schedule")
+        .doc(id)
+        .update(UpdateInfo);
+  }
 }
