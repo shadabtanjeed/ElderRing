@@ -37,7 +37,7 @@ class HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(top: 30.0),
+          padding: const EdgeInsets.only(top: 10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
