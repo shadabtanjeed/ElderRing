@@ -25,6 +25,29 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
   bool isLoading = false;
 
   @override
+  void initState() {
+    super.initState();
+    fetchMedicineData();
+  }
+
+  Future<void> fetchMedicineData() async {
+    DocumentSnapshot ds = await FirebaseFirestore.instance
+        .collection('medicine_schedule')
+        .doc(widget.medicineId)
+        .get();
+
+    setState(() {
+      medicineNameController.text = ds['medicine_name'];
+      medicineDosageController.text = ds['medicine_dosage'];
+      medicineType = ds['medicine_type'];
+      isAfterEating = ds['is_after_eating'];
+      intervalController.text = ds['interval'].toString();
+      startTime =
+          TimeOfDay.fromDateTime((ds['start_time'] as Timestamp).toDate());
+    });
+  }
+
+  @override
   void dispose() {
     intervalController.dispose();
     medicineDosageController.dispose();
