@@ -306,7 +306,7 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Color(0xFF2798E4),
+          backgroundColor: const Color(0xFF2798E4),
           textColor: Colors.white,
           fontSize: 16.0);
     });
@@ -316,10 +316,10 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
     });
 
     // Navigate to the MedicationSchedule page after a delay
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MedicationSchedule()),
+        MaterialPageRoute(builder: (context) => const MedicationSchedule()),
       );
     });
   }
