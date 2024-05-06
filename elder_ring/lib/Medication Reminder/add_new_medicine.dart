@@ -281,7 +281,7 @@ class _AddMedicineState extends State<AddMedicine> {
       Fluttertoast.showToast(
           msg: "Medicine Details Added Successfully",
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
           backgroundColor: Color(0xFF2798E4),
           textColor: Colors.white,
