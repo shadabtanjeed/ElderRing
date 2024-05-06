@@ -2,6 +2,7 @@ import 'package:elder_ring/Medication%20Reminder/update_medicine.dart';
 import 'package:flutter/material.dart';
 import 'package:elder_ring/Medication%20Reminder/add_new_medicine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'medicine_database.dart';
 import 'package:intl/intl.dart';
 
@@ -175,7 +176,49 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                               icon: const Icon(Icons.delete,
                                   color: Color(0xFFD70040)),
                               onPressed: () async {
-                                await DatabaseMethods().deleteMedicineData(ds.id);
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Confirm Deletion'),
+                                      content: const Text(
+                                          'Are you sure you want to delete this medicine?'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Cancel'),
+                                          style: TextButton.styleFrom(
+                                              foregroundColor: Colors.black),
+                                          // Change color here
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: const Text('Delete'),
+                                          style: TextButton.styleFrom(
+                                              foregroundColor: Colors.black),
+                                          // Change color here
+                                          onPressed: () async {
+                                            Navigator.of(context)
+                                                .pop(); // Move this line to here
+                                            await DatabaseMethods()
+                                                .deleteMedicineData(ds.id);
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "Medicine Deleted Successfully",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor:
+                                                    Color(0xFF2798E4),
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               },
                             ),
                           ],
