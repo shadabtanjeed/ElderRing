@@ -174,8 +174,8 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                             IconButton(
                               icon: const Icon(Icons.delete,
                                   color: Color(0xFFD70040)),
-                              onPressed: () {
-                                // Add your delete functionality here
+                              onPressed: () async {
+                                await DatabaseMethods().deleteMedicineData(ds.id);
                               },
                             ),
                           ],

@@ -21,4 +21,11 @@ class DatabaseMethods {
         .doc(id)
         .update(UpdateInfo);
   }
+
+  Future deleteMedicineData(String id) async {
+    return await FirebaseFirestore.instance
+        .collection("medicine_schedule")
+        .doc(id)
+        .delete();
+  }
 }
