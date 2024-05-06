@@ -31,7 +31,9 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
 
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: Color(0xFF2798E4),
+            ),
           );
         }
 
@@ -97,7 +99,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                     padding: const EdgeInsets.all(20),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.grey[200],
+                      color: Colors.grey[100],
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
@@ -157,7 +159,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                               icon: const Icon(Icons.edit,
                                   color: Color(0xFF2798E4)),
                               onPressed: () {
-                                // Add your edit functionality here
+                                EditEmployeeDetails(ds.id);
                               },
                             ),
                             const SizedBox(width: 1),
@@ -230,4 +232,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
       ),
     );
   }
+
+  Future EditMedicineDetails(String id) =>
+
 }
