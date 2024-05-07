@@ -20,11 +20,10 @@ class _AddMedicineState extends State<AddMedicine> {
   TextEditingController medicineNameController = TextEditingController();
   TextEditingController medicineTypeController = TextEditingController();
   TimeOfDay startTime = TimeOfDay.now();
-  bool isLoading = false; // Add this line
+  bool isLoading = false;
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     intervalController.dispose();
     medicineDosageController.dispose();
     medicineNameController.dispose();
@@ -34,6 +33,7 @@ class _AddMedicineState extends State<AddMedicine> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -131,7 +131,7 @@ class _AddMedicineState extends State<AddMedicine> {
               ],
             ),
           ),
-          if (isLoading) // Add this line
+          if (isLoading)
             Container(
               color: Colors.black.withOpacity(0.5),
               child: Center(
@@ -147,6 +147,7 @@ class _AddMedicineState extends State<AddMedicine> {
 
   Widget _buildTextField(String label, String hint, TextInputType inputType,
       TextEditingController controller) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -167,7 +168,8 @@ class _AddMedicineState extends State<AddMedicine> {
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: hint,
-                hintStyle: TextStyle(color: Colors.grey)),
+                hintStyle: TextStyle(
+                    color: isDarkMode ? Colors.white70 : Colors.grey)),
           ),
         ),
       ],
@@ -175,6 +177,7 @@ class _AddMedicineState extends State<AddMedicine> {
   }
 
   Widget _buildMedicineTypeTile(String type, String imagePath) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -184,7 +187,11 @@ class _AddMedicineState extends State<AddMedicine> {
       child: Container(
         padding: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          color: medicineType == type ? Colors.blue : Colors.white,
+          color: medicineType == type
+              ? Colors.blue
+              : isDarkMode
+                  ? Colors.grey[800]
+                  : Colors.white,
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(color: const Color(0xFF2798E4)),
         ),
@@ -192,13 +199,17 @@ class _AddMedicineState extends State<AddMedicine> {
           children: [
             Image.asset(
               imagePath,
-              width: 50, // you can adjust the size as needed
-              height: 50, // you can adjust the size as needed
+              width: 50,
+              height: 50,
             ),
             Text(
               type,
               style: TextStyle(
-                color: medicineType == type ? Colors.white : Colors.black,
+                color: medicineType == type
+                    ? Colors.white
+                    : isDarkMode
+                        ? Colors.white
+                        : Colors.black,
               ),
             ),
           ],
@@ -208,6 +219,7 @@ class _AddMedicineState extends State<AddMedicine> {
   }
 
   Widget _buildMealTimeTile(String time) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -219,7 +231,9 @@ class _AddMedicineState extends State<AddMedicine> {
         decoration: BoxDecoration(
           color: isAfterEating == (time == 'After Meal')
               ? Colors.blue
-              : Colors.white,
+              : isDarkMode
+                  ? Colors.grey[800]
+                  : Colors.white,
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(color: const Color(0xFF2798E4)),
         ),
@@ -228,7 +242,9 @@ class _AddMedicineState extends State<AddMedicine> {
           style: TextStyle(
             color: isAfterEating == (time == 'After Meal')
                 ? Colors.white
-                : Colors.black,
+                : isDarkMode
+                    ? Colors.white
+                    : Colors.black,
           ),
         ),
       ),
@@ -249,13 +265,12 @@ class _AddMedicineState extends State<AddMedicine> {
 
   Future<void> addMedicine() async {
     setState(() {
-      isLoading = true; // Add this line
+      isLoading = true;
     });
 
     String medicineId = randomAlphaNumeric(10);
     DatabaseMethods dbMethods = DatabaseMethods();
 
-    // Create a DateTime object using the current date and the hour and minute from startTime
     DateTime startDateTime = DateTime(
       DateTime.now().year,
       DateTime.now().month,
@@ -264,7 +279,6 @@ class _AddMedicineState extends State<AddMedicine> {
       startTime.minute,
     );
 
-    // Convert the DateTime object to a Timestamp
     Timestamp startTimeStamp = Timestamp.fromDate(startDateTime);
 
     Map<String, dynamic> medicineInfoMap = {
@@ -273,7 +287,7 @@ class _AddMedicineState extends State<AddMedicine> {
       "medicine_type": medicineType,
       "is_after_eating": isAfterEating,
       "interval": int.parse(intervalController.text),
-      "start_time": startTimeStamp, // Store the Timestamp in Firestore
+      "start_time": startTimeStamp,
       "medicine_id": medicineId,
     };
 
@@ -289,10 +303,9 @@ class _AddMedicineState extends State<AddMedicine> {
     });
 
     setState(() {
-      isLoading = false; // Add this line
+      isLoading = false;
     });
 
-    // Navigate to the MedicationSchedule page after a delay
     Future.delayed(Duration(seconds: 1), () {
       Navigator.push(
         context,
