@@ -1,14 +1,18 @@
 # Main
 
 1. Medication Reminder
-    - Emergency Medication
+   - Emergency Medication
 1. Location Sharing
 1. User Behaviour Anomaly
-    - User health maintainance reminder
+   - User health maintainance reminder
 1. Screen sharing
 1. Group Messaging
 
+## Bugs
+
+1. Logout Issue
 
 ## Ambition
+
 1. Voice to text api
 1. Dark-Light theme
