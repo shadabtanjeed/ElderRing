@@ -42,7 +42,11 @@ dependencies:
   google_maps_flutter: ^2.6.1
   location: ^6.0.1
 
-  
+  cloud_firestore: ^4.17.2
+  random_string: ^2.3.1
+  fluttertoast: ^8.2.5
+  intl: ^0.19.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -66,6 +70,10 @@ flutter:
   uses-material-design: true
   assets:
     - Resources/logo.png
+    - Resources/injection.png
+    - Resources/tablet.png
+    - Resources/syrup.png
+
 
   fonts:
     - family: Jost
