@@ -1,3 +1,4 @@
+import 'package:elder_ring/Screen%20Sharing/home_screen_elderly.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -77,14 +78,21 @@ class HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const HomeScreen()), // Navigating to MedicationSchedule
+                  );
+                },
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all(const Color(0xFF2798E4)),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
-                  'Emergency',
+                  'Screen Share',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,

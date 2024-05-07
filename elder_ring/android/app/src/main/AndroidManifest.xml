@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- background location access permission-->
 
     <application
+        tools:replace="android:label"
         android:label="ElderRing"
         android:name="${applicationName}"
         android:icon="@drawable/logo"
