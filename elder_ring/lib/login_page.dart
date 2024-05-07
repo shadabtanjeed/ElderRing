@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 FirebaseAuth auth = FirebaseAuth.instance;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => LoginPageState();
@@ -20,7 +20,7 @@ class LoginPageState extends State<LoginPage> {
       builder: (context) {
         return const Center(
           child: CircularProgressIndicator(
-            color: Color(0xFF2798E4),
+            color: Color(0xFF2798E4), // Change the color of the progress circle
           ),
         );
       },
@@ -34,6 +34,7 @@ class LoginPageState extends State<LoginPage> {
     } catch (e) {
       // Handle any errors here
     } finally {
+      // Dismiss the dialog before navigating
       Navigator.pop(context);
     }
   }
@@ -47,9 +48,8 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: isDarkMode ? Colors.black : Colors.white,
+      backgroundColor: Colors.white,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 10.0),
@@ -77,34 +77,21 @@ class LoginPageState extends State<LoginPage> {
                     child: TextField(
                       controller: email_controller,
                       cursorColor:
-                          isDarkMode ? Colors.white : const Color(0xFF2798E4),
-                      style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black),
+                          const Color(0xFF2798E4), // Set the cursor color
                       decoration: InputDecoration(
                         labelText: 'Email',
-                        labelStyle: TextStyle(
-                          color: isDarkMode
-                              ? Colors.white
-                              : const Color(0xFF2798E4),
+                        labelStyle: const TextStyle(
+                          color: Color(
+                              0xFF2798E4), // Set the label color when focused
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
-                            color: isDarkMode
-                                ? Colors.white
-                                : const Color(0xFF2798E4),
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
-                            color: isDarkMode
-                                ? Colors.white
-                                : const Color(0xFF2798E4),
-                          ),
+                          borderSide: const BorderSide(
+                              color: Color(
+                                  0xFF2798E4)), // Set the border color when focused
                         ),
                       ),
                     ),
@@ -115,36 +102,23 @@ class LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.all(20),
                     child: TextField(
                       controller: password_controller,
-                      obscureText: true,
+                      obscureText: true, // Hide the password being typed
                       cursorColor:
-                          isDarkMode ? Colors.white : const Color(0xFF2798E4),
-                      style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black),
+                          const Color(0xFF2798E4), // Set the cursor color
                       decoration: InputDecoration(
                         labelText: 'Password',
-                        labelStyle: TextStyle(
-                          color: isDarkMode
-                              ? Colors.white
-                              : const Color(0xFF2798E4),
+                        labelStyle: const TextStyle(
+                          color: Color(
+                              0xFF2798E4), // Set the label color when focused
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
-                            color: isDarkMode
-                                ? Colors.white
-                                : const Color(0xFF2798E4),
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
-                            color: isDarkMode
-                                ? Colors.white
-                                : const Color(0xFF2798E4),
-                          ),
+                          borderSide: const BorderSide(
+                              color: Color(
+                                  0xFF2798E4)), // Set the border color when focused
                         ),
                       ),
                     ),

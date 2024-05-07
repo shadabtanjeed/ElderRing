@@ -58,7 +58,6 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -172,7 +171,6 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
 
   Widget _buildTextField(String label, String hint, TextInputType inputType,
       TextEditingController controller) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -193,8 +191,7 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: hint,
-                hintStyle: TextStyle(
-                    color: isDarkMode ? Colors.white70 : Colors.grey)),
+                hintStyle: TextStyle(color: Colors.grey)),
           ),
         ),
       ],
@@ -202,7 +199,6 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
   }
 
   Widget _buildMedicineTypeTile(String type, String imagePath) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -212,11 +208,7 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
       child: Container(
         padding: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          color: medicineType == type
-              ? Colors.blue
-              : isDarkMode
-                  ? Colors.grey[800]
-                  : Colors.white,
+          color: medicineType == type ? Colors.blue : Colors.white,
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(color: const Color(0xFF2798E4)),
         ),
@@ -230,11 +222,7 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
             Text(
               type,
               style: TextStyle(
-                color: medicineType == type
-                    ? Colors.white
-                    : isDarkMode
-                        ? Colors.white
-                        : Colors.black,
+                color: medicineType == type ? Colors.white : Colors.black,
               ),
             ),
           ],
@@ -244,7 +232,6 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
   }
 
   Widget _buildMealTimeTile(String time) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -256,9 +243,7 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
         decoration: BoxDecoration(
           color: isAfterEating == (time == 'After Meal')
               ? Colors.blue
-              : isDarkMode
-                  ? Colors.grey[800]
-                  : Colors.white,
+              : Colors.white,
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(color: const Color(0xFF2798E4)),
         ),
@@ -267,9 +252,7 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
           style: TextStyle(
             color: isAfterEating == (time == 'After Meal')
                 ? Colors.white
-                : isDarkMode
-                    ? Colors.white
-                    : Colors.black,
+                : Colors.black,
           ),
         ),
       ),

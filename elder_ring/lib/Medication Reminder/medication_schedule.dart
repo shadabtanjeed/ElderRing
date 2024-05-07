@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:elder_ring/home_page.dart';
 
 class MedicationSchedule extends StatefulWidget {
-  const MedicationSchedule({Key? key}) : super(key: key);
+  const MedicationSchedule({super.key});
 
   @override
   State<MedicationSchedule> createState() => _MedicationScheduleState();
@@ -41,7 +41,6 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
         }
 
         if (snapshot.data != null) {
-          bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
@@ -103,7 +102,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                     padding: const EdgeInsets.all(20),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: isDarkMode ? Colors.grey[850] : Colors.grey[100],
+                      color: Colors.grey[100],
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
@@ -122,36 +121,26 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(ds['medicine_name'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600,
-                                      color: isDarkMode
-                                          ? Colors.white
-                                          : Color(0xFF2798E4))),
+                                      color: Color(0xFF2798E4))),
                               Text("Dosage: " + ds['medicine_dosage'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 17,
-                                      fontWeight: FontWeight.w600,
-                                      color: isDarkMode
-                                          ? Colors.white
-                                          : Colors.black)),
+                                      fontWeight: FontWeight.w600)),
                               Text(
                                   "Interval (in hrs): " +
                                       ds['interval'].toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 17,
-                                      fontWeight: FontWeight.w500,
-                                      color: isDarkMode
-                                          ? Colors.white
-                                          : Colors.black)),
+                                      fontWeight: FontWeight.w500)),
                               Text("Next Dose: " + remainingTimeString,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18, // increased font size
                                     fontWeight: FontWeight.w600, // made it bold
-                                    color: isDarkMode
-                                        ? Colors.white
-                                        : Color(
-                                            0xFFD70040), // changed color to red
+                                    color: Color(
+                                        0xFFD70040), // changed color to red
                                   )),
                               Text(
                                   ds['is_after_eating']
@@ -160,11 +149,9 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                                   style: TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.w600,
-                                      color: isDarkMode
-                                          ? Colors.white
-                                          : ds['is_after_eating']
-                                              ? const Color(0xFF097969)
-                                              : const Color(0xFFE97451))),
+                                      color: ds['is_after_eating']
+                                          ? const Color(0xFF097969)
+                                          : const Color(0xFFE97451))),
                             ],
                           ),
                         ),
@@ -172,10 +159,8 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             IconButton(
-                              icon: Icon(Icons.edit,
-                                  color: isDarkMode
-                                      ? Colors.white
-                                      : Color(0xFF2798E4)),
+                              icon: const Icon(Icons.edit,
+                                  color: Color(0xFF2798E4)),
                               onPressed: () {
                                 Navigator.push(
                                   context,
@@ -189,10 +174,8 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                             const SizedBox(width: 1),
                             // adjust the width as needed to change the spacing
                             IconButton(
-                              icon: Icon(Icons.delete,
-                                  color: isDarkMode
-                                      ? Colors.white
-                                      : Color(0xFFD70040)),
+                              icon: const Icon(Icons.delete,
+                                  color: Color(0xFFD70040)),
                               onPressed: () async {
                                 showDialog(
                                   context: context,
@@ -205,9 +188,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                                         TextButton(
                                           child: const Text('Cancel'),
                                           style: TextButton.styleFrom(
-                                              foregroundColor: isDarkMode
-                                                  ? Colors.white
-                                                  : Colors.black),
+                                              foregroundColor: Colors.black),
                                           // Change color here
                                           onPressed: () {
                                             Navigator.of(context).pop();
@@ -216,9 +197,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                                         TextButton(
                                           child: const Text('Delete'),
                                           style: TextButton.styleFrom(
-                                              foregroundColor: isDarkMode
-                                                  ? Colors.white
-                                                  : Colors.black),
+                                              foregroundColor: Colors.black),
                                           // Change color here
                                           onPressed: () async {
                                             Navigator.of(context)
