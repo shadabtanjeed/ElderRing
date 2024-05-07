@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'Locations/mapMenu.dart';
 import 'Medication Reminder/medication_schedule.dart';
-import 'theme_provider.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => HomePageState();
@@ -17,7 +16,6 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -98,7 +96,7 @@ class HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            const MapMenu()), // Navigating to MapMenu
+                            const MapMenu()), // Navigating to MaPage
                   );
                 },
                 style: ButtonStyle(
@@ -108,26 +106,6 @@ class HomePageState extends State<HomePage> {
                 ),
                 child: const Text(
                   'Location Sharing',
-                  style: TextStyle(
-                    fontFamily: 'Jost',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  //themeProvider.toggleTheme(); // Toggle the theme
-                  Provider.of<ThemeProvider>(context, listen: false)
-                      .toggleTheme();
-                },
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
-                ),
-                child: const Text(
-                  'Change Theme',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,
