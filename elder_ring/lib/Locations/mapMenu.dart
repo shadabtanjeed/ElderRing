@@ -5,7 +5,7 @@ import 'crudscreen.dart';
 import 'getLocation.dart';
 
 class MapMenu extends StatefulWidget {
-  const MapMenu({super.key});
+  const MapMenu({Key? key}) : super(key: key);
 
   @override
   State<MapMenu> createState() => _MapMenuState();
@@ -34,6 +34,10 @@ class _MapMenuState extends State<MapMenu> {
                   });
                 });
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
               child: const Text('Fetch Location'),
             ),
             const SizedBox(height: 20),
@@ -53,6 +57,10 @@ class _MapMenuState extends State<MapMenu> {
                   MaterialPageRoute(builder: (context) => const GetLocation()),
                 );
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
               child: const Text('Show Live Location'),
             ),
             const SizedBox(height: 20),
@@ -64,6 +72,10 @@ class _MapMenuState extends State<MapMenu> {
                       builder: (context) => const ShareLocation()),
                 );
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
               child: const Text('Fire Share'),
             ),
             const SizedBox(height: 20),
@@ -74,14 +86,22 @@ class _MapMenuState extends State<MapMenu> {
                   MaterialPageRoute(builder: (context) => const CrudScreen()),
                 );
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
               child: const Text('CRUDs'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(
-                    context); // Navigates back to the previous screen (HomePage)
+                Navigator.pop(context);
               },
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(const Color(0xFF2798E4)),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
               child: const Text('Go Back'),
             ),
           ],
