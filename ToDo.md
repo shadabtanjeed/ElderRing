@@ -11,6 +11,7 @@
 ## Bugs
 
 1. Logout Issue
+1. View Screen in Screen Sharing causes app crash, dark theme faces issues in that menu (applicable for apk build only)
 
 ## Ambition
 
