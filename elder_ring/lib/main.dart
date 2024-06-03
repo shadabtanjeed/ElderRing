@@ -1,3 +1,5 @@
+import 'dart:io'; // Correct import for Platform
+
 import 'package:elder_ring/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,7 +10,17 @@ import 'theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  Platform.isAndroid
+      ? await Firebase.initializeApp(
+          options: const FirebaseOptions(
+            apiKey: "AIzaSyA619vAUbNLH4oQXCdVDDx78zAFBQOeFBE",
+            appId: "1:265423351389:android:459e59e3f7d5c1a91927b4",
+            messagingSenderId: "265423351389",
+            projectId: "elderring-9e5f6",
+          ),
+        )
+      : await Firebase.initializeApp();
+  //await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(Lightmode),
