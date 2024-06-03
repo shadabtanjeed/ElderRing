@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'Signup/signup_page.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -165,6 +166,30 @@ class LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       fontFamily: 'Jost',
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignupPage()),
+                    );
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(text: 'Do not have an account? '),
+                        TextSpan(
+                          text: 'Create Account',
+                          style: TextStyle(
+                            color: const Color(0xFF2798E4),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

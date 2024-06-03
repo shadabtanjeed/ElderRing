@@ -65,6 +65,8 @@ flutter:
     - Resources/injection.png
     - Resources/tablet.png
     - Resources/syrup.png
+    - Resources/care_provider_image.png
+    - Resources/elder_picture.png
 
   fonts:
     - family: Jost
