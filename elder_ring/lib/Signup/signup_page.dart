@@ -9,7 +9,7 @@ import '../login_page.dart';
 FirebaseAuth auth = FirebaseAuth.instance;
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({Key? key}) : super(key: key);
+  const SignupPage({super.key});
 
   @override
   State<SignupPage> createState() => SignupPageState();
@@ -67,7 +67,7 @@ class SignupPageState extends State<SignupPage> {
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: AlignmentDirectional(0, 0),
+            alignment: const AlignmentDirectional(0, 0),
             child: Container(
               width: double.infinity,
               height: double.infinity,
@@ -75,7 +75,7 @@ class SignupPageState extends State<SignupPage> {
                 color: isDarkMode ? Colors.black : Colors.white,
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -83,7 +83,7 @@ class SignupPageState extends State<SignupPage> {
                     // Align vertically centered
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
+                      const Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 25),
                         child: Text(
                           'Signup',
@@ -96,7 +96,7 @@ class SignupPageState extends State<SignupPage> {
                           ),
                         ),
                       ),
-                      Align(
+                      const Align(
                         alignment: AlignmentDirectional(0, 0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
@@ -113,16 +113,17 @@ class SignupPageState extends State<SignupPage> {
                       ),
                       // Role selection widgets
                       Align(
-                        alignment: AlignmentDirectional(0, 0),
+                        alignment: const AlignmentDirectional(0, 0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 10, 0),
                                 child: GestureDetector(
                                   onTap: () {
                                     setState(() {
@@ -134,9 +135,9 @@ class SignupPageState extends State<SignupPage> {
                                     height: 100,
                                     decoration: BoxDecoration(
                                       color: selectedRole == 0
-                                          ? Color(0xFF2798E4)
-                                          : Color(0xFFF4E8E8),
-                                      boxShadow: [
+                                          ? const Color(0xFF2798E4)
+                                          : const Color(0xFFF4E8E8),
+                                      boxShadow: const [
                                         BoxShadow(
                                           blurRadius: 4,
                                           color: Color(0x33000000),
@@ -145,7 +146,7 @@ class SignupPageState extends State<SignupPage> {
                                       ],
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
-                                        color: Color(0xFF2798E4),
+                                        color: const Color(0xFF2798E4),
                                         width: 0.5,
                                       ),
                                     ),
@@ -153,11 +154,11 @@ class SignupPageState extends State<SignupPage> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Align(
-                                          alignment: AlignmentDirectional(0, 0),
+                                          alignment:
+                                              const AlignmentDirectional(0, 0),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 7, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 7, 0, 0),
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(8),
@@ -188,8 +189,8 @@ class SignupPageState extends State<SignupPage> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 0, 0),
                                 child: GestureDetector(
                                   onTap: () {
                                     setState(() {
@@ -201,9 +202,9 @@ class SignupPageState extends State<SignupPage> {
                                     height: 100,
                                     decoration: BoxDecoration(
                                       color: selectedRole == 1
-                                          ? Color(0xFF2798E4)
-                                          : Color(0xFFF4E8E8),
-                                      boxShadow: [
+                                          ? const Color(0xFF2798E4)
+                                          : const Color(0xFFF4E8E8),
+                                      boxShadow: const [
                                         BoxShadow(
                                           blurRadius: 4,
                                           color: Color(0x33000000),
@@ -212,7 +213,7 @@ class SignupPageState extends State<SignupPage> {
                                       ],
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
-                                        color: Color(0xFF2798E4),
+                                        color: const Color(0xFF2798E4),
                                         width: 0.5,
                                       ),
                                     ),
@@ -220,11 +221,11 @@ class SignupPageState extends State<SignupPage> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Align(
-                                          alignment: AlignmentDirectional(0, 0),
+                                          alignment:
+                                              const AlignmentDirectional(0, 0),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 7, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 7, 0, 0),
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(8),
@@ -260,9 +261,10 @@ class SignupPageState extends State<SignupPage> {
                       ),
                       // Username input field
                       Align(
-                        alignment: AlignmentDirectional(0, 0),
+                        alignment: const AlignmentDirectional(0, 0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 10),
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.8,
                             child: TextField(
@@ -306,9 +308,10 @@ class SignupPageState extends State<SignupPage> {
                       ),
                       // Email input field
                       Align(
-                        alignment: AlignmentDirectional(0, 0),
+                        alignment: const AlignmentDirectional(0, 0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 10),
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.8,
                             child: TextField(
@@ -352,9 +355,10 @@ class SignupPageState extends State<SignupPage> {
                       ),
                       // Password input field
                       Align(
-                        alignment: AlignmentDirectional(0, 0),
+                        alignment: const AlignmentDirectional(0, 0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 10),
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.8,
                             child: TextField(
@@ -398,9 +402,10 @@ class SignupPageState extends State<SignupPage> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0, 0),
+                        alignment: const AlignmentDirectional(0, 0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 10),
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.8,
                             child: TextField(
@@ -443,12 +448,16 @@ class SignupPageState extends State<SignupPage> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0, 0),
+                        alignment: const AlignmentDirectional(0, 0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                           child: ElevatedButton(
-                            onPressed: () {
-                              signUp();
+                            onPressed: (
+                                // Add the addUser function to the onPressed event
+
+                                ) async {
+                              await addUser();
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
@@ -472,18 +481,18 @@ class SignupPageState extends State<SignupPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginPage()),
+                                builder: (context) => const LoginPage()),
                           );
                         },
                         child: RichText(
                           text: TextSpan(
                             style: DefaultTextStyle.of(context).style,
-                            children: <TextSpan>[
+                            children: const <TextSpan>[
                               TextSpan(text: 'Do not have an account? '),
                               TextSpan(
                                 text: 'Login',
                                 style: TextStyle(
-                                  color: const Color(0xFF2798E4),
+                                  color: Color(0xFF2798E4),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -515,6 +524,13 @@ class SignupPageState extends State<SignupPage> {
 
     String type = isElder ? 'elder' : 'care_provider';
 
+    print('Debug Statements');
+    print('Username: $username');
+    print('Email: $email');
+    print('Elder Username: $elderUsername');
+    print('Password: $password');
+    print('Type: $type');
+
     Map<String, dynamic> UserInfoMap = {
       "username": username,
       "email": email,
@@ -532,7 +548,7 @@ class SignupPageState extends State<SignupPage> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Color(0xFF2798E4),
+          backgroundColor: const Color(0xFF2798E4),
           textColor: Colors.white,
           fontSize: 16.0);
     });
@@ -541,10 +557,10 @@ class SignupPageState extends State<SignupPage> {
       isLoading = false;
     });
 
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
     });
   }
