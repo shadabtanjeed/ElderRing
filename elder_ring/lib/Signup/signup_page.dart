@@ -454,11 +454,16 @@ class SignupPageState extends State<SignupPage> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                           child: ElevatedButton(
-                            onPressed: (
-                                // Add the addUser function to the onPressed event
-
-                                ) async {
-                              await addUser();
+                            onPressed: () {
+                              addUser().then((_) {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()),
+                                  (Route<dynamic> route) =>
+                                      false, // removes all previous routes
+                                );
+                              });
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
@@ -566,7 +571,7 @@ class SignupPageState extends State<SignupPage> {
 
         final List<DocumentSnapshot> elderDocuments = elderResult.docs;
 
-        if (elderDocuments.length == 0) {
+        if (elderDocuments.isEmpty) {
           //toast saying there is no elder with the username
           Fluttertoast.showToast(
               msg: "No elder with the username",
@@ -578,8 +583,6 @@ class SignupPageState extends State<SignupPage> {
               fontSize: 16.0);
           return;
         }
-
-        //elder exists with that name
 
         //update the associated_care_provider field of the elder with the signee username
         await FirebaseFirestore.instance
@@ -610,14 +613,21 @@ class SignupPageState extends State<SignupPage> {
             fontSize: 16.0);
       });
 
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
       setState(() {
         isLoading = false;
       });
 
       Future.delayed(const Duration(seconds: 1), () {
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+          (Route<dynamic> route) => false, // removes all previous routes
         );
       });
     }
