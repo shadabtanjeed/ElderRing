@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elder_ring/Signup/signup_db_methods.dart';
 import 'package:elder_ring/home_page.dart';
 import 'package:flutter/material.dart';
@@ -512,56 +513,113 @@ class SignupPageState extends State<SignupPage> {
   }
 
   Future<void> addUser() async {
-    final SignupDatabaseMethods signupdbmethods = SignupDatabaseMethods();
+    bool hasDuplicateUsername = false;
 
-    setState(() {});
+    final SignupDatabaseMethods signupdbmethods = SignupDatabaseMethods();
 
     String username = usernameController.text.trim();
     String email = emailController.text.trim();
-    String elderUsername = elderUsernameController.text.trim();
+
     bool isElder = selectedRole == 0;
+
+    String elderUsername;
+
+    if (!isElder) {
+      elderUsername = elderUsernameController.text.trim();
+    } else {
+      elderUsername = 'N/A';
+    }
+
     String password = passwordController.text.trim();
 
     String type = isElder ? 'elder' : 'care_provider';
 
-    print('Debug Statements');
-    print('Username: $username');
-    print('Email: $email');
-    print('Elder Username: $elderUsername');
-    print('Password: $password');
-    print('Type: $type');
+    //search for duplicate username existing in the database
+    final QuerySnapshot result = await FirebaseFirestore.instance
+        .collection('user_db')
+        .where('username', isEqualTo: username)
+        .get();
 
-    Map<String, dynamic> UserInfoMap = {
-      "username": username,
-      "email": email,
-      "password": password,
-      "associated_elder": elderUsername,
-      "type": type,
-      "associated_care_provider": "",
-    };
+    final List<DocumentSnapshot> documents = result.docs;
 
-    String userId = randomAlphaNumeric(10);
+    if (documents.length == 1) {
+      hasDuplicateUsername = true;
+    }
 
-    await signupdbmethods.addUserInfo(UserInfoMap, userId).then((value) {
+    if (hasDuplicateUsername) {
+      //toast saying there is duplicate username and do not proceed
       Fluttertoast.showToast(
-          msg: "User Added Successfully",
+          msg: "Username already exists",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
           backgroundColor: const Color(0xFF2798E4),
           textColor: Colors.white,
           fontSize: 16.0);
-    });
+    } else {
+      //find the user with the elder username
+      if (!isElder) {
+        final QuerySnapshot elderResult = await FirebaseFirestore.instance
+            .collection('user_db')
+            .where('username', isEqualTo: elderUsername)
+            .get();
 
-    setState(() {
-      isLoading = false;
-    });
+        final List<DocumentSnapshot> elderDocuments = elderResult.docs;
 
-    Future.delayed(const Duration(seconds: 1), () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
-    });
+        if (elderDocuments.length == 0) {
+          //toast saying there is no elder with the username
+          Fluttertoast.showToast(
+              msg: "No elder with the username",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: const Color(0xFF2798E4),
+              textColor: Colors.white,
+              fontSize: 16.0);
+          return;
+        }
+
+        //elder exists with that name
+
+        //update the associated_care_provider field of the elder with the signee username
+        await FirebaseFirestore.instance
+            .collection('user_db')
+            .doc(elderDocuments[0].id)
+            .update({'associated_care_provider': username});
+      }
+
+      Map<String, dynamic> UserInfoMap = {
+        "username": username,
+        "email": email,
+        "password": password,
+        "associated_elder": elderUsername,
+        "type": type,
+        "associated_care_provider": isElder ? "N/A" : "N/A"
+      };
+
+      String userId = randomAlphaNumeric(10);
+
+      await signupdbmethods.addUserInfo(UserInfoMap, userId).then((value) {
+        Fluttertoast.showToast(
+            msg: "User Added Successfully",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: const Color(0xFF2798E4),
+            textColor: Colors.white,
+            fontSize: 16.0);
+      });
+
+      setState(() {
+        isLoading = false;
+      });
+
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      });
+    }
   }
 }
