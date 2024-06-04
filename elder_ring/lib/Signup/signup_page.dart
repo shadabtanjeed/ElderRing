@@ -613,9 +613,11 @@ class SignupPageState extends State<SignupPage> {
             fontSize: 16.0);
       });
 
+      String firebase_email = username + "@gmail.com";
+
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
+        email: firebase_email,
         password: password,
       );
 

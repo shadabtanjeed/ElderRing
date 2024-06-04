@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'Locations/mapMenu.dart';
 import 'Medication Reminder/medication_schedule.dart';
 import 'theme_provider.dart';
+import 'login_page.dart'; // Make sure to import LoginPage
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -34,6 +35,10 @@ class HomePageState extends State<HomePage> {
             icon: const Icon(Icons.logout),
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
             },
           ),
         ],
@@ -59,8 +64,7 @@ class HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            const MedicationSchedule()), // Navigating to MedicationSchedule
+                        builder: (context) => const MedicationSchedule()),
                   );
                 },
                 style: ButtonStyle(
@@ -81,9 +85,7 @@ class HomePageState extends State<HomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const HomeScreen()), // Navigating to MedicationSchedule
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
                   );
                 },
                 style: ButtonStyle(
@@ -104,9 +106,7 @@ class HomePageState extends State<HomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const MapMenu()), // Navigating to MapMenu
+                    MaterialPageRoute(builder: (context) => const MapMenu()),
                   );
                 },
                 style: ButtonStyle(
@@ -125,7 +125,6 @@ class HomePageState extends State<HomePage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  //themeProvider.toggleTheme(); // Toggle the theme
                   Provider.of<ThemeProvider>(context, listen: false)
                       .toggleTheme();
                 },
