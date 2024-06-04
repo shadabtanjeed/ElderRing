@@ -319,26 +319,29 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
           margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
           child: allMedicineDetails(),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AddMedicine(username: username)),
-            );
-          },
-          backgroundColor: const Color(0xFF2798E4),
-          child: const Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.add, color: Colors.white),
-              Text('Add',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600)),
-            ],
+        floatingActionButton: Container(
+          width: 75.0,
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AddMedicine(username: username)),
+              );
+            },
+            backgroundColor: const Color(0xFF2798E4),
+            child: const Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.add, color: Colors.white),
+                Text('Add',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600)),
+              ],
+            ),
           ),
         ),
       ),
