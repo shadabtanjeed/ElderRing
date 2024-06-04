@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'Signup/signup_page.dart';
+import 'home_page.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -12,7 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  final email_controller = TextEditingController();
+  final username_controller = TextEditingController();
   final password_controller = TextEditingController();
 
   Future signIn() async {
@@ -27,21 +28,50 @@ class LoginPageState extends State<LoginPage> {
       },
     );
 
+    String firebase_email = username_controller.text.trim() + '@gmail.com';
+    String password = password_controller.text.trim();
+
+    print("Trying to sign in with email: $firebase_email");
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email_controller.text.trim(),
-        password: password_controller.text.trim(),
+        email: firebase_email,
+        password: password,
       );
+      Navigator.pop(context); // Close the progress dialog
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Sign-in successful!",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Color(0xFF2798E4),
+        ),
+      );
+      // Check if the user is signed in
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  HomePage()), // Replace with your home page widget
+        );
+      }
     } catch (e) {
-      // Handle any errors here
-    } finally {
-      Navigator.pop(context);
+      Navigator.pop(context); // Close the progress dialog
+      print("Error during sign-in: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Failed to sign in: $e"),
+        ),
+      );
     }
   }
 
   @override
   void dispose() {
-    email_controller.dispose();
+    username_controller.dispose();
     password_controller.dispose();
     super.dispose();
   }
@@ -76,13 +106,13 @@ class LoginPageState extends State<LoginPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: TextField(
-                      controller: email_controller,
+                      controller: username_controller,
                       cursorColor:
                           isDarkMode ? Colors.white : const Color(0xFF2798E4),
                       style: TextStyle(
                           color: isDarkMode ? Colors.white : Colors.black),
                       decoration: InputDecoration(
-                        labelText: 'Email',
+                        labelText: 'Username',
                         labelStyle: TextStyle(
                           color: isDarkMode
                               ? Colors.white
