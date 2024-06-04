@@ -110,10 +110,12 @@ class LoginPageState extends State<LoginPage> {
                       cursorColor:
                           isDarkMode ? Colors.white : const Color(0xFF2798E4),
                       style: TextStyle(
+                          fontFamily: 'Jost',
                           color: isDarkMode ? Colors.white : Colors.black),
                       decoration: InputDecoration(
                         labelText: 'Username',
                         labelStyle: TextStyle(
+                          fontFamily: 'Jost',
                           color: isDarkMode
                               ? Colors.white
                               : const Color(0xFF2798E4),
@@ -150,10 +152,12 @@ class LoginPageState extends State<LoginPage> {
                       cursorColor:
                           isDarkMode ? Colors.white : const Color(0xFF2798E4),
                       style: TextStyle(
+                          fontFamily: 'Jost',
                           color: isDarkMode ? Colors.white : Colors.black),
                       decoration: InputDecoration(
                         labelText: 'Password',
                         labelStyle: TextStyle(
+                          fontFamily: 'Jost',
                           color: isDarkMode
                               ? Colors.white
                               : const Color(0xFF2798E4),
@@ -209,7 +213,11 @@ class LoginPageState extends State<LoginPage> {
                   },
                   child: RichText(
                     text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
+                      style: TextStyle(
+                        fontFamily: 'Jost',
+                        color: isDarkMode ? Colors.white : Colors.black,
+                        fontSize: 14, // Adjusted the font size to be smaller
+                      ),
                       children: <TextSpan>[
                         TextSpan(text: 'Do not have an account? '),
                         TextSpan(

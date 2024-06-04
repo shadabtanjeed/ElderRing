@@ -76,7 +76,7 @@ class SignupPageState extends State<SignupPage> {
                 color: isDarkMode ? Colors.black : Colors.white,
               ),
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -91,7 +91,7 @@ class SignupPageState extends State<SignupPage> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Jost',
-                            fontSize: 25,
+                            fontSize: 24,
                             letterSpacing: 0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -106,7 +106,7 @@ class SignupPageState extends State<SignupPage> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: 'Jost',
-                              fontSize: 20,
+                              fontSize: 19,
                               letterSpacing: 0,
                             ),
                           ),
@@ -176,7 +176,7 @@ class SignupPageState extends State<SignupPage> {
                                           'Elder People',
                                           style: TextStyle(
                                             fontFamily: 'Jost',
-                                            fontSize: 15,
+                                            fontSize: 14,
                                             letterSpacing: 0,
                                             fontWeight: FontWeight.w500,
                                             color: selectedRole == 0
@@ -243,7 +243,7 @@ class SignupPageState extends State<SignupPage> {
                                           'Care Provider',
                                           style: TextStyle(
                                             fontFamily: 'Jost',
-                                            fontSize: 15,
+                                            fontSize: 14,
                                             letterSpacing: 0,
                                             fontWeight: FontWeight.w500,
                                             color: selectedRole == 1
@@ -279,6 +279,8 @@ class SignupPageState extends State<SignupPage> {
                               decoration: InputDecoration(
                                 labelText: 'Username',
                                 labelStyle: TextStyle(
+                                  fontFamily: 'Jost',
+                                  fontSize: 14,
                                   color: isDarkMode
                                       ? Colors.white
                                       : const Color(0xFF2798E4),
@@ -326,6 +328,8 @@ class SignupPageState extends State<SignupPage> {
                               decoration: InputDecoration(
                                 labelText: 'Email',
                                 labelStyle: TextStyle(
+                                  fontFamily: 'Jost',
+                                  fontSize: 14,
                                   color: isDarkMode
                                       ? Colors.white
                                       : const Color(0xFF2798E4),
@@ -364,16 +368,18 @@ class SignupPageState extends State<SignupPage> {
                             width: MediaQuery.of(context).size.width * 0.8,
                             child: TextField(
                               controller: passwordController,
-                              obscureText: true,
                               cursorColor: isDarkMode
                                   ? Colors.white
                                   : const Color(0xFF2798E4),
                               style: TextStyle(
                                   color:
                                       isDarkMode ? Colors.white : Colors.black),
+                              obscureText: true,
                               decoration: InputDecoration(
                                 labelText: 'Password',
                                 labelStyle: TextStyle(
+                                  fontFamily: 'Jost',
+                                  fontSize: 14,
                                   color: isDarkMode
                                       ? Colors.white
                                       : const Color(0xFF2798E4),
@@ -402,104 +408,121 @@ class SignupPageState extends State<SignupPage> {
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: const AlignmentDirectional(0, 0),
-                        child: Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 10),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            child: TextField(
-                              controller: elderUsernameController,
-                              cursorColor: isDarkMode
-                                  ? Colors.white
-                                  : const Color(0xFF2798E4),
-                              style: TextStyle(
-                                  color:
-                                      isDarkMode ? Colors.white : Colors.black),
-                              decoration: InputDecoration(
-                                labelText: 'Elder Username',
-                                labelStyle: TextStyle(
-                                  color: isDarkMode
-                                      ? Colors.white
-                                      : const Color(0xFF2798E4),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: BorderSide(
-                                    color: isDarkMode
-                                        ? Colors.white
-                                        : const Color(0xFF2798E4),
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: BorderSide(
-                                    color: isDarkMode
-                                        ? Colors.white
-                                        : const Color(0xFF2798E4),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: const AlignmentDirectional(0, 0),
-                        child: Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              addUser().then((_) {
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const LoginPage()),
-                                  (Route<dynamic> route) =>
-                                      false, // removes all previous routes
-                                );
-                              });
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color(0xFF2798E4)),
-                              foregroundColor:
-                                  MaterialStateProperty.all(Colors.white),
-                            ),
-                            child: const Text(
-                              'Signup',
-                              style: TextStyle(
-                                fontFamily: 'Jost',
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
-                          );
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            style: DefaultTextStyle.of(context).style,
-                            children: const <TextSpan>[
-                              TextSpan(text: 'Do not have an account? '),
-                              TextSpan(
-                                text: 'Login',
+                      // Elder username input field (only if selected role is care provider)
+                      if (selectedRole == 1)
+                        Align(
+                          alignment: const AlignmentDirectional(0, 0),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                8, 0, 8, 10),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: TextField(
+                                controller: elderUsernameController,
+                                cursorColor: isDarkMode
+                                    ? Colors.white
+                                    : const Color(0xFF2798E4),
                                 style: TextStyle(
-                                  color: Color(0xFF2798E4),
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : Colors.black),
+                                decoration: InputDecoration(
+                                  labelText: 'Associated Elder Username',
+                                  labelStyle: TextStyle(
+                                    fontFamily: 'Jost',
+                                    fontSize: 14,
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : const Color(0xFF2798E4),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : const Color(0xFF2798E4),
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : const Color(0xFF2798E4),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      Align(
+                        alignment: const AlignmentDirectional(0, 0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0, 10, 0, 10),
+                          child: SizedBox(
+                            width: 110,
+                            height: 40,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                addUser();
+                              },
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color(0xFF2798E4)),
+                                foregroundColor:
+                                    MaterialStateProperty.all(Colors.white),
+                              ),
+                              child: const Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  fontFamily: 'Jost',
                                   fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: const AlignmentDirectional(0, 0),
+                        child: Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 10),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Already have an account?',
+                                style: TextStyle(
+                                  fontFamily: 'Jost',
+                                  fontSize: 13,
+                                  letterSpacing: 0,
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginPage(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Log in here',
+                                  style: TextStyle(
+                                    fontFamily: 'Jost',
+                                    fontSize: 13,
+                                    letterSpacing: 0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF2798E4),
+                                  ),
                                 ),
                               ),
                             ],
