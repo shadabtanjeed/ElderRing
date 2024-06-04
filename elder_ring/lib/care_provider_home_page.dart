@@ -1,4 +1,5 @@
 import 'package:elder_ring/Screen%20Sharing/home_screen_elderly.dart';
+import 'package:elder_ring/Screen%20Sharing/home_scrren_careProvider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -96,7 +97,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    MaterialPageRoute(builder: (context) => const CareProvider_HomeScreen()),
                   );
                 },
                 style: ButtonStyle(
@@ -105,7 +106,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
-                  'Screen Share',
+                  'View Screen',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,
