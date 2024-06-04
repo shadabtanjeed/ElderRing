@@ -74,7 +74,9 @@ class ElderHomePageState extends State<ElderHomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const MedicationSchedule()),
+                      builder: (context) =>
+                          MedicationSchedule(username: username),
+                    ),
                   );
                 },
                 style: ButtonStyle(

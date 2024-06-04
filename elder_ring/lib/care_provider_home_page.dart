@@ -75,12 +75,14 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const MedicationSchedule()),
+                      builder: (context) =>
+                          MedicationSchedule(username: username),
+                    ),
                   );
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFFC73659)),
+                      MaterialStateProperty.all(const Color(0xFF006769)),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -101,7 +103,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFFC73659)),
+                      MaterialStateProperty.all(const Color(0xFF006769)),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -122,7 +124,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFFC73659)),
+                      MaterialStateProperty.all(const Color(0xFF006769)),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -141,7 +143,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFFC73659)),
+                      MaterialStateProperty.all(const Color(0xFF006769)),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
