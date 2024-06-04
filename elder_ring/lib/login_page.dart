@@ -1,17 +1,22 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'Signup/signup_page.dart';
+import 'care_provider_home_page.dart';
+import 'elder_home_page.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => LoginPageState();
 }
 
 class LoginPageState extends State<LoginPage> {
-  final email_controller = TextEditingController();
+  final username_controller = TextEditingController();
   final password_controller = TextEditingController();
 
   Future signIn() async {
@@ -20,36 +25,93 @@ class LoginPageState extends State<LoginPage> {
       builder: (context) {
         return const Center(
           child: CircularProgressIndicator(
-            color: Color(0xFF2798E4), // Change the color of the progress circle
+            color: Color(0xFF2798E4),
           ),
         );
       },
     );
 
+    String username = username_controller.text.trim();
+    String firebase_email = username_controller.text.trim() + '@gmail.com';
+    String password = password_controller.text.trim();
+
+    print("Trying to sign in with email: $firebase_email");
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email_controller.text.trim(),
-        password: password_controller.text.trim(),
+        email: firebase_email,
+        password: password,
       );
+      Navigator.pop(context); // Close the progress dialog
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Sign-in successful!",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Color(0xFF2798E4),
+        ),
+      );
+      // Check if the user is signed in
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        String userType = await handleUserType(username);
+
+        if (userType == 'elder') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ElderHomePage(username: username),
+            ),
+          );
+        } else if (userType == 'care_provider') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CareProviderHomePage(username: username),
+            ),
+          );
+        } else {
+          Fluttertoast.showToast(msg: 'Error: User type not found');
+        }
+      }
     } catch (e) {
-      // Handle any errors here
-    } finally {
-      // Dismiss the dialog before navigating
-      Navigator.pop(context);
+      Navigator.pop(context); // Close the progress dialog
+      print("Error during sign-in: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Failed to sign in: $e"),
+        ),
+      );
     }
+  }
+
+  Future<String> handleUserType(String username) async {
+    final QuerySnapshot result = await FirebaseFirestore.instance
+        .collection('user_db')
+        .where('username', isEqualTo: username)
+        .get();
+    final documents = result.docs;
+    if (documents.isEmpty) {
+      Fluttertoast.showToast(msg: 'Error: User not found');
+      return ''; // Indicate error or handle user not found scenario elsewhere
+    }
+    final userType = documents[0]['type'];
+    return userType;
   }
 
   @override
   void dispose() {
-    email_controller.dispose();
+    username_controller.dispose();
     password_controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: isDarkMode ? Colors.black : Colors.white,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 10.0),
@@ -75,23 +137,38 @@ class LoginPageState extends State<LoginPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: TextField(
-                      controller: email_controller,
+                      controller: username_controller,
                       cursorColor:
-                          const Color(0xFF2798E4), // Set the cursor color
+                          isDarkMode ? Colors.white : const Color(0xFF2798E4),
+                      style: TextStyle(
+                          fontFamily: 'Jost',
+                          color: isDarkMode ? Colors.white : Colors.black),
                       decoration: InputDecoration(
-                        labelText: 'Email',
-                        labelStyle: const TextStyle(
-                          color: Color(
-                              0xFF2798E4), // Set the label color when focused
+                        labelText: 'Username',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Jost',
+                          color: isDarkMode
+                              ? Colors.white
+                              : const Color(0xFF2798E4),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
-                          borderSide: const BorderSide(
-                              color: Color(
-                                  0xFF2798E4)), // Set the border color when focused
+                          borderSide: BorderSide(
+                            color: isDarkMode
+                                ? Colors.white
+                                : const Color(0xFF2798E4),
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                            color: isDarkMode
+                                ? Colors.white
+                                : const Color(0xFF2798E4),
+                          ),
                         ),
                       ),
                     ),
@@ -102,23 +179,38 @@ class LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.all(20),
                     child: TextField(
                       controller: password_controller,
-                      obscureText: true, // Hide the password being typed
+                      obscureText: true,
                       cursorColor:
-                          const Color(0xFF2798E4), // Set the cursor color
+                          isDarkMode ? Colors.white : const Color(0xFF2798E4),
+                      style: TextStyle(
+                          fontFamily: 'Jost',
+                          color: isDarkMode ? Colors.white : Colors.black),
                       decoration: InputDecoration(
                         labelText: 'Password',
-                        labelStyle: const TextStyle(
-                          color: Color(
-                              0xFF2798E4), // Set the label color when focused
+                        labelStyle: TextStyle(
+                          fontFamily: 'Jost',
+                          color: isDarkMode
+                              ? Colors.white
+                              : const Color(0xFF2798E4),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
-                          borderSide: const BorderSide(
-                              color: Color(
-                                  0xFF2798E4)), // Set the border color when focused
+                          borderSide: BorderSide(
+                            color: isDarkMode
+                                ? Colors.white
+                                : const Color(0xFF2798E4),
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                            color: isDarkMode
+                                ? Colors.white
+                                : const Color(0xFF2798E4),
+                          ),
                         ),
                       ),
                     ),
@@ -139,6 +231,34 @@ class LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       fontFamily: 'Jost',
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignupPage()),
+                    );
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontFamily: 'Jost',
+                        color: isDarkMode ? Colors.white : Colors.black,
+                        fontSize: 14, // Adjusted the font size to be smaller
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(text: 'Do not have an account? '),
+                        TextSpan(
+                          text: 'Create Account',
+                          style: TextStyle(
+                            color: const Color(0xFF2798E4),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

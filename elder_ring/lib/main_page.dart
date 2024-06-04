@@ -1,5 +1,5 @@
 import 'package:elder_ring/login_page.dart';
-import 'package:elder_ring/home_page.dart'; // Import HomePage
+import 'package:elder_ring/elder_home_page.dart'; // Import HomePage
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -16,7 +16,7 @@ class MainPage extends StatelessWidget {
             // return HomePage(); // HomePage is not defined
             return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
-                return const HomePage();
+                return const LoginPage();
               },
             ); // Wrap HomePage with StatefulBuilder
           } else {
