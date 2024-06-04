@@ -97,7 +97,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    MaterialPageRoute(builder: (context) => const Elderly_HomeScreen()),
                   );
                 },
                 style: ButtonStyle(
@@ -106,7 +106,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
-                  'Screen Share',
+                  'Share Screen',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,

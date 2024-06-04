@@ -3,18 +3,13 @@ import 'package:elder_ring/Screen%20Sharing/jitsi_meet_methods.dart';
 import 'package:flutter/material.dart';
 
 
-class MeetingScreen extends StatelessWidget {
-  MeetingScreen({super.key});
+class Elderly_MeetingScreen extends StatelessWidget {
+  Elderly_MeetingScreen({super.key});
 
   final JitsiMeetMethods _jitsiMeetMethods = JitsiMeetMethods();
 
   createNewMeeting() async{
     _jitsiMeetMethods.createMeeting(roomName: 'RoomFromElderly', userName: 'Elderly User');
-  }
-
-  joinMeeting(BuildContext context)
-  {
-     _jitsiMeetMethods.createMeeting(roomName: 'RoomFromElderly', userName: 'Care Provider');
   }
 
   @override
@@ -28,10 +23,6 @@ class MeetingScreen extends StatelessWidget {
               HomeMeetingButton(onPressed: createNewMeeting,
               text: 'Share Screen',
               icon: Icons.screen_share,
-              ),
-              HomeMeetingButton(onPressed: ()=> joinMeeting(context),
-              text: 'View Screen',
-              icon: Icons.remove_red_eye_outlined,
               ),
             ],
           )

@@ -1,16 +1,16 @@
-import 'package:elder_ring/Screen%20Sharing/meeting_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:elder_ring/Screen%20Sharing/elderly_meeting_screen.dart';
 
 
-class HomeScreen extends StatefulWidget{
-  const HomeScreen({super.key});
+class Elderly_HomeScreen extends StatefulWidget{
+  const Elderly_HomeScreen({super.key});
 
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<Elderly_HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>{
+class _HomeScreenState extends State<Elderly_HomeScreen>{
 
   int _page = 0;
   onPageChanged(int page){
@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen>{
   }
 
   List<Widget> pages = [
-    MeetingScreen(),
+    Elderly_MeetingScreen(),
   ];
 
 
