@@ -20,6 +20,7 @@ class ElderHomePageState extends State<ElderHomePage> {
   final user = FirebaseAuth.instance.currentUser;
 
   String username = "";
+  static const elderColor = Color(0xFF2798E4);
 
   @override
   void initState() {
@@ -81,7 +82,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                      MaterialStateProperty.all(elderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -102,7 +103,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                      MaterialStateProperty.all(elderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -123,7 +124,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                      MaterialStateProperty.all(elderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -142,7 +143,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                      MaterialStateProperty.all(elderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(

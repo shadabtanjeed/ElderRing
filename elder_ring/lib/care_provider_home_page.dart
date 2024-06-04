@@ -22,6 +22,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
   final user = FirebaseAuth.instance.currentUser;
 
   String username = "";
+  static const careProviderColor = Color(0xFF006769);
 
   @override
   void initState() {
@@ -83,7 +84,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF006769)),
+                      MaterialStateProperty.all(careProviderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -104,7 +105,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF006769)),
+                      MaterialStateProperty.all(careProviderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -125,7 +126,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF006769)),
+                      MaterialStateProperty.all(careProviderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -144,7 +145,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF006769)),
+                      MaterialStateProperty.all(careProviderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
