@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'Signup/signup_page.dart';
-import 'home_page.dart';
+import 'care_provider_home_page.dart';
+import 'elder_home_page.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -28,6 +31,7 @@ class LoginPageState extends State<LoginPage> {
       },
     );
 
+    String username = username_controller.text.trim();
     String firebase_email = username_controller.text.trim() + '@gmail.com';
     String password = password_controller.text.trim();
 
@@ -51,12 +55,25 @@ class LoginPageState extends State<LoginPage> {
       // Check if the user is signed in
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  HomePage()), // Replace with your home page widget
-        );
+        String userType = await handleUserType(username);
+
+        if (userType == 'elder') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ElderHomePage(username: username),
+            ),
+          );
+        } else if (userType == 'care_provider') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CareProviderHomePage(username: username),
+            ),
+          );
+        } else {
+          Fluttertoast.showToast(msg: 'Error: User type not found');
+        }
       }
     } catch (e) {
       Navigator.pop(context); // Close the progress dialog
@@ -67,6 +84,20 @@ class LoginPageState extends State<LoginPage> {
         ),
       );
     }
+  }
+
+  Future<String> handleUserType(String username) async {
+    final QuerySnapshot result = await FirebaseFirestore.instance
+        .collection('user_db')
+        .where('username', isEqualTo: username)
+        .get();
+    final documents = result.docs;
+    if (documents.isEmpty) {
+      Fluttertoast.showToast(msg: 'Error: User not found');
+      return ''; // Indicate error or handle user not found scenario elsewhere
+    }
+    final userType = documents[0]['type'];
+    return userType;
   }
 
   @override

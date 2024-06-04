@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'medicine_database.dart';
 import 'package:intl/intl.dart';
-import 'package:elder_ring/home_page.dart';
+import 'package:elder_ring/elder_home_page.dart';
 
 class MedicationSchedule extends StatefulWidget {
   const MedicationSchedule({Key? key}) : super(key: key);
@@ -15,6 +15,8 @@ class MedicationSchedule extends StatefulWidget {
 }
 
 class _MedicationScheduleState extends State<MedicationSchedule> {
+  String username = '';
+
   Stream<QuerySnapshot>? MedicineInfoStream;
 
   @override
@@ -265,7 +267,10 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
       onWillPop: () async {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(
+              builder: (context) => ElderHomePage(
+                    username: username,
+                  )),
         );
         return false;
       },
@@ -281,7 +286,10 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(
+                  builder: (context) => ElderHomePage(
+                        username: username,
+                      )),
             ),
           ),
         ),
