@@ -7,15 +7,26 @@ import 'Medication Reminder/medication_schedule.dart';
 import 'theme_provider.dart';
 import 'login_page.dart'; // Make sure to import LoginPage
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class CareProviderHomePage extends StatefulWidget {
+  final String username;
+
+  const CareProviderHomePage({Key? key, required this.username})
+      : super(key: key);
 
   @override
-  State<HomePage> createState() => HomePageState();
+  State<CareProviderHomePage> createState() => CareProviderHomePageState();
 }
 
-class HomePageState extends State<HomePage> {
+class CareProviderHomePageState extends State<CareProviderHomePage> {
   final user = FirebaseAuth.instance.currentUser;
+
+  String username = "";
+
+  @override
+  void initState() {
+    super.initState();
+    username = widget.username;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +80,7 @@ class HomePageState extends State<HomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                      MaterialStateProperty.all(const Color(0xFFC73659)),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -90,7 +101,7 @@ class HomePageState extends State<HomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                      MaterialStateProperty.all(const Color(0xFFC73659)),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -111,7 +122,7 @@ class HomePageState extends State<HomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                      MaterialStateProperty.all(const Color(0xFFC73659)),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -130,7 +141,7 @@ class HomePageState extends State<HomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                      MaterialStateProperty.all(const Color(0xFFC73659)),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(

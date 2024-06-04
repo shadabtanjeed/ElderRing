@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elder_ring/Signup/signup_db_methods.dart';
-import 'package:elder_ring/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -87,7 +86,7 @@ class SignupPageState extends State<SignupPage> {
                       const Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 25),
                         child: Text(
-                          'Signup',
+                          'Create Account',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Jost',
@@ -515,7 +514,7 @@ class SignupPageState extends State<SignupPage> {
                                   );
                                 },
                                 child: const Text(
-                                  'Log in here',
+                                  'Log in',
                                   style: TextStyle(
                                     fontFamily: 'Jost',
                                     fontSize: 13,

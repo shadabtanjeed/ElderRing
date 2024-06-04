@@ -1,5 +1,6 @@
 import 'dart:io'; // Correct import for Platform
 
+import 'package:elder_ring/login_page.dart';
 import 'package:elder_ring/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const MainPage(),
+      home: const LoginPage(),
       theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
