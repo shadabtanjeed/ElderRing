@@ -7,14 +7,18 @@ import 'medication_schedule.dart';
 
 class UpdateMedicine extends StatefulWidget {
   final String medicineId;
+  final String username;
 
-  const UpdateMedicine({Key? key, required this.medicineId}) : super(key: key);
+  const UpdateMedicine(
+      {Key? key, required this.medicineId, required this.username})
+      : super(key: key);
 
   @override
   State<UpdateMedicine> createState() => _UpdateMedicineState();
 }
 
 class _UpdateMedicineState extends State<UpdateMedicine> {
+  String username = '';
   String medicineType = 'Tablet';
   bool isAfterEating = false;
   TextEditingController intervalController = TextEditingController();
@@ -27,6 +31,7 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
   @override
   void initState() {
     super.initState();
+    username = widget.username;
     fetchMedicineData();
   }
 
@@ -313,6 +318,7 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
       "interval": int.parse(intervalController.text),
       "start_time": startTimeStamp,
       "medicine_id": medicineId,
+      "username": username,
     };
 
     await dbMethods
@@ -333,10 +339,12 @@ class _UpdateMedicineState extends State<UpdateMedicine> {
     });
 
     // Navigate to the MedicationSchedule page after a delay
+    // Navigate to the MedicationSchedule page after a delay
     Future.delayed(const Duration(seconds: 1), () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MedicationSchedule()),
+        MaterialPageRoute(
+            builder: (context) => MedicationSchedule(username: username)),
       );
     });
   }

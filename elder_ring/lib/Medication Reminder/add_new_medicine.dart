@@ -6,13 +6,16 @@ import 'medicine_database.dart';
 import 'medication_schedule.dart';
 
 class AddMedicine extends StatefulWidget {
-  const AddMedicine({Key? key}) : super(key: key);
+  final String username;
+
+  const AddMedicine({Key? key, required this.username}) : super(key: key);
 
   @override
   State<AddMedicine> createState() => _AddMedicineState();
 }
 
 class _AddMedicineState extends State<AddMedicine> {
+  String username = '';
   String medicineType = 'Tablet';
   bool isAfterEating = false;
   TextEditingController intervalController = TextEditingController();
@@ -21,6 +24,12 @@ class _AddMedicineState extends State<AddMedicine> {
   TextEditingController medicineTypeController = TextEditingController();
   TimeOfDay startTime = TimeOfDay.now();
   bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    username = widget.username;
+  }
 
   @override
   void dispose() {
@@ -289,6 +298,7 @@ class _AddMedicineState extends State<AddMedicine> {
       "interval": int.parse(intervalController.text),
       "start_time": startTimeStamp,
       "medicine_id": medicineId,
+      "username": username,
     };
 
     await dbMethods.addMedicineInfo(medicineInfoMap, medicineId).then((value) {
@@ -306,10 +316,11 @@ class _AddMedicineState extends State<AddMedicine> {
       isLoading = false;
     });
 
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MedicationSchedule()),
+        MaterialPageRoute(
+            builder: (context) => MedicationSchedule(username: username)),
       );
     });
   }
