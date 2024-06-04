@@ -1,5 +1,9 @@
 # ElderRing
 
-## Patient Credentials:
-- **Email:** admin@admin.com
-- **Password:** adminadmin
+## Elder People:
+- **Username:** elder_people
+- **Password:** elder_people
+
+## Care Provider:
+- **Username:** care_provider
+- **Password:** care_provider
