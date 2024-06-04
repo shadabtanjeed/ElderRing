@@ -1,11 +1,33 @@
+import 'dart:io'; // Correct import for Platform
+
+import 'package:elder_ring/login_page.dart';
 import 'package:elder_ring/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:elder_ring/theme.dart';
+import 'package:elder_ring/theme_provider.dart'; // Import the ThemeProvider
+import 'package:provider/provider.dart';
+import 'theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
+  Platform.isAndroid
+      ? await Firebase.initializeApp(
+          options: const FirebaseOptions(
+            apiKey: "AIzaSyA619vAUbNLH4oQXCdVDDx78zAFBQOeFBE",
+            appId: "1:265423351389:android:459e59e3f7d5c1a91927b4",
+            messagingSenderId: "265423351389",
+            projectId: "elderring-9e5f6",
+          ),
+        )
+      : await Firebase.initializeApp();
+  //await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(Lightmode),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,12 +38,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const MainPage(),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: const Color(0xFF2798E4),
-        fontFamily: 'Jost', // Use the Jost font
-      ),
+      home: const LoginPage(),
+      theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
 }

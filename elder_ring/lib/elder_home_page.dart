@@ -1,20 +1,35 @@
+import 'package:elder_ring/Screen%20Sharing/home_screen_elderly.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'Locations/mapMenu.dart';
+import 'Medication Reminder/medication_schedule.dart';
+import 'theme_provider.dart';
+import 'login_page.dart'; // Make sure to import LoginPage
 
-import 'map_page.dart'; // Importing the MaPage widget
+class ElderHomePage extends StatefulWidget {
+  final String username;
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const ElderHomePage({Key? key, required this.username}) : super(key: key);
 
   @override
-  State<HomePage> createState() => HomePageState();
+  State<ElderHomePage> createState() => ElderHomePageState();
 }
 
-class HomePageState extends State<HomePage> {
+class ElderHomePageState extends State<ElderHomePage> {
   final user = FirebaseAuth.instance.currentUser;
+
+  String username = "";
+
+  @override
+  void initState() {
+    super.initState();
+    username = widget.username;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -30,13 +45,17 @@ class HomePageState extends State<HomePage> {
             icon: const Icon(Icons.logout),
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
             },
           ),
         ],
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(top: 50.0),
+          padding: const EdgeInsets.only(top: 10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -52,7 +71,13 @@ class HomePageState extends State<HomePage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Handle button press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          MedicationSchedule(username: username),
+                    ),
+                  );
                 },
                 style: ButtonStyle(
                   backgroundColor:
@@ -70,7 +95,10 @@ class HomePageState extends State<HomePage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Handle button press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Elderly_HomeScreen()),
+                  );
                 },
                 style: ButtonStyle(
                   backgroundColor:
@@ -78,7 +106,7 @@ class HomePageState extends State<HomePage> {
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
-                  'Emergency',
+                  'Share Screen',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,
@@ -90,8 +118,7 @@ class HomePageState extends State<HomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => MaPage()), // Navigating to MaPage
+                    MaterialPageRoute(builder: (context) => const MapMenu()),
                   );
                 },
                 style: ButtonStyle(
@@ -101,6 +128,25 @@ class HomePageState extends State<HomePage> {
                 ),
                 child: const Text(
                   'Location Sharing',
+                  style: TextStyle(
+                    fontFamily: 'Jost',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Provider.of<ThemeProvider>(context, listen: false)
+                      .toggleTheme();
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                child: const Text(
+                  'Change Theme',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,
