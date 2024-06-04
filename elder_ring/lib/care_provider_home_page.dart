@@ -7,6 +7,7 @@ import 'Locations/mapMenu.dart';
 import 'Medication Reminder/medication_schedule.dart';
 import 'theme_provider.dart';
 import 'login_page.dart'; // Make sure to import LoginPage
+import 'package:elder_ring/Users/users.dart';
 
 class CareProviderHomePage extends StatefulWidget {
   final String username;
@@ -20,8 +21,9 @@ class CareProviderHomePage extends StatefulWidget {
 
 class CareProviderHomePageState extends State<CareProviderHomePage> {
   final user = FirebaseAuth.instance.currentUser;
-
   String username = "";
+
+  String? elderUsername;
   static const careProviderColor = Color(0xFF006769);
 
   @override
@@ -48,6 +50,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
             icon: const Icon(Icons.logout),
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
+              Users.clear();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -93,6 +96,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,
                   ),
+
                 ),
               ),
               const SizedBox(height: 20),

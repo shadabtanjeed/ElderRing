@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'Signup/signup_page.dart';
 import 'care_provider_home_page.dart';
 import 'elder_home_page.dart';
+import 'Users/users.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -19,6 +20,7 @@ class LoginPageState extends State<LoginPage> {
   final username_controller = TextEditingController();
   final password_controller = TextEditingController();
   static const Color loginPageColor = Color(0xFF2798E4);
+
 
   Future signIn() async {
     showDialog(
@@ -51,6 +53,7 @@ class LoginPageState extends State<LoginPage> {
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: loginPageColor,
+
         ),
       );
       // Check if the user is signed in
@@ -59,6 +62,10 @@ class LoginPageState extends State<LoginPage> {
         String userType = await handleUserType(username);
 
         if (userType == 'elder') {
+
+          Users.setElderlyUsername(username);
+          Users.fetchAssociatedCareProvider();
+
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -66,6 +73,10 @@ class LoginPageState extends State<LoginPage> {
             ),
           );
         } else if (userType == 'care_provider') {
+
+          Users.setCareProviderUsername(username);
+          Users.fetchAssociatedElder();
+
           Navigator.push(
             context,
             MaterialPageRoute(
