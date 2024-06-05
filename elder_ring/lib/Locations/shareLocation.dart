@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:elder_ring/models/locationObj.dart';
 import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elder_ring/Users/users.dart';
 
 class ShareLocation extends StatefulWidget {
   const ShareLocation({super.key});
@@ -13,7 +14,7 @@ class ShareLocation extends StatefulWidget {
 class _ShareLocationState extends State<ShareLocation> {
   LocationObj locationObj = LocationObj(
     position: const GeoPoint(0, 0),
-    unique_id: "Untouchable", // replace this with the actual unique_id
+    unique_id: Users.getElderlyUsername(),
     updated_on: DateTime.now(),
   );
 

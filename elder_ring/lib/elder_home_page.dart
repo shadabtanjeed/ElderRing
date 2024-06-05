@@ -7,7 +7,7 @@ import 'Medication Reminder/medication_schedule.dart';
 import 'theme_provider.dart';
 import 'login_page.dart'; // Make sure to import LoginPage
 import 'package:elder_ring/Users/users.dart';
-
+import 'package:elder_ring/Locations/shareLocation.dart';
 
 class ElderHomePage extends StatefulWidget {
   final String username;
@@ -84,8 +84,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                   );
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(elderColor),
+                  backgroundColor: MaterialStateProperty.all(elderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -101,12 +100,12 @@ class ElderHomePageState extends State<ElderHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Elderly_HomeScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const Elderly_HomeScreen()),
                   );
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(elderColor),
+                  backgroundColor: MaterialStateProperty.all(elderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -122,16 +121,16 @@ class ElderHomePageState extends State<ElderHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const MapMenu()),
+                    MaterialPageRoute(
+                        builder: (context) => const ShareLocation()),
                   );
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(elderColor),
+                  backgroundColor: MaterialStateProperty.all(elderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
-                  'Location Sharing',
+                  'Share Location',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,
@@ -145,8 +144,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                       .toggleTheme();
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(elderColor),
+                  backgroundColor: MaterialStateProperty.all(elderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
