@@ -3,7 +3,9 @@ import 'package:elder_ring/Screen%20Sharing/elderly_meeting_screen.dart';
 
 
 class Elderly_HomeScreen extends StatefulWidget{
-  const Elderly_HomeScreen({super.key});
+  final String username;
+
+  const Elderly_HomeScreen({super.key, required this.username});
 
 
   @override
@@ -19,13 +21,16 @@ class _HomeScreenState extends State<Elderly_HomeScreen>{
     });
   }
 
-  List<Widget> pages = [
-    Elderly_MeetingScreen(),
-  ];
+
 
 
   @override
   Widget build(BuildContext context) {
+
+    List<Widget> pages = [
+      Elderly_MeetingScreen(username: widget.username),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

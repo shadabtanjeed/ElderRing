@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 
 
 class CareProvider_MeetingScreen extends StatelessWidget {
-  CareProvider_MeetingScreen({super.key});
+  final String username;
+  CareProvider_MeetingScreen({super.key, required this.username});
 
   final JitsiMeetMethods _jitsiMeetMethods = JitsiMeetMethods();
 
   joinMeeting(BuildContext context)
   {
-    _jitsiMeetMethods.createMeeting(roomName: 'RoomFromElderly', userName: 'Care Provider');
+    _jitsiMeetMethods.createMeeting(roomName: username, userName: 'Care Provider');
   }
 
   @override
