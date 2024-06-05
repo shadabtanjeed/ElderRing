@@ -25,33 +25,8 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
   final user = FirebaseAuth.instance.currentUser;
   String username = "";
 
-  String? elderUsername;
+  String elderUsername = Users.getElderlyUsername();
   static const careProviderColor = Color(0xFF006769);
-
-  @override
-  void initState() {
-    super.initState();
-    fetchAssociatedElder();
-  }
-
-  Future<void> fetchAssociatedElder() async {
-    try {
-      final QuerySnapshot result = await FirebaseFirestore.instance
-          .collection('user_db')
-          .where('username', isEqualTo: widget.username)
-          .get();
-      final documents = result.docs;
-      if (documents.isNotEmpty) {
-        setState(() {
-          elderUsername = documents[0]['associated_elder'];
-        });
-      } else {
-        Fluttertoast.showToast(msg: 'Error: User not found');
-      }
-    } catch (e) {
-      Fluttertoast.showToast(msg: 'Error: $e');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,8 +134,10 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                         );
                       },
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(careProviderColor),
-                        foregroundColor: MaterialStateProperty.all(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all(careProviderColor),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
                       ),
                       child: const Text(
                         'Show Elderly\'s Location',
