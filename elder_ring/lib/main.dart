@@ -1,5 +1,6 @@
 import 'dart:io'; // Correct import for Platform
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:elder_ring/login_page.dart';
 import 'package:elder_ring/main_page.dart';
@@ -40,12 +41,49 @@ Future<void> main() async {
     ],
   );
 
+  AwesomeNotifications().setListeners(
+    onNotificationCreatedMethod: onNotificationCreatedMethod,
+    onNotificationDisplayedMethod: onNotificationDisplayedMethod,
+    onActionReceivedMethod: onActionReceivedMethod,
+    onDismissActionReceivedMethod: onDismissActionReceivedMethod,
+  );
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(Lightmode),
       child: const MyApp(),
     ),
   );
+}
+
+Future<void> onNotificationCreatedMethod(
+    ReceivedNotification receivedNotification) async {
+  debugPrint('onNotificationCreatedMethod');
+}
+
+Future<void> onNotificationDisplayedMethod(
+    ReceivedNotification receivedNotification) async {
+  debugPrint('onNotificationDisplayedMethod');
+}
+
+Future<void> onDismissActionReceivedMethod(
+    ReceivedAction receivedAction) async {
+  debugPrint('onDismissActionReceivedMethod');
+}
+
+Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
+  debugPrint('onActionReceivedMethod');
+  final payload = receivedAction.payload ?? {};
+  if (payload["navigate"] == "true") {
+    navigatorKey.currentState!.push(
+      MaterialPageRoute(
+        builder: (context) => NotificationResponder(
+          medicineName: payload['medicineName'] ?? '',
+          time: DateTime.parse(payload['time'] ?? ''),
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -59,21 +97,6 @@ class MyApp extends StatelessWidget {
       home: const LoginPage(),
       theme: Provider.of<ThemeProvider>(context).themeData,
       navigatorKey: navigatorKey, // Use the global navigator key
-    );
-  }
-}
-
-@pragma("vm:entry-point")
-void actionButtonKeyPressed(
-    String buttonKey, ReceivedAction receivedAction) async {
-  if (buttonKey == 'TAKE_MEDICINE' && receivedAction.payload != null) {
-    navigatorKey.currentState!.push(
-      MaterialPageRoute(
-        builder: (context) => NotificationResponder(
-          medicineName: receivedAction.payload!['medicineName'] ?? '',
-          time: DateTime.parse(receivedAction.payload!['time'] ?? ''),
-        ),
-      ),
     );
   }
 }
