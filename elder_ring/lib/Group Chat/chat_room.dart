@@ -10,8 +10,9 @@ import 'package:uuid/uuid.dart';
 class ChatRoom extends StatelessWidget {
   final Map<String, dynamic> userMap;
   final String chatRoomId;
+  final String username;
 
-  ChatRoom({super.key, required this.chatRoomId, required this.userMap});
+  ChatRoom({super.key, required this.chatRoomId, required this.userMap, required this.username});
 
   final TextEditingController _message = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -40,7 +41,7 @@ class ChatRoom extends StatelessWidget {
         .collection('chats')
         .doc(fileName)
         .set({
-      "sendby": _auth.currentUser!.displayName,
+      "sendby": username,
       "message": "",
       "type": "img",
       "time": FieldValue.serverTimestamp(),
@@ -77,7 +78,7 @@ class ChatRoom extends StatelessWidget {
   void onSendMessage() async {
     if (_message.text.isNotEmpty) {
       Map<String, dynamic> messages = {
-        "sendby": _auth.currentUser!.displayName,
+        "sendby": username,
         "message": _message.text,
         "type": "text",
         "time": FieldValue.serverTimestamp(),
@@ -102,7 +103,7 @@ class ChatRoom extends StatelessWidget {
       appBar: AppBar(
         title: StreamBuilder<DocumentSnapshot>(
           stream:
-          _firestore.collection("gc_users").doc(userMap['uid']).snapshots(),
+          _firestore.collection("gc_users").doc(userMap['docID']).snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data != null) {
               return Container(
@@ -133,16 +134,17 @@ class ChatRoom extends StatelessWidget {
                     .collection('chatroom')
                     .doc(chatRoomId)
                     .collection('chats')
-                    .orderBy("time", descending: false)
+                    .orderBy('time', descending: false)
                     .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.data != null) {
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    print("Messages Fetched: ${snapshot.data!.docs.length}");
                     return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
-                        Map<String, dynamic> map = snapshot.data!.docs[index]
-                            .data() as Map<String, dynamic>;
+                        Map<String, dynamic> map =
+                        snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                        print("Message: ${map['message']}, Sent by: ${map['sendby']}");
                         return messages(size, map, context);
                       },
                     );
@@ -151,6 +153,7 @@ class ChatRoom extends StatelessWidget {
                   }
                 },
               ),
+
             ),
             Container(
               height: size.height / 10,
@@ -194,7 +197,7 @@ class ChatRoom extends StatelessWidget {
     return map['type'] == "text"
         ? Container(
       width: size.width,
-      alignment: map['sendby'] == _auth.currentUser!.displayName
+      alignment: map['sendby'] == username
           ? Alignment.centerRight
           : Alignment.centerLeft,
       child: Container(
@@ -218,7 +221,7 @@ class ChatRoom extends StatelessWidget {
       height: size.height / 2.5,
       width: size.width,
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-      alignment: map['sendby'] == _auth.currentUser!.displayName
+      alignment: map['sendby'] == username
           ? Alignment.centerRight
           : Alignment.centerLeft,
       child: InkWell(
@@ -239,7 +242,7 @@ class ChatRoom extends StatelessWidget {
             map['message'],
             fit: BoxFit.cover,
           )
-              : CircularProgressIndicator(),
+              : const CircularProgressIndicator(),
         ),
       ),
     );
@@ -249,7 +252,7 @@ class ChatRoom extends StatelessWidget {
 class ShowImage extends StatelessWidget {
   final String imageUrl;
 
-  const ShowImage({required this.imageUrl, Key? key}) : super(key: key);
+  const ShowImage({required this.imageUrl, super.key});
 
   @override
   Widget build(BuildContext context) {

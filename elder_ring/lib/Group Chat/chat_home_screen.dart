@@ -7,14 +7,13 @@ import 'chat_room.dart';
 class Chat_Home_Screen extends StatefulWidget {
   final String username;
 
-  const Chat_Home_Screen({Key? key, required this.username}) : super(key: key);
+  const Chat_Home_Screen({super.key, required this.username});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<Chat_Home_Screen>
-    with WidgetsBindingObserver {
+class HomeScreenState extends State<Chat_Home_Screen> with WidgetsBindingObserver {
   Map<String, dynamic>? userMap;
   bool isLoading = false;
   final TextEditingController _search = TextEditingController();
@@ -24,12 +23,12 @@ class _HomeScreenState extends State<Chat_Home_Screen>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     setStatus("Online");
   }
 
   void setStatus(String status) async {
-    await _firestore.collection('gc_users').doc(_auth.currentUser!.uid).update({
+    await _firestore.collection('gc_users').doc(userMap?['docID']).update({
       "status": status,
     });
   }
@@ -45,23 +44,21 @@ class _HomeScreenState extends State<Chat_Home_Screen>
     }
   }
 
-  String chatRoomId(String user1, String user2) {
-    if (user1[0].toLowerCase().codeUnits[0] >
-        user2.toLowerCase().codeUnits[0]) {
-      return "$user1$user2";
-    } else {
-      return "$user2$user1";
-    }
-  }
+  String chatRoomId(String userId1, String userId2) {
+  List<String> userIds = [userId1, userId2];
+  userIds.sort();  // Sort the user IDs to ensure a consistent order
+  return userIds.join("_");
+}
+
 
   void onSearch() async {
-    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     setState(() {
       isLoading = true;
     });
 
-    await _firestore
+    await firestore
         .collection('gc_users')
         .where("username", isEqualTo: _search.text)
         .get()
@@ -70,7 +67,6 @@ class _HomeScreenState extends State<Chat_Home_Screen>
         userMap = value.docs[0].data();
         isLoading = false;
       });
-      print(userMap);
     });
   }
 
@@ -126,8 +122,8 @@ class _HomeScreenState extends State<Chat_Home_Screen>
                 userMap != null
                     ? ListTile(
                         onTap: () async {
-                          print(widget.username);
-                          print(userMap!['username']);
+
+                          print(userMap);
 
                           String roomId = chatRoomId(
                               widget.username,
@@ -135,7 +131,7 @@ class _HomeScreenState extends State<Chat_Home_Screen>
 
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (_) => ChatRoom(chatRoomId: roomId, userMap: userMap!),
+                              builder: (_) => ChatRoom(chatRoomId: roomId, userMap: userMap!, username: widget.username),
                             ),
                           );
                         },
