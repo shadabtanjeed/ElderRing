@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,8 @@ class Chat_HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<Chat_HomeScreen> with WidgetsBindingObserver {
+class _HomeScreenState extends State<Chat_HomeScreen>
+    with WidgetsBindingObserver {
   Map<String, dynamic>? userMap;
   bool isLoading = false;
   final TextEditingController _search = TextEditingController();
@@ -23,7 +23,7 @@ class _HomeScreenState extends State<Chat_HomeScreen> with WidgetsBindingObserve
   }
 
   void setStatus(String status) async {
-    await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
+    await _firestore.collection('gc_users').doc(_auth.currentUser!.uid).update({
       "status": status,
     });
   }
@@ -56,8 +56,8 @@ class _HomeScreenState extends State<Chat_HomeScreen> with WidgetsBindingObserve
     });
 
     await _firestore
-        .collection('users')
-        .where("email", isEqualTo: _search.text)
+        .collection('gc_users')
+        .where("username", isEqualTo: _search.text)
         .get()
         .then((value) {
       setState(() {
@@ -74,17 +74,14 @@ class _HomeScreenState extends State<Chat_HomeScreen> with WidgetsBindingObserve
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home Screen"),
-        actions: [
-          // IconButton(icon: Icon(Icons.logout), onPressed: () => logOut(context))
-        ],
+        title: const Text("Chat"),
       ),
       body: isLoading
           ? Center(
               child: Container(
                 height: size.height / 20,
                 width: size.height / 20,
-                child: CircularProgressIndicator(),
+                child: const CircularProgressIndicator(),
               ),
             )
           : Column(
@@ -115,7 +112,7 @@ class _HomeScreenState extends State<Chat_HomeScreen> with WidgetsBindingObserve
                 ),
                 ElevatedButton(
                   onPressed: onSearch,
-                  child: Text("Search"),
+                  child: const Text("Search"),
                 ),
                 SizedBox(
                   height: size.height / 30,
@@ -136,30 +133,30 @@ class _HomeScreenState extends State<Chat_HomeScreen> with WidgetsBindingObserve
                           //   ),
                           // );
                         },
-                        leading: Icon(Icons.account_box, color: Colors.black),
+                        leading:
+                            const Icon(Icons.account_box, color: Colors.black),
                         title: Text(
-                          userMap!['name'],
-                          style: TextStyle(
+                          userMap!['username'],
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 17,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         subtitle: Text(userMap!['email']),
-                        trailing: Icon(Icons.chat, color: Colors.black),
+                        trailing: const Icon(Icons.chat, color: Colors.black),
                       )
                     : Container(),
               ],
             ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.group),
-        onPressed: () {}
-        // () => Navigator.of(context).push(
-        //   MaterialPageRoute(
-        //     builder: (_) => GroupChatHomeScreen(),
-        //   ),
-        // ),
-      ),
+      floatingActionButton:
+          FloatingActionButton(child: const Icon(Icons.group), onPressed: () {}
+              // () => Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (_) => GroupChatHomeScreen(),
+              //   ),
+              // ),
+              ),
     );
   }
 }
