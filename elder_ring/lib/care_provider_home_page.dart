@@ -9,6 +9,7 @@ import 'Medication Reminder_Care Provider/cp_medication_schedule.dart';
 import 'theme_provider.dart';
 import 'login_page.dart'; // Make sure to import LoginPage
 import 'package:elder_ring/Users/users.dart';
+import 'package:elder_ring/Locations/getLocation.dart';
 
 class CareProviderHomePage extends StatefulWidget {
   final String username;
@@ -153,6 +154,28 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
+                            builder: (context) => const GetLocation(),
+                          ),
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(careProviderColor),
+                        foregroundColor: MaterialStateProperty.all(Colors.white),
+                      ),
+                      child: const Text(
+                        'Show Elderly\'s Location',
+                        style: TextStyle(
+                          fontFamily: 'Jost',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
                               builder: (context) => const MapMenu()),
                         );
                       },
@@ -163,7 +186,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                             MaterialStateProperty.all(Colors.white),
                       ),
                       child: const Text(
-                        'Location Sharing',
+                        'Dev Menu',
                         style: TextStyle(
                           fontFamily: 'Jost',
                           fontWeight: FontWeight.bold,
