@@ -302,7 +302,9 @@ class _AddMedicineState extends State<AddMedicine> {
       "username": username,
     };
 
-    await dbMethods.addMedicineInfo(medicineInfoMap, medicineId).then((value) {
+    await dbMethods
+        .addMedicineInfo(medicineInfoMap, medicineId)
+        .then((value) async {
       Fluttertoast.showToast(
           msg: "Medicine Details Added Successfully",
           toastLength: Toast.LENGTH_SHORT,
@@ -313,8 +315,13 @@ class _AddMedicineState extends State<AddMedicine> {
           fontSize: 16.0);
 
       // Schedule a notification for the new medicine
-      CreateMedicineNotification(medicineNameController.text, startTime,
-          int.parse(intervalController.text));
+      if (medicineNameController.text.isNotEmpty &&
+          intervalController.text.isNotEmpty) {
+        await CreateMedicineNotification(medicineNameController.text, startTime,
+            int.parse(intervalController.text) * 60);
+      } else {
+        print('Invalid inputs to CreateMedicineNotification');
+      }
     });
 
     setState(() {

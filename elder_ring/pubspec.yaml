@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   awesome_notifications: ^0.9.3+1
+
   cloud_firestore: ^5.0.0
   cupertino_icons: ^1.0.6
   firebase_auth: ^5.0.0
@@ -42,6 +43,7 @@ dependencies:
   location: ^6.0.1
   provider: null
   random_string: ^2.3.1
+  shared_preferences: 2.2.3
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
