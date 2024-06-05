@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elder_ring/Screen%20Sharing/home_scrren_careProvider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,6 +28,13 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
   void initState() {
     super.initState();
     fetchAssociatedElder();
+
+    AwesomeNotifications _awesomeNotifications = AwesomeNotifications();
+    _awesomeNotifications.isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        _awesomeNotifications.requestPermissionToSendNotifications();
+      }
+    });
   }
 
   Future<void> fetchAssociatedElder() async {

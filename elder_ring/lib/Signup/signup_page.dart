@@ -75,7 +75,7 @@ class SignupPageState extends State<SignupPage> {
                 color: isDarkMode ? Colors.black : Colors.white,
               ),
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,

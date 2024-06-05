@@ -10,7 +10,7 @@
         tools:replace="android:label"
         android:label="ElderRing"
         android:name="${applicationName}"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/app_logo"
         tools:ignore="ExtraText">
         android:hardwareAccelerated="true">
         <activity
@@ -38,8 +38,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA619vAUbNLH4oQXCdVDDx78zAFBQOeFBE"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA619vAUbNLH4oQXCdVDDx78zAFBQOeFBE" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility?hl=en and

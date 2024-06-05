@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:elder_ring/Screen%20Sharing/home_screen_elderly.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,12 @@ class ElderHomePageState extends State<ElderHomePage> {
   void initState() {
     super.initState();
     username = widget.username;
+    AwesomeNotifications _awesomeNotifications = AwesomeNotifications();
+    _awesomeNotifications.isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        _awesomeNotifications.requestPermissionToSendNotifications();
+      }
+    });
   }
 
   @override
@@ -97,7 +104,8 @@ class ElderHomePageState extends State<ElderHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Elderly_HomeScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const Elderly_HomeScreen()),
                   );
                 },
                 style: ButtonStyle(
