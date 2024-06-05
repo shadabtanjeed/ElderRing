@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elder_ring/Users/users.dart';
+import 'package:elder_ring/models/locationObj.dart';
 
 class GetLocation extends StatefulWidget {
   const GetLocation({super.key});
@@ -18,56 +20,71 @@ class _GetLocationState extends State<GetLocation> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sharing Live Location'),
-      ),
-      body: StreamBuilder<DocumentSnapshot>(
-        stream: _db.collection('location_db').doc('Untouchable').snapshots(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return const Text('Something went wrong');
-          }
+    return StreamBuilder<DocumentSnapshot>(
+      stream: _db
+          .collection('location_db')
+          .doc(Users.getElderlyUsername())
+          .snapshots(),
+      builder: (BuildContext context,
+          AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Something went wrong');
+        }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text("Initiating Satellites...");
-          }
+        LocationObj locationObj = LocationObj(
+          position: snapshot.data!['position'],
+          unique_id: snapshot.data!['unique_id'],
+          updated_on: snapshot.data!['updated_on'].toDate(),
+        );
 
-          GeoPoint position = snapshot.data!['position'];
-          LatLng currentLocation =
-              LatLng(position.latitude, position.longitude);
-          mapController?.moveCamera(CameraUpdate.newLatLng(currentLocation));
+        GeoPoint position = locationObj.position;
+        LatLng currentLocation = LatLng(position.latitude, position.longitude);
 
-          markers.clear();
-          markers.add(Marker(
-            markerId: const MarkerId('currentLocation'),
-            position: currentLocation,
-            icon: BitmapDescriptor.defaultMarkerWithHue(
-                BitmapDescriptor.hueViolet),
-          ));
+        String appBarTitle = 'Getting Live Location';
+        String markerTitle = 'Current Location';
+        BitmapDescriptor markerColor =
+        BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet);
 
-          path.add(currentLocation);
-          polylines.clear();
-          polylines.add(Polyline(
-            polylineId: const PolylineId('path'),
-            points: path,
-            color: const Color.fromARGB(255, 10, 223, 18),
-          ));
+        if (!locationObj.isLocationUpToDate(locationObj.updated_on)) {
+          appBarTitle = 'Last Known Location';
+          markerTitle = 'Last seen on ${locationObj.updated_on}';
+          markerColor =
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed);
+        }
 
-          return GoogleMap(
+        markers.clear();
+        Marker currentLocationMarker = Marker(
+          markerId: const MarkerId('currentLocation'),
+          position: currentLocation,
+          infoWindow: InfoWindow(
+            title: markerTitle,
+          ),
+          icon: markerColor,
+        );
+        markers.add(currentLocationMarker);
+
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(appBarTitle),
+          ),
+          body: GoogleMap(
             onMapCreated: (GoogleMapController controller) {
               mapController = controller;
+              Future.delayed(Duration(milliseconds: 500)).then((_) {
+                controller.animateCamera(
+                  CameraUpdate.newLatLngZoom(currentLocationMarker.position, 15),
+                );
+              });
             },
             initialCameraPosition: CameraPosition(
               target: currentLocation,
-              zoom: 14,
+              zoom: 15,
             ),
             markers: markers,
             polylines: polylines,
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
