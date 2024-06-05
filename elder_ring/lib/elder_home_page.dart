@@ -6,6 +6,8 @@ import 'Locations/mapMenu.dart';
 import 'Medication Reminder/medication_schedule.dart';
 import 'theme_provider.dart';
 import 'login_page.dart'; // Make sure to import LoginPage
+import 'package:elder_ring/Users/users.dart';
+
 
 class ElderHomePage extends StatefulWidget {
   final String username;
@@ -20,6 +22,7 @@ class ElderHomePageState extends State<ElderHomePage> {
   final user = FirebaseAuth.instance.currentUser;
 
   String username = "";
+  static const Color elderColor = Color(0xFF2798E4);
 
   @override
   void initState() {
@@ -45,6 +48,7 @@ class ElderHomePageState extends State<ElderHomePage> {
             icon: const Icon(Icons.logout),
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
+              Users.clear();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -81,7 +85,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                      MaterialStateProperty.all(elderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -102,7 +106,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                      MaterialStateProperty.all(elderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -123,7 +127,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                      MaterialStateProperty.all(elderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
@@ -142,7 +146,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF2798E4)),
+                      MaterialStateProperty.all(elderColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text(
