@@ -1,60 +1,76 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class NotificationResponder extends StatelessWidget {
+class NotificationResponder extends StatefulWidget {
   final String medicineName;
   final DateTime time;
 
   NotificationResponder({required this.medicineName, required this.time});
 
   @override
+  _NotificationResponderState createState() => _NotificationResponderState();
+}
+
+class _NotificationResponderState extends State<NotificationResponder> {
+  String emoji = '';
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Medicine Reminder'),
+        centerTitle: true,
+        title: const Text(
+          'Medicine Reminder',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+        ),
         backgroundColor: Color(0xFF2798E4),
       ),
       body: Center(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 20.0),
-          // Add margins on the two sides
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Did you take $medicineName on ${time.toString()}?',
+                'Did you take ${widget.medicineName} on ${widget.time.toString()}?',
                 style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center, // Align the text in the center
+                textAlign: TextAlign.center,
               ),
               SizedBox(height: 20),
-              // Add some space between the text and the buttons
+              Text(
+                emoji,
+                style: TextStyle(fontSize: 50),
+              ),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                // Space the buttons evenly
                 children: <Widget>[
                   ElevatedButton.icon(
                     onPressed: () {
-                      // Handle 'Yes' button press
-                      //navigate to MedicineSchedulePage
+                      setState(() {
+                        emoji = '😊'; // Happy emoji
+                      });
                       Navigator.pushNamed(context, '/MedicineSchedulePage');
                     },
                     icon: Icon(Icons.check),
                     label: Text('Yes'),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
-                      backgroundColor: Color(0xFF2798E4), // Set the text color
+                      backgroundColor: Color(0xFF2798E4),
                     ),
                   ),
                   ElevatedButton.icon(
                     onPressed: () {
-                      // Handle 'No' button press
+                      setState(() {
+                        emoji = '😞'; // Sad emoji
+                      });
                       Navigator.pushNamed(context, '/MedicineSchedulePage');
                     },
                     icon: Icon(Icons.close),
                     label: Text('No'),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
-                      backgroundColor: Color(0xFF2798E4), // Set the text color
+                      backgroundColor: Color(0xFF2798E4),
                     ),
                   ),
                 ],
