@@ -3,6 +3,7 @@ import 'locationServices.dart';
 import 'shareLocation.dart';
 import 'crudscreen.dart';
 import 'getLocation.dart';
+import 'package:elder_ring/Users/users.dart';
 
 class MapMenu extends StatefulWidget {
   const MapMenu({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class MapMenu extends StatefulWidget {
 class _MapMenuState extends State<MapMenu> {
   String latitude = '';
   String longitude = '';
+  static const Color mapPageColor = Color(0xFF2798E4);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class _MapMenuState extends State<MapMenu> {
                 });
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                backgroundColor: MaterialStateProperty.all(mapPageColor),
                 foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
               child: const Text('Fetch Location'),
@@ -58,7 +60,7 @@ class _MapMenuState extends State<MapMenu> {
                 );
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                backgroundColor: MaterialStateProperty.all(mapPageColor),
                 foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
               child: const Text('Show Live Location'),
@@ -73,7 +75,7 @@ class _MapMenuState extends State<MapMenu> {
                 );
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                backgroundColor: MaterialStateProperty.all(mapPageColor),
                 foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
               child: const Text('Fire Share'),
@@ -87,7 +89,7 @@ class _MapMenuState extends State<MapMenu> {
                 );
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Color(0xFF2798E4)),
+                backgroundColor: MaterialStateProperty.all(mapPageColor),
                 foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
               child: const Text('CRUDs'),
@@ -98,11 +100,46 @@ class _MapMenuState extends State<MapMenu> {
                 Navigator.pop(context);
               },
               style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(const Color(0xFF2798E4)),
+                backgroundColor: MaterialStateProperty.all(mapPageColor),
                 foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
               child: const Text('Go Back'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Users'),
+                      content: SingleChildScrollView(
+                        child: ListBody(
+                          children: <Widget>[
+                            Text(
+                                'Elderly Username: ${Users.getElderlyUsername()}'),
+                            Text(
+                                'Care Provider Username: ${Users.getCareProviderUsername()}'),
+                          ],
+                        ),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(mapPageColor),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
+              child: const Text('Show Users'),
             ),
           ],
         ),
