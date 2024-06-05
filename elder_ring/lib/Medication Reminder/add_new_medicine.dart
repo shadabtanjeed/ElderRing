@@ -318,7 +318,7 @@ class _AddMedicineState extends State<AddMedicine> {
       if (medicineNameController.text.isNotEmpty &&
           intervalController.text.isNotEmpty) {
         await CreateMedicineNotification(medicineNameController.text, startTime,
-            int.parse(intervalController.text) * 60);
+            int.parse(intervalController.text));
       } else {
         print('Invalid inputs to CreateMedicineNotification');
       }
