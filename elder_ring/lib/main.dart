@@ -1,5 +1,6 @@
 import 'dart:io'; // Correct import for Platform
 
+import 'package:elder_ring/Notifications/local_notificatiions.dart';
 import 'package:elder_ring/login_page.dart';
 import 'package:elder_ring/main_page.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await LocalNotifications.init();
   Platform.isAndroid
       ? await Firebase.initializeApp(
           options: const FirebaseOptions(
