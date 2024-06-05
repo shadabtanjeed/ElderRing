@@ -97,7 +97,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const CareProvider_HomeScreen()),
+                    MaterialPageRoute(builder: (context) => CareProvider_HomeScreen(username: widget.username,)),
                   );
                 },
                 style: ButtonStyle(

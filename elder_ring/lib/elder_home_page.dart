@@ -95,7 +95,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Elderly_HomeScreen()),
+                    MaterialPageRoute(builder: (context) => Elderly_HomeScreen(username: username,)),
                   );
                 },
                 style: ButtonStyle(
