@@ -635,14 +635,16 @@ class SignupPageState extends State<SignupPage> {
             fontSize: 16.0);
       });
 
+      userId = randomAlphaNumeric(10);
+
       //add to group chat users
       Map<String, dynamic> GCUserMap = {
         "username": username,
         "email": email,
-        "status": "Unavailable"
+        "status": "Unavailable",
+        "docID" : userId
       };
 
-      userId = randomAlphaNumeric(10);
 
       await signupdbmethods.addGCUser(GCUserMap, userId);
       //

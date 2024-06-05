@@ -159,7 +159,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Chat_HomeScreen()),
+                    MaterialPageRoute(builder: (context) => Chat_Home_Screen(username: username,)),
                   );
                 },
                 style: ButtonStyle(
