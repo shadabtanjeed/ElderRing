@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:random_string/random_string.dart';
+import '../Notifications/local_notifications.dart';
 import 'medicine_database.dart';
 import 'medication_schedule.dart';
 
@@ -310,6 +311,10 @@ class _AddMedicineState extends State<AddMedicine> {
           backgroundColor: Color(0xFF2798E4),
           textColor: Colors.white,
           fontSize: 16.0);
+
+      // Schedule a notification for the new medicine
+      CreateMedicineNotification(medicineNameController.text, startTime,
+          int.parse(intervalController.text));
     });
 
     setState(() {
