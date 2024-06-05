@@ -8,6 +8,7 @@ import 'Locations/mapMenu.dart';
 import 'Medication Reminder_Care Provider/cp_medication_schedule.dart';
 import 'theme_provider.dart';
 import 'login_page.dart'; // Make sure to import LoginPage
+import 'package:elder_ring/Users/users.dart';
 
 class CareProviderHomePage extends StatefulWidget {
   final String username;
@@ -21,7 +22,10 @@ class CareProviderHomePage extends StatefulWidget {
 
 class CareProviderHomePageState extends State<CareProviderHomePage> {
   final user = FirebaseAuth.instance.currentUser;
+  String username = "";
+
   String? elderUsername;
+  static const careProviderColor = Color(0xFF006769);
 
   @override
   void initState() {
@@ -66,6 +70,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
             icon: const Icon(Icons.logout),
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
+              Users.clear();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -106,7 +111,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFF006769)),
+                            MaterialStateProperty.all(careProviderColor),
                         foregroundColor:
                             MaterialStateProperty.all(Colors.white),
                       ),
@@ -130,7 +135,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFF006769)),
+                            MaterialStateProperty.all(careProviderColor),
                         foregroundColor:
                             MaterialStateProperty.all(Colors.white),
                       ),
@@ -153,7 +158,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFF006769)),
+                            MaterialStateProperty.all(careProviderColor),
                         foregroundColor:
                             MaterialStateProperty.all(Colors.white),
                       ),
@@ -172,7 +177,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFF006769)),
+                            MaterialStateProperty.all(careProviderColor),
                         foregroundColor:
                             MaterialStateProperty.all(Colors.white),
                       ),
