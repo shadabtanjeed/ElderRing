@@ -12,8 +12,6 @@ import 'package:provider/provider.dart';
 import 'Notifications/NotificationResponder.dart';
 import 'theme_provider.dart';
 
-import 'package:awesome_notifications_fcm/awesome_notifications_fcm.dart';
-
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
