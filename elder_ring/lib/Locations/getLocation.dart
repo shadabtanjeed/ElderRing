@@ -17,18 +17,29 @@ class _GetLocationState extends State<GetLocation> {
   Set<Marker> markers = {};
   Set<Polyline> polylines = {};
   List<LatLng> path = [];
+  Future<DocumentSnapshot>? _initialData;
+
+  @override
+  void initState() {
+    super.initState();
+    _initialData = _db.collection('location_db').doc(Users.getElderlyUsername()).get();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<DocumentSnapshot>(
-      stream: _db
-          .collection('location_db')
-          .doc(Users.getElderlyUsername())
-          .snapshots(),
-      builder: (BuildContext context,
-          AsyncSnapshot<DocumentSnapshot> snapshot) {
+    return FutureBuilder<DocumentSnapshot>(
+      future: _initialData,
+      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
         if (snapshot.hasError) {
           return const Text('Something went wrong');
+        }
+
+        if (snapshot.data == null) {
+          return const Text('No data');
         }
 
         LocationObj locationObj = LocationObj(
