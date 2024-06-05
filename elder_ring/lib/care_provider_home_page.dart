@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elder_ring/Screen%20Sharing/home_screen_elderly.dart';
 import 'package:elder_ring/Screen%20Sharing/home_scrren_careProvider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -94,7 +95,29 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  final String elder_name;
+                  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+                    Future<String> fetchAssociatedElder(String currentUsername) async {
+                    // Fetch the document for the current user
+                    QuerySnapshot querySnapshot = await firestore
+                        .collection('user_db')
+                        .where('username', isEqualTo: currentUsername)
+                        .get();
+
+                    // Extract the associated elder from the document
+                    if (querySnapshot.docs.isNotEmpty) {
+                      return querySnapshot.docs.first.get('associated_elder');
+                    } else {
+                      throw Exception('No user found for username: $currentUsername');
+                    }
+                  }
+
+                  elder_name = await fetchAssociatedElder(username);
+                    print(elder_name);
+
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => CareProvider_HomeScreen(username: widget.username,)),
