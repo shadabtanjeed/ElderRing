@@ -7,11 +7,33 @@ int createUniqueId() {
 }
 
 Future<void> CreateMedicineNotification(
-    String medicineName, TimeOfDay startTime, int interval) async {
-  DateTime startDateTime = DateTime(DateTime.now().year, DateTime.now().month,
-      DateTime.now().day, startTime.hour, startTime.minute, 0, 0);
+    String medicineName, TimeOfDay startTime, int intervalInHours) async {
+  print('CreateMedicineNotification called with:');
+  print('medicineName: $medicineName');
+  print('startTime: $startTime');
+  print('intervalInHours: $intervalInHours');
 
-  AwesomeNotifications().createNotification(
+  DateTime now = DateTime.now();
+  DateTime startDateTime = DateTime(
+    now.year,
+    now.month,
+    now.day,
+    startTime.hour,
+    startTime.minute,
+  );
+
+  // If the start time is before now, schedule it for the next day
+  if (startDateTime.isBefore(now)) {
+    startDateTime = startDateTime.add(Duration(days: 1));
+  }
+
+  print('Scheduling first notification at: $startDateTime');
+  print('Interval: $intervalInHours hours');
+
+  for (int i = 0; i < 3; i++) {
+    // Limit the number of notifications to 3 intervals
+    // Schedule the notification at the specified start time
+    bool createdNotification = await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: createUniqueId(),
         channelKey: 'basic_channel',
@@ -30,25 +52,24 @@ Future<void> CreateMedicineNotification(
           label: 'Take Medicine',
         ),
       ],
-      schedule: NotificationInterval(
-        interval: interval,
-        timeZone: DateTime.now().timeZoneName,
-        repeats: true,
-      ));
+      schedule: NotificationCalendar.fromDate(
+        date: startDateTime,
+        repeats: false,
+      ),
+    );
 
-  // Calculate the DateTime when the first notification will be shown
-  DateTime firstNotificationTime = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-      startTime.hour,
-      startTime.minute,
-      0,
-      0);
+    if (!createdNotification) {
+      print('Failed to create notification');
+    } else {
+      print('Notification created successfully');
+    }
+
+    startDateTime = startDateTime.add(Duration(hours: intervalInHours));
+  }
 
   // Prepare the message
   String message =
-      'Scheduled a $medicineName reminder for ${firstNotificationTime.toString()} with an interval of $interval minutes.';
+      'Scheduled a $medicineName reminder for ${startDateTime.toString()} with an interval of $intervalInHours hours.';
 
   // Display a message with the time and date when the first notification will be shown
   Fluttertoast.showToast(
