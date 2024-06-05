@@ -2,12 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Chat_HomeScreen extends StatefulWidget {
+import 'chat_room.dart';
+
+class Chat_Home_Screen extends StatefulWidget {
+  final String username;
+
+  const Chat_Home_Screen({Key? key, required this.username}) : super(key: key);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<Chat_HomeScreen>
+class _HomeScreenState extends State<Chat_Home_Screen>
     with WidgetsBindingObserver {
   Map<String, dynamic>? userMap;
   bool isLoading = false;
@@ -119,19 +125,19 @@ class _HomeScreenState extends State<Chat_HomeScreen>
                 ),
                 userMap != null
                     ? ListTile(
-                        onTap: () {
-                          String roomId = chatRoomId(
-                              _auth.currentUser!.displayName!,
-                              userMap!['name']);
+                        onTap: () async {
+                          print(widget.username);
+                          print(userMap!['username']);
 
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (_) => ChatRoom(
-                          //       chatRoomId: roomId,
-                          //       userMap: userMap!,
-                          //     ),
-                          //   ),
-                          // );
+                          String roomId = chatRoomId(
+                              widget.username,
+                              userMap!['username']);
+
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => ChatRoom(chatRoomId: roomId, userMap: userMap!),
+                            ),
+                          );
                         },
                         leading:
                             const Icon(Icons.account_box, color: Colors.black),
