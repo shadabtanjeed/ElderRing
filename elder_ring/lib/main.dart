@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'Notifications/NotificationResponder.dart';
 import 'theme_provider.dart';
 
+import 'package:awesome_notifications_fcm/awesome_notifications_fcm.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
@@ -41,12 +43,38 @@ Future<void> main() async {
     ],
   );
 
-  AwesomeNotifications().setListeners(
-    onNotificationCreatedMethod: onNotificationCreatedMethod,
-    onNotificationDisplayedMethod: onNotificationDisplayedMethod,
-    onActionReceivedMethod: onActionReceivedMethod,
-    onDismissActionReceivedMethod: onDismissActionReceivedMethod,
-  );
+  AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
+    debugPrint('onActionReceivedMethod');
+    final payload = receivedAction.payload ?? {};
+    if (payload["navigate"] == "true") {
+      navigatorKey.currentState!.push(
+        MaterialPageRoute(
+          builder: (context) => NotificationResponder(
+            medicineName: payload['medicineName'] ?? '',
+            time: DateTime.parse(payload['time'] ?? ''),
+          ),
+        ),
+      );
+    }
+  });
+
+  AwesomeNotifications()
+      .createdStream
+      .listen((ReceivedNotification receivedNotification) {
+    debugPrint('onNotificationCreatedMethod');
+  });
+
+  AwesomeNotifications()
+      .displayedStream
+      .listen((ReceivedNotification receivedNotification) {
+    debugPrint('onNotificationDisplayedMethod');
+  });
+
+  AwesomeNotifications()
+      .dismissedStream
+      .listen((ReceivedAction receivedAction) {
+    debugPrint('onDismissActionReceivedMethod');
+  });
 
   runApp(
     ChangeNotifierProvider(
@@ -54,36 +82,6 @@ Future<void> main() async {
       child: const MyApp(),
     ),
   );
-}
-
-Future<void> onNotificationCreatedMethod(
-    ReceivedNotification receivedNotification) async {
-  debugPrint('onNotificationCreatedMethod');
-}
-
-Future<void> onNotificationDisplayedMethod(
-    ReceivedNotification receivedNotification) async {
-  debugPrint('onNotificationDisplayedMethod');
-}
-
-Future<void> onDismissActionReceivedMethod(
-    ReceivedAction receivedAction) async {
-  debugPrint('onDismissActionReceivedMethod');
-}
-
-Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
-  debugPrint('onActionReceivedMethod');
-  final payload = receivedAction.payload ?? {};
-  if (payload["navigate"] == "true") {
-    navigatorKey.currentState!.push(
-      MaterialPageRoute(
-        builder: (context) => NotificationResponder(
-          medicineName: payload['medicineName'] ?? '',
-          time: DateTime.parse(payload['time'] ?? ''),
-        ),
-      ),
-    );
-  }
 }
 
 class MyApp extends StatelessWidget {

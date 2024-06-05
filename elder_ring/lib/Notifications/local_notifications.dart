@@ -30,6 +30,10 @@ Future<void> CreateMedicineNotification(
   print('Scheduling first notification at: $startDateTime');
   print('Interval: $intervalInHours hours');
 
+  // Prepare the message
+  String message =
+      'Scheduled a $medicineName reminder for ${startDateTime.toString()} with an interval of $intervalInHours hours.';
+
   for (int i = 0; i < 3; i++) {
     // Limit the number of notifications to 3 intervals
     // Schedule the notification at the specified start time
@@ -66,10 +70,6 @@ Future<void> CreateMedicineNotification(
 
     startDateTime = startDateTime.add(Duration(hours: intervalInHours));
   }
-
-  // Prepare the message
-  String message =
-      'Scheduled a $medicineName reminder for ${startDateTime.toString()} with an interval of $intervalInHours hours.';
 
   // Display a message with the time and date when the first notification will be shown
   Fluttertoast.showToast(
