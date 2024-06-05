@@ -24,12 +24,15 @@ class CareProviderHomePage extends StatefulWidget {
 
 class CareProviderHomePageState extends State<CareProviderHomePage> {
   final user = FirebaseAuth.instance.currentUser;
-  String? elderUsername;
+
+  String username = "";
+
+  String elderUsername = Users.getElderlyUsername();
+  static const careProviderColor = Color(0xFF006769);
 
   @override
   void initState() {
     super.initState();
-    fetchAssociatedElder();
 
     AwesomeNotifications _awesomeNotifications = AwesomeNotifications();
     _awesomeNotifications.isNotificationAllowed().then((isAllowed) {
@@ -37,25 +40,6 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
         _awesomeNotifications.requestPermissionToSendNotifications();
       }
     });
-  }
-
-  Future<void> fetchAssociatedElder() async {
-    try {
-      final QuerySnapshot result = await FirebaseFirestore.instance
-          .collection('user_db')
-          .where('username', isEqualTo: widget.username)
-          .get();
-      final documents = result.docs;
-      if (documents.isNotEmpty) {
-        setState(() {
-          elderUsername = documents[0]['associated_elder'];
-        });
-      } else {
-        Fluttertoast.showToast(msg: 'Error: User not found');
-      }
-    } catch (e) {
-      Fluttertoast.showToast(msg: 'Error: $e');
-    }
   }
 
   @override
