@@ -6,6 +6,8 @@ class Users {
   static String _careProviderUsername = '';
   static bool elderSet = false;
   static bool careProviderSet = false;
+  static String _loginUser = '';
+  static bool loginUserSet = false;
 
   static void setElderlyUsername(String username) {
     if (!elderSet) {
@@ -21,6 +23,13 @@ class Users {
     }
   }
 
+  static void setLoginUser(String username) {
+    if (!loginUserSet) {
+      _loginUser = username;
+      loginUserSet = true;
+    }
+  }
+
   static String getElderlyUsername() {
     return _elderlyUsername;
   }
@@ -29,11 +38,17 @@ class Users {
     return _careProviderUsername;
   }
 
+  static String getLoginUser() {
+    return _loginUser;
+  }
+
   static void clear() {
     _elderlyUsername = '';
     _careProviderUsername = '';
+    _loginUser = "";
     elderSet = false;
     careProviderSet = false;
+    loginUserSet = false;
   }
 
   static Future<void> fetchAssociatedElder() async {
@@ -79,5 +94,4 @@ class Users {
       throw Exception('Care Provider is already set');
     }
   }
-
 }
