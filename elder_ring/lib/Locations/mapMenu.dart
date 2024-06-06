@@ -203,6 +203,22 @@ class _MapMenuState extends State<MapMenu> {
                 ),
               ),
             ),
+            //Previous Buttons
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddEntryPage()),
+                );
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(mapPageColor),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
+              child: const Text('Add Entry'),
+            ),
+//end
           ],
         ),
       ),
