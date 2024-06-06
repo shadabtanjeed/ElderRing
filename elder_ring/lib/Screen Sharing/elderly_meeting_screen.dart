@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 
 class Elderly_MeetingScreen extends StatelessWidget {
-  Elderly_MeetingScreen({super.key});
+  final String username;
+  Elderly_MeetingScreen({super.key, required this.username});
 
   final JitsiMeetMethods _jitsiMeetMethods = JitsiMeetMethods();
 
