@@ -1,9 +1,11 @@
+import 'package:elder_ring/Notifications/local_notificatiions.dart';
 import 'package:elder_ring/Screen%20Sharing/home_screen_elderly.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Locations/mapMenu.dart';
 import 'Medication Reminder/medication_schedule.dart';
+import 'Notifications/notification_responder_page.dart';
 import 'theme_provider.dart';
 import 'login_page.dart'; // Make sure to import LoginPage
 import 'package:elder_ring/Users/users.dart';
@@ -26,8 +28,21 @@ class ElderHomePageState extends State<ElderHomePage> {
 
   @override
   void initState() {
+    listenToNotifications();
     super.initState();
     username = widget.username;
+  }
+
+  //to listen to any notificationClick or not
+  listenToNotifications() {
+    LocalNotifications.onClickNotification.stream.listen((event) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => NotificationResponderPage(
+                    payload: event,
+                  ))); //navigate to another page
+    });
   }
 
   @override
@@ -149,6 +164,24 @@ class ElderHomePageState extends State<ElderHomePage> {
                 ),
                 child: const Text(
                   'Change Theme',
+                  style: TextStyle(
+                    fontFamily: 'Jost',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  LocalNotifications.showSimpleNotification(
+                      title: 'Hello', body: 'This is a test', payload: 'Test');
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(elderColor),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                child: const Text(
+                  'Simple Notification',
                   style: TextStyle(
                     fontFamily: 'Jost',
                     fontWeight: FontWeight.bold,

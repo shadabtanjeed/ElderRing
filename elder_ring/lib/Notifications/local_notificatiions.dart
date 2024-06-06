@@ -1,15 +1,26 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class LocalNotifications {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+
+  static final onClickNotification = BehaviorSubject<String>();
+
+  //on tap on any notification
+  static void onNotificationTap(NotificationResponse notifcationResponse) {
+    onClickNotification.add(notifcationResponse.payload!);
+  }
 
   static Future<void> init() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@drawable/logo');
     final DarwinInitializationSettings initializationSettingsDarwin =
         DarwinInitializationSettings(
-            onDidReceiveLocalNotification: (id, title, body, payload) => null);
+            onDidReceiveLocalNotification: (int id, String? title, String? body,
+                String? payload) async {});
 
     final LinuxInitializationSettings initializationSettingsLinux =
         LinuxInitializationSettings(defaultActionName: 'Open notification');
@@ -19,7 +30,36 @@ class LocalNotifications {
             iOS: initializationSettingsDarwin,
             linux: initializationSettingsLinux);
 
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onDidReceiveNotificationResponse: (details) => null);
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onDidReceiveNotificationResponse: onNotificationTap,
+        onDidReceiveBackgroundNotificationResponse: onNotificationTap);
+  }
+
+  static Future<void> showSimpleNotification({
+    required String title,
+    required String body,
+    String? payload,
+  }) async {
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails('your channel id', 'your channel name',
+            channelDescription: 'your channel description',
+            importance: Importance.max,
+            priority: Priority.high,
+            //make sound
+            playSound: true,
+            ticker: 'ticker');
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+    await flutterLocalNotificationsPlugin
+        .show(0, title, body, notificationDetails, payload: payload);
+  }
+
+  static Future<void> showScheduledNotification({
+    required String title,
+    required String body,
+    String? payload,
+  }) async {
+    tz.initializeTimeZones();
+    var localTime = tz.local;
   }
 }
