@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'locationServices.dart';
 import 'shareLocation.dart';
 import 'crudscreen.dart';
 import 'getLocation.dart';
 import 'package:elder_ring/Users/users.dart';
+import 'package:elder_ring/theme_provider.dart';
 
 class MapMenu extends StatefulWidget {
   const MapMenu({Key? key}) : super(key: key);
@@ -19,6 +21,10 @@ class _MapMenuState extends State<MapMenu> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final careProviderColor =
+        themeProvider.isDarkMode ? Colors.grey[800] : Colors.blue;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Location Menu'),
@@ -140,6 +146,23 @@ class _MapMenuState extends State<MapMenu> {
                 foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
               child: const Text('Show Users'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                themeProvider.toggleTheme();
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(careProviderColor),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
+              child: const Text(
+                'Change Theme',
+                style: TextStyle(
+                  fontFamily: 'Jost',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
