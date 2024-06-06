@@ -151,14 +151,6 @@ class HomeScreenState extends State<Chat_Home_Screen> with WidgetsBindingObserve
                     : Container(),
               ],
             ),
-      floatingActionButton:
-          FloatingActionButton(child: const Icon(Icons.group), onPressed: () {}
-              // () => Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (_) => GroupChatHomeScreen(),
-              //   ),
-              // ),
-              ),
     );
   }
 }
