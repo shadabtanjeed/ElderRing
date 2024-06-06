@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elder_ring/Group%20Chat/GC/group_home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -152,12 +153,12 @@ class HomeScreenState extends State<Chat_Home_Screen> with WidgetsBindingObserve
               ],
             ),
       floatingActionButton:
-          FloatingActionButton(child: const Icon(Icons.group), onPressed: () {}
-              // () => Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (_) => GroupChatHomeScreen(),
-              //   ),
-              // ),
+          FloatingActionButton(child: const Icon(Icons.group), onPressed:
+              () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => GroupChatHomeScreen(username: widget.username),
+                ),
+              ),
               ),
     );
   }
