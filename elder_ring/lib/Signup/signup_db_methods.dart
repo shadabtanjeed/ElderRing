@@ -7,4 +7,11 @@ class SignupDatabaseMethods {
         .doc(id)
         .set(userInfoMap);
   }
+
+  Future<void> addGCUser(Map<String, dynamic> gcUserMap, String id) async {
+    await FirebaseFirestore.instance
+        .collection("gc_users")
+        .doc(id)
+        .set(gcUserMap);
+  }
 }

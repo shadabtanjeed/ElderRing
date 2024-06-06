@@ -44,6 +44,9 @@ dependencies:
   provider: null
   random_string: ^2.3.1
   rxdart: ^0.27.7
+  image_picker: ^0.8.3+2
+  firebase_storage: ^11.7.7
+  uuid: ^3.0.4
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
