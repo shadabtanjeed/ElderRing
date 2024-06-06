@@ -21,9 +21,9 @@ class ChatRoom extends StatelessWidget {
   File? imageFile;
 
   Future getImage() async {
-    ImagePicker _picker = ImagePicker();
+    ImagePicker picker = ImagePicker();
 
-    await _picker.pickImage(source: ImageSource.gallery).then((xFile) {
+    await picker.pickImage(source: ImageSource.gallery).then((xFile) {
       if (xFile != null) {
         imageFile = File(xFile.path);
         uploadImage();
@@ -32,7 +32,7 @@ class ChatRoom extends StatelessWidget {
   }
 
   Future uploadImage() async {
-    String fileName = Uuid().v1();
+    String fileName = const Uuid().v1();
     int status = 1;
 
     await _firestore
