@@ -21,7 +21,6 @@ class LoginPageState extends State<LoginPage> {
   final password_controller = TextEditingController();
   static const Color loginPageColor = Color(0xFF2798E4);
 
-
   Future signIn() async {
     showDialog(
       context: context,
@@ -53,7 +52,6 @@ class LoginPageState extends State<LoginPage> {
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: loginPageColor,
-
         ),
       );
       // Check if the user is signed in
@@ -62,7 +60,6 @@ class LoginPageState extends State<LoginPage> {
         String userType = await handleUserType(username);
 
         if (userType == 'elder') {
-
           Users.setElderlyUsername(username);
           Users.fetchAssociatedCareProvider();
 
@@ -73,7 +70,6 @@ class LoginPageState extends State<LoginPage> {
             ),
           );
         } else if (userType == 'care_provider') {
-
           Users.setCareProviderUsername(username);
           Users.fetchAssociatedElder();
 
@@ -150,8 +146,7 @@ class LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.all(20),
                     child: TextField(
                       controller: username_controller,
-                      cursorColor:
-                          isDarkMode ? Colors.white : loginPageColor,
+                      cursorColor: isDarkMode ? Colors.white : loginPageColor,
                       style: TextStyle(
                           fontFamily: 'Jost',
                           color: isDarkMode ? Colors.white : Colors.black),
@@ -159,9 +154,7 @@ class LoginPageState extends State<LoginPage> {
                         labelText: 'Username',
                         labelStyle: TextStyle(
                           fontFamily: 'Jost',
-                          color: isDarkMode
-                              ? Colors.white
-                              : loginPageColor,
+                          color: isDarkMode ? Colors.white : loginPageColor,
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -169,17 +162,13 @@ class LoginPageState extends State<LoginPage> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide(
-                            color: isDarkMode
-                                ? Colors.white
-                                : loginPageColor,
+                            color: isDarkMode ? Colors.white : loginPageColor,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide(
-                            color: isDarkMode
-                                ? Colors.white
-                                : loginPageColor,
+                            color: isDarkMode ? Colors.white : loginPageColor,
                           ),
                         ),
                       ),
@@ -192,36 +181,28 @@ class LoginPageState extends State<LoginPage> {
                     child: TextField(
                       controller: password_controller,
                       obscureText: true,
-                      cursorColor:
-                          isDarkMode ? Colors.white : loginPageColor,
+                      cursorColor: isDarkMode ? Colors.white : loginPageColor,
                       style: TextStyle(
                           fontFamily: 'Jost',
                           color: isDarkMode ? Colors.white : Colors.black),
                       decoration: InputDecoration(
                         labelText: 'Password',
                         labelStyle: TextStyle(
-                          fontFamily: 'Jost',
-                          color: isDarkMode
-                              ? Colors.white
-                              : loginPageColor
-                        ),
+                            fontFamily: 'Jost',
+                            color: isDarkMode ? Colors.white : loginPageColor),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide(
-                            color: isDarkMode
-                                ? Colors.white
-                                : loginPageColor,
+                            color: isDarkMode ? Colors.white : loginPageColor,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide(
-                            color: isDarkMode
-                                ? Colors.white
-                                : loginPageColor,
+                            color: isDarkMode ? Colors.white : loginPageColor,
                           ),
                         ),
                       ),
@@ -234,8 +215,7 @@ class LoginPageState extends State<LoginPage> {
                     signIn();
                   },
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(loginPageColor),
+                    backgroundColor: MaterialStateProperty.all(loginPageColor),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
                   child: const Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../elder_home_page.dart';
 import 'locationServices.dart';
 import 'shareLocation.dart';
 import 'crudscreen.dart';
@@ -105,7 +106,12 @@ class _MapMenuState extends State<MapMenu> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ElderHomePage(username: Users.getLoginUser())),
+                );
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(mapPageColor),
