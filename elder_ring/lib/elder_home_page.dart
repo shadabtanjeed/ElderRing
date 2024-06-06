@@ -561,7 +561,6 @@ class ElderHomePageState extends State<ElderHomePage> {
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Color(0xFF2798E4),
           selectedItemColor: Colors.white,
-          // This will make the selected icon white
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -579,13 +578,20 @@ class ElderHomePageState extends State<ElderHomePage> {
           onTap: (index) {
             switch (index) {
               case 0:
-                // Handle tap for Home
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ElderHomePage(username: username)),
+                );
                 break;
               case 1:
                 // Handle tap for SOS
                 break;
               case 2:
-                // Handle tap for Menu
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MapMenu()),
+                );
                 break;
             }
           },
