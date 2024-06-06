@@ -7,9 +7,10 @@ import 'package:elder_ring/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'Locations/mapMenu.dart';
+import 'devMenu.dart';
 import 'Medication Reminder/medication_schedule.dart';
 import 'Notifications/notification_responder_page.dart';
+import 'main.dart';
 import 'theme_provider.dart';
 import 'login_page.dart';
 import 'package:elder_ring/Users/users.dart';
@@ -35,20 +36,26 @@ class ElderHomePageState extends State<ElderHomePage> {
   void initState() {
     listenToNotifications();
     super.initState();
+
+    LocalNotifications.onClickNotification.listen((payload) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NotificationResponderPage(payload: payload),
+        ),
+      );
+    });
     username = widget.username;
   }
 
   // To listen to any notificationClick or not
   listenToNotifications() {
-    LocalNotifications.onClickNotification.stream.listen((event) {
-      Navigator.push(
-        context,
+    LocalNotifications.onClickNotification.listen((payload) {
+      navigatorKey.currentState!.push(
         MaterialPageRoute(
-          builder: (context) => NotificationResponderPage(
-            payload: event,
-          ),
+          builder: (context) => NotificationResponderPage(payload: payload),
         ),
-      ); // Navigate to another page
+      );
     });
   }
 
