@@ -635,6 +635,20 @@ class SignupPageState extends State<SignupPage> {
             fontSize: 16.0);
       });
 
+      userId = randomAlphaNumeric(10);
+
+      //add to group chat users
+      Map<String, dynamic> GCUserMap = {
+        "username": username,
+        "email": email,
+        "status": "Unavailable",
+        "docID" : userId
+      };
+
+
+      await signupdbmethods.addGCUser(GCUserMap, userId);
+      //
+
       String firebase_email = username + "@gmail.com";
 
       UserCredential userCredential =
