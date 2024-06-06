@@ -6,6 +6,7 @@ import 'crudscreen.dart';
 import 'getLocation.dart';
 import 'package:elder_ring/Users/users.dart';
 import 'package:elder_ring/theme_provider.dart';
+import 'package:elder_ring/theme.dart';
 
 class MapMenu extends StatefulWidget {
   const MapMenu({Key? key}) : super(key: key);
@@ -22,12 +23,13 @@ class _MapMenuState extends State<MapMenu> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final careProviderColor =
-        themeProvider.isDarkMode ? Colors.grey[800] : Colors.blue;
+    final isDarkMode = themeProvider.themeData == Darkmode;
+    final careProviderColor = isDarkMode ? Colors.grey[800] : Colors.blue;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Location Menu'),
+        title: const Text('Menu'),
+        backgroundColor: isDarkMode ? Colors.black : mapPageColor,
       ),
       body: Center(
         child: Column(

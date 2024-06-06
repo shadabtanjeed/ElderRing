@@ -1,5 +1,6 @@
 import 'package:elder_ring/Notifications/local_notificatiions.dart';
 import 'package:elder_ring/Screen%20Sharing/home_screen_elderly.dart';
+import 'package:elder_ring/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,21 +39,29 @@ class ElderHomePageState extends State<ElderHomePage> {
   listenToNotifications() {
     LocalNotifications.onClickNotification.stream.listen((event) {
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => NotificationResponderPage(
-                    payload: event,
-                  ))); // Navigate to another page
+        context,
+        MaterialPageRoute(
+          builder: (context) => NotificationResponderPage(
+            payload: event,
+          ),
+        ),
+      ); // Navigate to another page
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.themeData == Darkmode;
+    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+    final elderColorDynamic = isDarkMode ? Colors.grey[800] : elderColor;
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Colors.white,
+        backgroundColor: backgroundColor,
         appBar: AppBar(
           automaticallyImplyLeading: true,
           title: Text(
@@ -64,13 +73,14 @@ class ElderHomePageState extends State<ElderHomePage> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          backgroundColor: Color(0xFF2798E4),
+          backgroundColor: elderColorDynamic,
           // This is the AppBar's background color
           actions: [
             IconButton(
               icon: Icon(Icons.logout),
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
+                Users.clear();
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => LoginPage()),
                 );
@@ -88,7 +98,7 @@ class ElderHomePageState extends State<ElderHomePage> {
               width: double.infinity,
               height: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: backgroundColor,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -106,6 +116,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                           fontSize: 25,
                           letterSpacing: 0,
                           fontWeight: FontWeight.bold,
+                          color: textColor,
                         ),
                       ),
                     ),
@@ -141,7 +152,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                                     width: 120,
                                     height: 120,
                                     decoration: BoxDecoration(
-                                      color: elderColor,
+                                      color: elderColorDynamic,
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 4,
@@ -205,7 +216,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                                     width: 120,
                                     height: 120,
                                     decoration: BoxDecoration(
-                                      color: elderColor,
+                                      color: elderColorDynamic,
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 4,
@@ -281,7 +292,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                                     width: 120,
                                     height: 120,
                                     decoration: BoxDecoration(
-                                      color: elderColor,
+                                      color: elderColorDynamic,
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 4,
@@ -345,7 +356,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                                     width: 120,
                                     height: 120,
                                     decoration: BoxDecoration(
-                                      color: elderColor,
+                                      color: elderColorDynamic,
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 4,
@@ -419,15 +430,16 @@ class ElderHomePageState extends State<ElderHomePage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ShareLocation()),
+                                        builder: (context) =>
+                                            const ShareLocation(),
+                                      ),
                                     );
                                   },
                                   child: Container(
                                     width: 120,
                                     height: 120,
                                     decoration: BoxDecoration(
-                                      color: elderColor,
+                                      color: elderColorDynamic,
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 4,
@@ -491,7 +503,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                                     width: 120,
                                     height: 120,
                                     decoration: BoxDecoration(
-                                      color: elderColor,
+                                      color: elderColorDynamic,
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 4,
@@ -559,7 +571,7 @@ class ElderHomePageState extends State<ElderHomePage> {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color(0xFF2798E4),
+          backgroundColor: elderColorDynamic,
           selectedItemColor: Colors.white,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -581,7 +593,8 @@ class ElderHomePageState extends State<ElderHomePage> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ElderHomePage(username: username)),
+                    builder: (context) => ElderHomePage(username: username),
+                  ),
                 );
                 break;
               case 1:
