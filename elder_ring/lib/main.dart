@@ -10,6 +10,8 @@ import 'package:elder_ring/theme_provider.dart'; // Import the ThemeProvider
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalNotifications.init();

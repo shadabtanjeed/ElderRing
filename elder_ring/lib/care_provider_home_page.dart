@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Locations/shareLocation.dart';
 import 'Medication Reminder_Care Provider/cp_medication_schedule.dart';
+import 'Notifications/local_notificatiions.dart';
+import 'Notifications/notification_responder_page.dart';
+import 'main.dart';
 import 'theme_provider.dart';
 import 'login_page.dart';
 import 'Users/users.dart';
 import 'locations/getLocation.dart';
-import 'locations/mapMenu.dart';
+import 'devMenu.dart';
 
 class CareProviderHomePage extends StatefulWidget {
   final String username;
@@ -29,6 +32,19 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
   void initState() {
     super.initState();
     elderUsername = Users.getElderlyUsername();
+
+    LocalNotifications.onClickNotification.listen((payload) {
+      navigatorKey.currentState!.push(
+        MaterialPageRoute(
+          builder: (context) => NotificationResponderPage(payload: payload),
+        ),
+      );
+    });
+  }
+
+  void dispose() {
+    LocalNotifications.onClickNotification.close();
+    super.dispose();
   }
 
   @override
