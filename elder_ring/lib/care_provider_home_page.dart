@@ -1,3 +1,4 @@
+import 'package:elder_ring/Screen%20Sharing/home_scrren_careProvider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -173,12 +174,12 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                                     EdgeInsetsDirectional.fromSTEB(13, 0, 0, 0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           VideoCallPage()), // Update to your VideoCall page
-                                    // );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CareProvider_HomeScreen()),
+                                    );
                                   },
                                   child: Container(
                                     width: 120,
