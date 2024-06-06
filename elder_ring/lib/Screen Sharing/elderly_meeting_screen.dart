@@ -10,7 +10,7 @@ class Elderly_MeetingScreen extends StatelessWidget {
   final JitsiMeetMethods _jitsiMeetMethods = JitsiMeetMethods();
 
   createNewMeeting() async{
-    _jitsiMeetMethods.createMeeting(roomName: username, userName: 'Elderly User');
+    _jitsiMeetMethods.createMeeting(roomName: 'RoomFromElderly', userName: 'Elderly User');
   }
 
   @override
