@@ -70,6 +70,12 @@ flutter:
     - Resources/syrup.png
     - Resources/care_provider_image.png
     - Resources/elder_picture.png
+    - Resources/emergency-call.png
+    - Resources/medicine.png
+    - Resources/placeholder.png
+    - Resources/sos.png
+    - Resources/speech-bubble.png
+    - Resources/videoconference.png
 
   fonts:
     - family: Jost
