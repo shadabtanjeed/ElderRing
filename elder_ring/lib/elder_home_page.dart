@@ -1,5 +1,6 @@
 import 'package:elder_ring/EmergencyMeds/AddEM.dart';
 import 'package:elder_ring/EmergencyMeds/GetEMNameList.dart';
+import 'package:elder_ring/Group%20Chat/chat_home_screen.dart';
 import 'package:elder_ring/Notifications/local_notificatiions.dart';
 import 'package:elder_ring/Screen%20Sharing/home_screen_elderly.dart';
 import 'package:elder_ring/theme.dart';
@@ -363,7 +364,13 @@ class ElderHomePageState extends State<ElderHomePage> {
                                     EdgeInsetsDirectional.fromSTEB(13, 0, 0, 0),
                                 child: InkWell(
                                   onTap: () {
-                                    // Navigate to Chat Messaging page
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Chat_Home_Screen(
+                                            username: username),
+                                      ),
+                                    );
                                   },
                                   child: Container(
                                     width: 120,
