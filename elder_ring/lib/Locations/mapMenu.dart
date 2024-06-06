@@ -4,6 +4,9 @@ import 'shareLocation.dart';
 import 'crudscreen.dart';
 import 'getLocation.dart';
 import 'package:elder_ring/Users/users.dart';
+import 'package:elder_ring/EmergencyMeds/EMDBHander.dart';
+import 'package:elder_ring/EmergencyMeds/AddEM.dart';
+import 'package:elder_ring/EmergencyMeds/GetEMNameList.dart';
 
 class MapMenu extends StatefulWidget {
   const MapMenu({Key? key}) : super(key: key);
@@ -140,6 +143,34 @@ class _MapMenuState extends State<MapMenu> {
                 foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
               child: const Text('Show Users'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddEntryPage()),
+                );
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(mapPageColor),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
+              child: const Text('Add Entry'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EntryNamesPage()),
+                );
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(mapPageColor),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
+              child: const Text('Get Entry Names'),
             ),
           ],
         ),
