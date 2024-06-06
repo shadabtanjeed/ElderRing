@@ -278,55 +278,49 @@ class _AddMedicineState extends State<AddMedicine> {
       isLoading = true;
     });
 
-    try {
-      String medicineId = randomAlphaNumeric(10);
-      DatabaseMethods dbMethods = DatabaseMethods();
+    String medicineId = randomAlphaNumeric(10);
+    DatabaseMethods dbMethods = DatabaseMethods();
 
-      DateTime startDateTime = DateTime(
-        DateTime.now().year,
-        DateTime.now().month,
-        DateTime.now().day,
-        startTime.hour,
-        startTime.minute,
-      );
+    DateTime startDateTime = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+      startTime.hour,
+      startTime.minute,
+    );
 
-      Timestamp startTimeStamp = Timestamp.fromDate(startDateTime);
+    Timestamp startTimeStamp = Timestamp.fromDate(startDateTime);
 
-      Map<String, dynamic> medicineInfoMap = {
-        "medicine_name": medicineNameController.text,
-        "medicine_dosage": medicineDosageController.text,
-        "medicine_type": medicineType,
-        "is_after_eating": isAfterEating,
-        "interval": int.parse(intervalController.text),
-        "start_time": startTimeStamp,
-        "medicine_id": medicineId,
-        "username": username,
-      };
+    Map<String, dynamic> medicineInfoMap = {
+      "medicine_name": medicineNameController.text,
+      "medicine_dosage": medicineDosageController.text,
+      "medicine_type": medicineType,
+      "is_after_eating": isAfterEating,
+      "interval": int.parse(intervalController.text),
+      "start_time": startTimeStamp,
+      "medicine_id": medicineId,
+      "username": username,
+    };
 
-      await dbMethods
-          .addMedicineInfo(medicineInfoMap, medicineId)
-          .then((value) {
-        Fluttertoast.showToast(
-            msg: "Medicine Details Added Successfully",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Color(0xFF2798E4),
-            textColor: Colors.white,
-            fontSize: 16.0);
-      });
+    await dbMethods.addMedicineInfo(medicineInfoMap, medicineId).then((value) {
+      Fluttertoast.showToast(
+          msg: "Medicine Details Added Successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Color(0xFF2798E4),
+          textColor: Colors.white,
+          fontSize: 16.0);
+    });
 
-      await LocalNotifications.createMedicineNotification(
-          medicineNameController.text,
-          startTime,
-          int.parse(intervalController.text));
-    } catch (e) {
-      print('Error in addMedicine: $e');
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
+    await LocalNotifications.createMedicineNotification(
+        medicineNameController.text,
+        startTime,
+        int.parse(intervalController.text));
+
+    setState(() {
+      isLoading = false;
+    });
 
     Future.delayed(const Duration(seconds: 1), () {
       Navigator.push(

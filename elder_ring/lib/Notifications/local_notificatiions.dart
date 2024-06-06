@@ -11,7 +11,6 @@ class LocalNotifications {
 
   static final onClickNotification = BehaviorSubject<String>();
 
-  //on tap on any notification
   static void onNotificationTap(NotificationResponse notificationResponse) {
     onClickNotification.add(notificationResponse.payload!);
   }
@@ -45,7 +44,7 @@ class LocalNotifications {
     String? payload,
   }) async {
     const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('your channel id', 'your channel name',
+        AndroidNotificationDetails('channelId', 'channelName',
             channelDescription: 'your channel description',
             importance: Importance.max,
             priority: Priority.high,
@@ -69,8 +68,7 @@ class LocalNotifications {
         body,
         tz.TZDateTime.from(scheduledTime, tz.local),
         const NotificationDetails(
-            android: AndroidNotificationDetails(
-                'channel 3', 'your channel name',
+            android: AndroidNotificationDetails('channelId', 'channelName',
                 channelDescription: 'your channel description',
                 importance: Importance.max,
                 priority: Priority.high,
@@ -83,7 +81,7 @@ class LocalNotifications {
 
   static Future<void> createMedicineNotification(
       String medicineName, TimeOfDay startTime, int intervalInHours) async {
-    debugPrint('createMedicineNotification called');
+    debugPrint('createMedicineNotification called at ${DateTime.now()}');
     debugPrint('Medicine Name: $medicineName');
     debugPrint('Start Time: $startTime');
     debugPrint('Interval in Hours: $intervalInHours');
@@ -104,7 +102,7 @@ class LocalNotifications {
     debugPrint('Initial Notification Time: $initialNotificationTime');
 
     const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('Medicine Reminder', 'Medicine Reminder',
+        AndroidNotificationDetails('channelId', 'channelName',
             channelDescription: 'Reminds user of taking medicine',
             importance: Importance.max,
             priority: Priority.high,
@@ -124,7 +122,7 @@ class LocalNotifications {
       payload: medicineName,
     );
 
-    debugPrint('Initial notification scheduled');
+    debugPrint('Initial notification scheduled at ${DateTime.now()}');
 
     for (int i = 1; i <= 3; i++) {
       final nextNotificationTime =
@@ -144,7 +142,6 @@ class LocalNotifications {
       debugPrint('Notification $i scheduled at $nextNotificationTime');
     }
 
-    // Display toast and debug print message
     Fluttertoast.showToast(
       msg:
           "Medicine notifications for $medicineName created successfully at ${startTime.hour}:${startTime.minute}",
@@ -156,6 +153,7 @@ class LocalNotifications {
       fontSize: 16.0,
     );
 
-    debugPrint('Medicine notifications created successfully');
+    debugPrint(
+        'Medicine notifications created successfully at ${DateTime.now()}');
   }
 }
