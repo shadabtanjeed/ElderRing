@@ -1,3 +1,5 @@
+import 'package:elder_ring/EmergencyMeds/AddEM.dart';
+import 'package:elder_ring/EmergencyMeds/GetEMNameList.dart';
 import 'package:elder_ring/Notifications/local_notificatiions.dart';
 import 'package:elder_ring/Screen%20Sharing/home_screen_elderly.dart';
 import 'package:elder_ring/theme.dart';
@@ -210,7 +212,13 @@ class ElderHomePageState extends State<ElderHomePage> {
                                     EdgeInsetsDirectional.fromSTEB(13, 0, 0, 0),
                                 child: InkWell(
                                   onTap: () {
-                                    // Navigate to Video Call page
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            Elderly_HomeScreen(),
+                                      ),
+                                    );
                                   },
                                   child: Container(
                                     width: 120,
@@ -286,7 +294,12 @@ class ElderHomePageState extends State<ElderHomePage> {
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 13, 0),
                                 child: InkWell(
                                   onTap: () {
-                                    // Navigate to Emergency Medications page
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              EntryNamesPage()),
+                                    );
                                   },
                                   child: Container(
                                     width: 120,
