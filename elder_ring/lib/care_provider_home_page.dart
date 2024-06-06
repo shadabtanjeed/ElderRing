@@ -1,3 +1,4 @@
+import 'package:elder_ring/Group%20Chat/chat_home_screen.dart';
 import 'package:elder_ring/Screen%20Sharing/home_scrren_careProvider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -326,12 +327,13 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
                                     EdgeInsetsDirectional.fromSTEB(13, 0, 0, 0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           ChatMessagingPage()), // Update to your ChatMessaging page
-                                    // );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Chat_Home_Screen(
+                                              username: Users
+                                                  .getLoginUser())), // Update to your ChatMessaging page
+                                    );
                                   },
                                   child: Container(
                                     width: 120,
