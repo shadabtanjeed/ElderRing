@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 
 class CareProvider_HomeScreen extends StatefulWidget{
-  const CareProvider_HomeScreen({super.key});
+  final String username;
+  const CareProvider_HomeScreen({super.key, required this.username});
 
 
   @override
@@ -19,13 +20,16 @@ class _HomeScreenState extends State<CareProvider_HomeScreen>{
     });
   }
 
-  List<Widget> pages = [
-    CareProvider_MeetingScreen(),
-  ];
+
 
 
   @override
   Widget build(BuildContext context) {
+
+    List<Widget> pages = [
+      CareProvider_MeetingScreen(username: widget.username),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
