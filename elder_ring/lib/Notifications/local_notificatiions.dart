@@ -110,36 +110,42 @@ class LocalNotifications {
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
 
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      'Time to take medicine',
-      'It\'s time to take your medicine: $medicineName',
-      tz.TZDateTime.from(initialNotificationTime, tz.local),
-      notificationDetails,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      payload: medicineName,
-    );
-
-    debugPrint('Initial notification scheduled at ${DateTime.now()}');
-
-    for (int i = 1; i <= 3; i++) {
-      final nextNotificationTime =
-          initialNotificationTime.add(Duration(hours: intervalInHours * i));
+    try {
       await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         'Time to take medicine',
         'It\'s time to take your medicine: $medicineName',
-        tz.TZDateTime.from(nextNotificationTime, tz.local),
+        tz.TZDateTime.from(initialNotificationTime, tz.local),
         notificationDetails,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         payload: medicineName,
       );
+      debugPrint('Initial notification scheduled at ${DateTime.now()}');
+    } catch (e) {
+      debugPrint('Error scheduling initial notification: $e');
+    }
 
-      debugPrint('Notification $i scheduled at $nextNotificationTime');
+    for (int i = 1; i <= 3; i++) {
+      final nextNotificationTime =
+          initialNotificationTime.add(Duration(hours: intervalInHours * i));
+      try {
+        await flutterLocalNotificationsPlugin.zonedSchedule(
+          i,
+          'Time to take medicine',
+          'It\'s time to take your medicine: $medicineName',
+          tz.TZDateTime.from(nextNotificationTime, tz.local),
+          notificationDetails,
+          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime,
+          payload: medicineName,
+        );
+        debugPrint('Notification $i scheduled at $nextNotificationTime');
+      } catch (e) {
+        debugPrint('Error scheduling notification $i: $e');
+      }
     }
 
     Fluttertoast.showToast(
