@@ -38,10 +38,16 @@ class ElderHomePageState extends State<ElderHomePage> {
     super.initState();
 
     LocalNotifications.onClickNotification.listen((payload) {
+      List<String> payloadParts = payload.split('||');
+      String medicineName = payloadParts[0];
+      String time = payloadParts[1];
+
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => NotificationResponderPage(payload: payload),
+          builder: (context) => NotificationResponderPage(payload: payload,
+            medicineName: medicineName,
+            time: time,),
         ),
       );
     });
@@ -51,11 +57,25 @@ class ElderHomePageState extends State<ElderHomePage> {
   // To listen to any notificationClick or not
   listenToNotifications() {
     LocalNotifications.onClickNotification.listen((payload) {
+      List<String> payloadParts = payload.split('||');
+      String medicineName = payloadParts[0];
+      String time = payloadParts[1];
+
       navigatorKey.currentState!.push(
         MaterialPageRoute(
-          builder: (context) => NotificationResponderPage(payload: payload),
+          builder: (context) => NotificationResponderPage(payload: payload,
+            medicineName: medicineName,
+            time: time,),
         ),
       );
+    });
+  }
+
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
     });
   }
 
@@ -599,7 +619,8 @@ class ElderHomePageState extends State<ElderHomePage> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: elderColorDynamic,
-          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white, // Default icon color
+          selectedItemColor: Colors.black45, // Highlight color for selected item
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -625,7 +646,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                 );
                 break;
               case 1:
-                // Handle tap for SOS
+              // Handle tap for SOS
                 break;
               case 2:
                 Navigator.pushReplacement(

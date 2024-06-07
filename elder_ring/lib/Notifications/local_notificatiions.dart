@@ -102,6 +102,8 @@ class LocalNotifications {
     const NotificationDetails notificationDetails =
     NotificationDetails(android: androidNotificationDetails);
 
+    String payload = '$medicineName||${startTime.toString()}';
+
     try {
       await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
@@ -112,7 +114,7 @@ class LocalNotifications {
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
-        payload: medicineName,
+        payload: payload,
       );
       debugPrint('Initial notification scheduled at ${DateTime.now()}');
     } catch (e) {
