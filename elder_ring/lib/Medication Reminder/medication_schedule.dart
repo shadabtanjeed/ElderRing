@@ -10,24 +10,21 @@ import 'package:elder_ring/elder_home_page.dart';
 class MedicationSchedule extends StatefulWidget {
   final String username;
 
-  const MedicationSchedule({Key? key, required this.username})
-      : super(key: key);
+  const MedicationSchedule({Key? key, required this.username}) : super(key: key);
 
   @override
   State<MedicationSchedule> createState() => _MedicationScheduleState();
 }
 
 class _MedicationScheduleState extends State<MedicationSchedule> {
-  String username = '';
-  Stream<QuerySnapshot>? MedicineInfoStream;
+  late String username;
+  Stream<QuerySnapshot>? medicineInfoStream;
 
   @override
   void initState() {
     super.initState();
     username = widget.username;
-    MedicineInfoStream =
-        FirebaseFirestore.instance.collection('medicine_schedule').snapshots();
-
+    medicineInfoStream = FirebaseFirestore.instance.collection('medicine_schedule').snapshots();
     fetchUserMedicine();
   }
 
@@ -38,14 +35,13 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
         .get();
     final documents = snapshot.docs;
     if (documents.isEmpty) {
-      Fluttertoast.showToast(
-          msg: 'Error: The user does not have any medicine added yet');
+      Fluttertoast.showToast(msg: 'Error: The user does not have any medicine added yet');
     }
   }
 
   Widget allMedicineDetails() {
     return StreamBuilder<QuerySnapshot>(
-      stream: MedicineInfoStream,
+      stream: medicineInfoStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
@@ -179,7 +175,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                                   color: isDarkMode
                                       ? Colors.white
                                       : Color(
-                                          0xFFD70040), // changed color to red
+                                      0xFFD70040), // changed color to red
                                 )),
                             Text(
                                 ds['is_after_eating']
@@ -191,8 +187,8 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                                     color: isDarkMode
                                         ? Colors.white
                                         : ds['is_after_eating']
-                                            ? const Color(0xFF097969)
-                                            : const Color(0xFFE97451))),
+                                        ? const Color(0xFF097969)
+                                        : const Color(0xFFE97451))),
                           ],
                         ),
                       ),
@@ -248,18 +244,14 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
                                                 : Colors.black),
                                         // Change color here
                                         onPressed: () async {
-                                          Navigator.of(context)
-                                              .pop(); // Move this line to here
-                                          await DatabaseMethods()
-                                              .deleteMedicineData(ds.id);
+                                          Navigator.of(context).pop(); // Move this line to here
+                                          await DatabaseMethods().deleteMedicineData(ds.id);
                                           Fluttertoast.showToast(
-                                              msg:
-                                                  "Medicine Deleted Successfully",
+                                              msg: "Medicine Deleted Successfully",
                                               toastLength: Toast.LENGTH_SHORT,
                                               gravity: ToastGravity.BOTTOM,
                                               timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Color(0xFF2798E4),
+                                              backgroundColor: Color(0xFF2798E4),
                                               textColor: Colors.white,
                                               fontSize: 16.0);
                                         },
@@ -289,10 +281,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
       onWillPop: () async {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-              builder: (context) => ElderHomePage(
-                    username: username,
-                  )),
+          MaterialPageRoute(builder: (context) => ElderHomePage(username: username)),
         );
         return false;
       },
@@ -308,10 +297,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
-                  builder: (context) => ElderHomePage(
-                        username: username,
-                      )),
+              MaterialPageRoute(builder: (context) => ElderHomePage(username: username)),
             ),
           ),
         ),
@@ -325,8 +311,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => AddMedicine(username: username)),
+                MaterialPageRoute(builder: (context) => AddMedicine(username: username)),
               );
             },
             backgroundColor: const Color(0xFF2798E4),

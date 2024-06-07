@@ -33,13 +33,13 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
     super.initState();
     elderUsername = Users.getElderlyUsername();
 
-    LocalNotifications.onClickNotification.listen((payload) {
-      navigatorKey.currentState!.push(
-        MaterialPageRoute(
-          builder: (context) => NotificationResponderPage(payload: payload),
-        ),
-      );
-    });
+    // LocalNotifications.onClickNotification.listen((payload) {
+    //   navigatorKey.currentState!.push(
+    //     MaterialPageRoute(
+    //       builder: (context) => NotificationResponderPage(payload: payload),
+    //     ),
+    //   );
+    // });
   }
 
   void dispose() {

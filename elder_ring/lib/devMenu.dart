@@ -1,4 +1,5 @@
 import 'package:elder_ring/Notifications/local_notificatiions.dart';
+import 'package:elder_ring/Notifications/notification_responder_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'elder_home_page.dart';
@@ -201,7 +202,6 @@ class _MapMenuState extends State<MapMenu> {
                   'Change Theme',
                   style: TextStyle(
                     fontFamily: 'Jost',
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -233,6 +233,25 @@ class _MapMenuState extends State<MapMenu> {
                 ),
                 child: const Text('Simple Notification'),
               ),
+
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NotificationResponderPage(
+                        payload: 'Simple Notification',
+                        medicineName: 'Demo Medicine',
+                        time: DateTime.now().toString())),
+                  );
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(mapPageColor),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                child: const Text('Medicine Responder Page'),
+              ),
+              const SizedBox(height: 20),
               //end
             ],
           ),
