@@ -80,46 +80,38 @@ class LocalNotifications {
   }
 
   static Future<void> createMedicineNotification(
-      String medicineName, TimeOfDay startTime, int intervalInHours) async {
+      String medicineName, DateTime startTime, int intervalInHours) async {
     debugPrint('createMedicineNotification called at ${DateTime.now()}');
     debugPrint('Medicine Name: $medicineName');
     debugPrint('Start Time: $startTime');
     debugPrint('Interval in Hours: $intervalInHours');
 
     final now = DateTime.now();
-    final startDateTime = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      startTime.hour,
-      startTime.minute,
-    );
-
-    final initialNotificationTime = startDateTime.isBefore(now)
-        ? startDateTime.add(Duration(days: 1))
-        : startDateTime;
+    final initialNotificationTime = startTime.isBefore(now)
+        ? startTime.add(Duration(days: 1))
+        : startTime;
 
     debugPrint('Initial Notification Time: $initialNotificationTime');
 
     const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('channelId', 'channelName',
-            channelDescription: 'Reminds user of taking medicine',
-            importance: Importance.max,
-            priority: Priority.high,
-            ticker: 'ticker');
+    AndroidNotificationDetails('channelId', 'channelName',
+        channelDescription: 'Reminds user of taking medicine',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker');
     const NotificationDetails notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
+    NotificationDetails(android: androidNotificationDetails);
 
     try {
       await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
-        'Time to take medicine',
+        'Time to take $medicineName',
         'It\'s time to take your medicine: $medicineName',
         tz.TZDateTime.from(initialNotificationTime, tz.local),
         notificationDetails,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
+        UILocalNotificationDateInterpretation.absoluteTime,
         payload: medicineName,
       );
       debugPrint('Initial notification scheduled at ${DateTime.now()}');
@@ -129,7 +121,7 @@ class LocalNotifications {
 
     for (int i = 1; i <= 3; i++) {
       final nextNotificationTime =
-          initialNotificationTime.add(Duration(hours: intervalInHours * i));
+      initialNotificationTime.add(Duration(hours: intervalInHours * i));
       try {
         await flutterLocalNotificationsPlugin.zonedSchedule(
           i,
@@ -139,7 +131,7 @@ class LocalNotifications {
           notificationDetails,
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
           uiLocalNotificationDateInterpretation:
-              UILocalNotificationDateInterpretation.absoluteTime,
+          UILocalNotificationDateInterpretation.absoluteTime,
           payload: medicineName,
         );
         debugPrint('Notification $i scheduled at $nextNotificationTime');
@@ -150,7 +142,7 @@ class LocalNotifications {
 
     Fluttertoast.showToast(
       msg:
-          "Medicine notifications for $medicineName created successfully at ${startTime.hour}:${startTime.minute}",
+      "Medicine notifications for $medicineName created successfully at ${startTime.hour}:${startTime.minute}",
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
