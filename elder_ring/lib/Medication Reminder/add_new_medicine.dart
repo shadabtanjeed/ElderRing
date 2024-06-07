@@ -315,8 +315,10 @@ class _AddMedicineState extends State<AddMedicine> {
 
     await LocalNotifications.createMedicineNotification(
         medicineNameController.text,
-        startTime,
+        startDateTime,
         int.parse(intervalController.text));
+
+    //await LocalNotifications.showScheduledNotification(title: 'Scheduled Notification', body: 'This is test', scheduledTime: startDateTime);
 
     setState(() {
       isLoading = false;
