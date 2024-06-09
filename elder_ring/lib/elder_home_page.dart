@@ -619,8 +619,8 @@ class ElderHomePageState extends State<ElderHomePage> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: elderColorDynamic,
-          unselectedItemColor: Colors.white, // Default icon color
-          selectedItemColor: Colors.black45, // Highlight color for selected item
+          unselectedItemColor: Colors.black45, // Default icon color
+          selectedItemColor: Colors.white, // Highlight color for selected item
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),

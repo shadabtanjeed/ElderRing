@@ -8,6 +8,7 @@ import 'elder_home_page.dart';
 import 'Users/users.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
+String LoggedInUser = '';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -36,6 +37,8 @@ class LoginPageState extends State<LoginPage> {
     String username = username_controller.text.trim();
     String firebase_email = username_controller.text.trim() + '@gmail.com';
     String password = password_controller.text.trim();
+
+    LoggedInUser = username;
 
     print("Trying to sign in with email: $firebase_email");
 

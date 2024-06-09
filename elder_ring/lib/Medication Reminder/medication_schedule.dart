@@ -1,4 +1,5 @@
 import 'package:elder_ring/Medication%20Reminder/update_medicine.dart';
+import 'package:elder_ring/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:elder_ring/Medication%20Reminder/add_new_medicine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -277,14 +278,21 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.pushReplacement(
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) {
+
+        if (didPop) {
+          return;
+        }
+
+        Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => ElderHomePage(username: username)),
+          MaterialPageRoute(builder: (context) => ElderHomePage(username: widget.username)),
+              (Route<dynamic> route) => false,
         );
-        return false;
       },
+
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -297,7 +305,7 @@ class _MedicationScheduleState extends State<MedicationSchedule> {
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => ElderHomePage(username: username)),
+              MaterialPageRoute(builder: (context) => ElderHomePage(username: widget.username)), // Use widget.username here
             ),
           ),
         ),
