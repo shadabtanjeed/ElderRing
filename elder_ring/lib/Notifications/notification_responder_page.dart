@@ -1,3 +1,4 @@
+import 'package:elder_ring/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../Users/users.dart';
@@ -35,7 +36,7 @@ class _NotificationResponderPageState extends State<NotificationResponderPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => MedicationSchedule(username: username),
+            builder: (context) => MedicationSchedule(username: LoggedInUser),
           ),
         );
         return false;
@@ -78,7 +79,7 @@ class _NotificationResponderPageState extends State<NotificationResponderPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MedicationSchedule(username: username),
+                              builder: (context) => MedicationSchedule(username: LoggedInUser),
                             ),
                           );
                         });
@@ -95,7 +96,12 @@ class _NotificationResponderPageState extends State<NotificationResponderPage> {
                         setState(() {
                           emoji = '😞'; // Sad emoji
                         });
-                        Navigator.pushNamed(context, '/MedicineSchedulePage');
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MedicationSchedule(username: LoggedInUser),
+                          ),
+                        );
                       },
                       icon: Icon(Icons.close),
                       label: Text('No'),
