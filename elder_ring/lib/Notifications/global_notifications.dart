@@ -183,3 +183,79 @@ Future<void> sendSOSMessage() async {
     print('Response body: ${response.body}');
   }
 }
+
+Future<void> sendMedicineMissNotification(String medicine_name, String time) async {
+  Users.fetchAssociatedCareProvider();
+  String careProviderUsername = Users.getCareProviderUsername();
+  String cp_token = '';
+
+  if (careProviderUsername == '') {
+    print('Failed to get care provider username');
+    return;
+  }
+
+  final DocumentSnapshot result = await FirebaseFirestore.instance
+      .collection('user_token')
+      .doc(careProviderUsername)
+      .get();
+
+  if (result.exists) {
+    cp_token = (result.data() as Map<String, dynamic>)?['token'];
+  } else {
+    print('Document does not exist on the database');
+  }
+
+  final String accessToken = await getAccessToken(); // Get the access token
+  final String fcmEndpoint = 'https://fcm.googleapis.com/v1/projects/elderring-9e5f6/messages:send'; // Corrected URL
+  final String? currentFCMToken = cp_token;
+
+  if (currentFCMToken == null) {
+    print('Failed to get FCM token');
+    return;
+  }
+
+  print("FCM Token: $currentFCMToken");
+
+
+  final Map<String, dynamic> message = {
+    'message': {
+      'token': currentFCMToken,
+      'notification': {
+        'body': 'Your elder has missed $medicine_name on $time!!',
+        'title': 'Medicine Miss Notification'
+      },
+      'data': {
+        'type': 'MedicineMiss',
+        'time': time,
+        'medicine_name': medicine_name,
+        'current_user_fcm_token': currentFCMToken,
+        'payload': 'MedicineMiss||$medicine_name||$time'
+      },
+    }
+  };
+
+  final http.Response response = await http.post(
+    Uri.parse(fcmEndpoint),
+    headers: <String, String>{
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    },
+    body: jsonEncode(message),
+  );
+
+  if (response.statusCode == 200) {
+    print('FCM message sent successfully');
+    Fluttertoast.showToast(
+        msg: "Sorry to hear that",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.blue,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  } else {
+    print('Failed to send FCM message: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+}
