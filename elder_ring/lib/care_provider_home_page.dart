@@ -27,8 +27,7 @@ class CareProviderHomePage extends StatefulWidget {
   State<CareProviderHomePage> createState() => CareProviderHomePageState();
 }
 
-class CareProviderHomePageState extends State<CareProviderHomePage>
-{
+class CareProviderHomePageState extends State<CareProviderHomePage> {
   String mtoken = "";
 
   final user = FirebaseAuth.instance.currentUser;
@@ -58,8 +57,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
         LocalNotifications.showSimpleNotification(
             title: 'SOS Notification',
             body: 'SOS Button has been pressed at time: $time !',
-            payload: 'SOS Payload'
-        );
+            payload: 'SOS Payload');
         // Navigate to the SOS page
         Navigator.push(
           context,
@@ -72,8 +70,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
         LocalNotifications.showSimpleNotification(
             title: 'Global Notification',
             body: 'Demo Body',
-            payload: 'Demo Payload'
-        );
+            payload: 'Demo Payload');
       }
     });
 
@@ -82,7 +79,6 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
 
   void listenToNotifications() {
     LocalNotifications.onClickNotification.listen((payload) {
-
       List<String> payloadParts = payload.split('||');
       String time = payloadParts[1];
 
@@ -170,7 +166,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
         key: GlobalKey<ScaffoldState>(),
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Color(0xFF006769),
+          backgroundColor: Color(0xFF006769), // Ensure consistent color
           automaticallyImplyLeading: true,
           title: Text(
             'Home',
@@ -224,8 +220,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 13, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 13, 0),
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -233,8 +228,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               CareProviderMedicationSchedule(
-                                                elder_username:
-                                                    Users.getElderlyUsername(),
+                                                elder_username: Users.getElderlyUsername(),
                                                 username: 'username',
                                               )),
                                     );
@@ -243,7 +237,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                                     width: 120,
                                     height: 120,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF006769D),
+                                      color: Color(0xFF006769), // Corrected color
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 4,
@@ -262,12 +256,9 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                                         Align(
                                           alignment: AlignmentDirectional(0, 0),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 9, 0, 0),
+                                            padding: EdgeInsetsDirectional.fromSTEB(0, 9, 0, 0),
                                             child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
+                                              borderRadius: BorderRadius.circular(8),
                                               child: Image.asset(
                                                 'Resources/medicine.png',
                                                 width: 50,
@@ -278,9 +269,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 8, 0, 0),
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                                           child: Text(
                                             'Medication Schedule',
                                             textAlign: TextAlign.center,
@@ -298,15 +287,13 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(13, 0, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(13, 0, 0, 0),
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              CareProvider_HomeScreen()),
+                                          builder: (context) => CareProvider_HomeScreen()),
                                     );
                                   },
                                   child: Container(
@@ -332,12 +319,9 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                                         Align(
                                           alignment: AlignmentDirectional(0, 0),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 7, 0, 0),
+                                            padding: EdgeInsetsDirectional.fromSTEB(0, 7, 0, 0),
                                             child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
+                                              borderRadius: BorderRadius.circular(8),
                                               child: Image.asset(
                                                 'Resources/videoconference.png',
                                                 width: 50,
@@ -348,9 +332,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 8, 0, 0),
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                                           child: Text(
                                             'Video \nCall',
                                             textAlign: TextAlign.center,
@@ -380,15 +362,13 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 13, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 13, 0),
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              GetLocation()), // Update to your SeeLocation page
+                                          builder: (context) => GetLocation()), // Update to your SeeLocation page
                                     );
                                   },
                                   child: Container(
@@ -414,12 +394,9 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                                         Align(
                                           alignment: AlignmentDirectional(0, 0),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 7, 0, 0),
+                                            padding: EdgeInsetsDirectional.fromSTEB(0, 7, 0, 0),
                                             child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
+                                              borderRadius: BorderRadius.circular(8),
                                               child: Image.asset(
                                                 'Resources/placeholder.png',
                                                 width: 50,
@@ -430,9 +407,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 8, 0, 0),
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                                           child: Text(
                                             'See Elderly\'s\nLocation',
                                             textAlign: TextAlign.center,
@@ -450,16 +425,14 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(13, 0, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(13, 0, 0, 0),
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => Chat_Home_Screen(
-                                              username: Users
-                                                  .getLoginUser())), // Update to your ChatMessaging page
+                                              username: Users.getLoginUser())), // Update to your ChatMessaging page
                                     );
                                   },
                                   child: Container(
@@ -485,12 +458,9 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                                         Align(
                                           alignment: AlignmentDirectional(0, 0),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 7, 0, 0),
+                                            padding: EdgeInsetsDirectional.fromSTEB(0, 7, 0, 0),
                                             child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
+                                              borderRadius: BorderRadius.circular(8),
                                               child: Image.asset(
                                                 'Resources/speech-bubble.png',
                                                 width: 50,
@@ -501,9 +471,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 7, 0, 0),
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 7, 0, 0),
                                           child: Text(
                                             'Chat\nMessaging',
                                             textAlign: TextAlign.center,
