@@ -1,3 +1,5 @@
+import 'package:elder_ring/Notifications/global_notifications.dart';
+import 'package:elder_ring/elder_home_page.dart';
 import 'package:elder_ring/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -79,7 +81,7 @@ class _NotificationResponderPageState extends State<NotificationResponderPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MedicationSchedule(username: LoggedInUser),
+                              builder: (context) => ElderHomePage(username: LoggedInUser),
                             ),
                           );
                         });
@@ -96,12 +98,15 @@ class _NotificationResponderPageState extends State<NotificationResponderPage> {
                         setState(() {
                           emoji = '😞'; // Sad emoji
                         });
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MedicationSchedule(username: LoggedInUser),
-                          ),
-                        );
+                        sendMedicineMissNotification(widget.medicineName, widget.time);
+                        Future.delayed(Duration(seconds: 1), () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ElderHomePage(username: LoggedInUser),
+                            ),
+                          );
+                        });
                       },
                       icon: Icon(Icons.close),
                       label: Text('No'),

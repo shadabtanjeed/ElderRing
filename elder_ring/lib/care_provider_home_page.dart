@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'Locations/shareLocation.dart';
 import 'Medication Reminder_Care Provider/cp_medication_schedule.dart';
 import 'Notifications/SOSResponderPage.dart';
+import 'Notifications/MedicineMissNotificationPage.dart';
 import 'Notifications/local_notificatiions.dart';
 import 'Notifications/notification_responder_page.dart';
 import 'main.dart';
@@ -65,7 +66,30 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
             builder: (context) => SOSResponderPage(time: time),
           ),
         );
-      } else {
+      }
+
+      else if(message.data['type'] == 'MedicineMiss')
+      {
+        String time = message.data['time'];
+        String medicine_name = message.data['medicine_name'];
+        // Handle SOS notification
+        LocalNotifications.showSimpleNotification(
+            title: 'Medicine Miss Notification',
+            body: 'Your elder has missed $medicine_name on $time!!',
+            payload: 'Medicine Miss Payload');
+        // Navigate to the SOS page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MedicineMissResponder(
+              time: time,
+              medicineName: medicine_name,
+            )
+          ),
+        );
+      }
+      else
+      {
         // Handle other types of notifications
         LocalNotifications.showSimpleNotification(
             title: 'Global Notification',
