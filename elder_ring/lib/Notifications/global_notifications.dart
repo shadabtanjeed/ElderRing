@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:http/http.dart' as http;
 import 'package:googleapis/servicecontrol/v1.dart' as servicecontrol;
@@ -168,6 +169,15 @@ Future<void> sendSOSMessage() async {
 
   if (response.statusCode == 200) {
     print('FCM message sent successfully');
+    Fluttertoast.showToast(
+        msg: "Your care provider has been notified. Please keep patience. For general guidelines, kindly visit emergency medication.",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.blue,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
   } else {
     print('Failed to send FCM message: ${response.statusCode}');
     print('Response body: ${response.body}');
