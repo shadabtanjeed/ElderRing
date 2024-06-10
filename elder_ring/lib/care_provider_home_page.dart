@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elder_ring/Group%20Chat/chat_home_screen.dart';
 import 'package:elder_ring/Screen%20Sharing/home_scrren_careProvider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Locations/shareLocation.dart';
@@ -24,7 +26,10 @@ class CareProviderHomePage extends StatefulWidget {
   State<CareProviderHomePage> createState() => CareProviderHomePageState();
 }
 
-class CareProviderHomePageState extends State<CareProviderHomePage> {
+class CareProviderHomePageState extends State<CareProviderHomePage>
+{
+  String mtoken = "";
+
   final user = FirebaseAuth.instance.currentUser;
   String? elderUsername;
 
@@ -40,6 +45,73 @@ class CareProviderHomePageState extends State<CareProviderHomePage> {
     //     ),
     //   );
     // });
+
+    requestPermission();
+    getToken();
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      LocalNotifications.showSimpleNotification(title: 'Global Notification', body: 'Demo Body', payload: 'Demo Payload');
+    });
+
+    initInfo();
+  }
+
+  void requestPermission() async {
+    // To listen to any notificationClick or not
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permission');
+    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+      print('User granted provisional permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
+  }
+
+  void getToken() async {
+    FirebaseMessaging.instance.getToken().then((token) {
+      if (token != null) {
+        setState(() {
+          mtoken = token;
+        });
+        saveToken(token);
+      }
+    }).catchError((e) {
+      print('Failed to get token: $e');
+    });
+  }
+
+  void saveToken(String token) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('user_token')
+          .doc(LoggedInUser)
+          .set({'token': token}, SetOptions(merge: true));
+      print('Token updated successfully');
+    } catch (e) {
+      print('Failed to update token: $e');
+    }
+  }
+
+  void initInfo() async {
+    // Get the current user's information
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Get the user's information from Firestore or your own database
+      // For example:
+      // String name = await getUserName(user.uid);
+    }
   }
 
   void dispose() {

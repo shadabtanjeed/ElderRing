@@ -51,6 +51,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA619vAUbNLH4oQXCdVDDx78zAFBQOeFBE" />
+
+        <meta-data android:name="firebase_analytics_collection_enabled" android:value="true" />
+
         <service
             android:name="com.dexterous.flutterlocalnotifications.ForegroundService"
             android:exported="false"
