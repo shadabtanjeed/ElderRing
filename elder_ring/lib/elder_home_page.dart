@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'devMenu.dart';
 import 'Medication Reminder/medication_schedule.dart';
 import 'Notifications/notification_responder_page.dart';
+import 'Notifications/global_notifications.dart';
 import 'main.dart';
 import 'theme_provider.dart';
 import 'login_page.dart';
@@ -726,7 +727,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                     );
                     break;
                   case 1:
-                  // Handle tap for SOS
+                      sendSOSMessage();
                     break;
                   case 2:
                     Navigator.pushReplacement(

@@ -50,7 +50,23 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
     getToken();
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      LocalNotifications.showSimpleNotification(title: 'Global Notification', body: 'Demo Body', payload: 'Demo Payload');
+      if (message.data['type'] == 'SOS') {
+        String time = message.data['time'];
+        // Handle SOS notification
+        LocalNotifications.showSimpleNotification(
+            title: 'SOS Notification',
+            body: 'SOS Button has been pressed at time: $time !',
+            payload: 'SOS Payload'
+        );
+        // Add your code to navigate to the SOS page here
+      } else {
+        // Handle other types of notifications
+        LocalNotifications.showSimpleNotification(
+            title: 'Global Notification',
+            body: 'Demo Body',
+            payload: 'Demo Payload'
+        );
+      }
     });
 
     initInfo();
