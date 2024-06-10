@@ -621,7 +621,7 @@ class ElderHomePageState extends State<ElderHomePage> {
                                     EdgeInsetsDirectional.fromSTEB(13, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () {
-                                        // Navigate to SOS page
+                                        sendSOSMessage();
                                       },
                                       child: Container(
                                         width: 120,
