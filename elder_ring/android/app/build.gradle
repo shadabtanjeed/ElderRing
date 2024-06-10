@@ -2,7 +2,7 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
-    id("com.google.gms.google-services")
+    id "com.google.gms.google-services"
 }
 
 def localProperties = new Properties()
@@ -80,4 +80,6 @@ flutter {
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
     implementation 'com.android.support:multidex:2.0.1'
+    implementation 'com.google.firebase:firebase-analytics:latest_version'
+    implementation 'com.google.firebase:firebase-messaging:latest_version'
 }

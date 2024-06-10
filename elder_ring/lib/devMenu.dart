@@ -1,3 +1,4 @@
+import 'package:elder_ring/Notifications/global_notifications.dart';
 import 'package:elder_ring/Notifications/local_notificatiions.dart';
 import 'package:elder_ring/Notifications/notification_responder_page.dart';
 import 'package:flutter/material.dart';
@@ -250,6 +251,17 @@ class _MapMenuState extends State<MapMenu> {
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 child: const Text('Medicine Responder Page'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  sendFCMMessage();
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(mapPageColor),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                child: const Text('Global Notifications'),
               ),
               const SizedBox(height: 20),
               //end

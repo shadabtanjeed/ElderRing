@@ -47,6 +47,10 @@ dependencies:
   firebase_storage: ^11.7.7
   uuid: ^3.0.4
   rxdart: ^0.27.7
+  firebase_messaging: ^14.9.4
+  http: ^1.2.1
+  googleapis: ^13.1.0
+  googleapis_auth: ^1.5.1
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
