@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:http/http.dart' as http;
 import 'package:googleapis/servicecontrol/v1.dart' as servicecontrol;
+import 'package:intl/intl.dart';
 
 import '../Users/users.dart';
 
@@ -138,7 +139,7 @@ Future<void> sendSOSMessage() async {
 
   print("FCM Token: $currentFCMToken");
 
-  final String time = DateTime.now().toIso8601String(); // Add this line
+  final String time = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());// Add this line
 
   final Map<String, dynamic> message = {
     'message': {
@@ -152,6 +153,7 @@ Future<void> sendSOSMessage() async {
         'time': DateTime.now().toIso8601String(), // Add this line
         'current_user_fcm_token': currentFCMToken,
       },
+      'payload': 'SOS||$time' // Add this line
     }
   };
 

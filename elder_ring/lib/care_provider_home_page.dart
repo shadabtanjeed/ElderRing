@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Locations/shareLocation.dart';
 import 'Medication Reminder_Care Provider/cp_medication_schedule.dart';
+import 'Notifications/SOSResponderPage.dart';
 import 'Notifications/local_notificatiions.dart';
 import 'Notifications/notification_responder_page.dart';
 import 'main.dart';
@@ -37,6 +38,7 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
   void initState() {
     super.initState();
     elderUsername = Users.getElderlyUsername();
+    listenToNotifications();
 
     // LocalNotifications.onClickNotification.listen((payload) {
     //   navigatorKey.currentState!.push(
@@ -58,7 +60,13 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
             body: 'SOS Button has been pressed at time: $time !',
             payload: 'SOS Payload'
         );
-        // Add your code to navigate to the SOS page here
+        // Navigate to the SOS page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SOSResponderPage(time: time),
+          ),
+        );
       } else {
         // Handle other types of notifications
         LocalNotifications.showSimpleNotification(
@@ -70,6 +78,21 @@ class CareProviderHomePageState extends State<CareProviderHomePage>
     });
 
     initInfo();
+  }
+
+  void listenToNotifications() {
+    LocalNotifications.onClickNotification.listen((payload) {
+
+      List<String> payloadParts = payload.split('||');
+      String time = payloadParts[1];
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SOSResponderPage(time: time),
+        ),
+      );
+    });
   }
 
   void requestPermission() async {
