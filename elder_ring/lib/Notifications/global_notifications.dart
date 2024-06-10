@@ -105,3 +105,69 @@ Future<void> sendFCMMessage() async {
     print('Response body: ${response.body}');
   }
 }
+
+Future<void> sendSOSMessage() async {
+  Users.fetchAssociatedCareProvider();
+  String careProviderUsername = Users.getCareProviderUsername();
+  String cp_token = '';
+
+  if (careProviderUsername == '') {
+    print('Failed to get care provider username');
+    return;
+  }
+
+  final DocumentSnapshot result = await FirebaseFirestore.instance
+      .collection('user_token')
+      .doc(careProviderUsername)
+      .get();
+
+  if (result.exists) {
+    cp_token = (result.data() as Map<String, dynamic>)?['token'];
+  } else {
+    print('Document does not exist on the database');
+  }
+
+  final String accessToken = await getAccessToken(); // Get the access token
+  final String fcmEndpoint = 'https://fcm.googleapis.com/v1/projects/elderring-9e5f6/messages:send'; // Corrected URL
+  final String? currentFCMToken = cp_token;
+
+  if (currentFCMToken == null) {
+    print('Failed to get FCM token');
+    return;
+  }
+
+  print("FCM Token: $currentFCMToken");
+
+  final String time = DateTime.now().toIso8601String(); // Add this line
+
+  final Map<String, dynamic> message = {
+    'message': {
+      'token': currentFCMToken,
+      'notification': {
+        'body': 'SOS Button has been pressed at time: $time !!',
+        'title': 'SOS Notification'
+      },
+      'data': {
+        'type': 'SOS',
+        'time': DateTime.now().toIso8601String(), // Add this line
+        'current_user_fcm_token': currentFCMToken,
+      },
+    }
+  };
+
+  final http.Response response = await http.post(
+    Uri.parse(fcmEndpoint),
+    headers: <String, String>{
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    },
+    body: jsonEncode(message),
+  );
+
+  if (response.statusCode == 200) {
+    print('FCM message sent successfully');
+  } else {
+    print('Failed to send FCM message: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+}
