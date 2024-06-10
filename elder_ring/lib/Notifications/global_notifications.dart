@@ -139,7 +139,7 @@ Future<void> sendSOSMessage() async {
 
   print("FCM Token: $currentFCMToken");
 
-  final String time = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());// Add this line
+  final String time = DateTime.now().toIso8601String(); // Add this line
 
   final Map<String, dynamic> message = {
     'message': {
@@ -150,10 +150,10 @@ Future<void> sendSOSMessage() async {
       },
       'data': {
         'type': 'SOS',
-        'time': DateTime.now().toIso8601String(), // Add this line
+        'time': DateTime.now().toIso8601String(),
         'current_user_fcm_token': currentFCMToken,
+        'payload': 'SOS||$time'
       },
-      'payload': 'SOS||$time' // Add this line
     }
   };
 
