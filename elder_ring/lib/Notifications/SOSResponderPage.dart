@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:intl/intl.dart';
+
 class SOSResponderPage extends StatelessWidget {
   final String time;
 
@@ -7,6 +9,9 @@ class SOSResponderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime parsedTime = DateTime.parse(time);
+    String formattedTime = DateFormat('yyyy-MM-dd – kk:mm:ss').format(parsedTime);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('SOS Alert'),
@@ -19,7 +24,7 @@ class SOSResponderPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Your associated elder has pressed the SOS button at time: $time',
+                'Your associated elder has pressed the SOS button at time: $formattedTime',
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
