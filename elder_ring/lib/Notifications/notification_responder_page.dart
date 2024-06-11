@@ -94,11 +94,11 @@ class _NotificationResponderPageState extends State<NotificationResponderPage> {
                       ),
                     ),
                     ElevatedButton.icon(
-                      onPressed: () {
+                      onPressed: () async {
                         setState(() {
                           emoji = '😞'; // Sad emoji
                         });
-                        sendMedicineMissNotification(widget.medicineName, widget.time);
+                        await sendMedicineMissNotification(widget.medicineName, widget.time);
                         Future.delayed(Duration(seconds: 1), () {
                           Navigator.pushReplacement(
                             context,
